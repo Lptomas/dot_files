@@ -1,0 +1,215 @@
+# 
+# open mimeapps and othes from : https://github.com/LukeSmithxyz/voidrice/blob/master/.config/lf/lfrc
+# https://www.thegeekstuff.com/2011/01/tput-command-examples/
+
+#set hidden true 
+set ignorecase true
+set icons true
+set autoquit on
+set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
+
+
+# Movement
+map gh cd ~/
+map gd cd ~/documents
+map gD cd ~/downloads
+map gi cd ~/Imagens
+map gg cd ~/Desktop
+map gp cd ~/pCloudDrive
+map gv cd ~/videos/recordings
+map gs cd ~/.local/bin
+map gc cd ~/.config
+map gw cd ~/.config/dwm/
+
+# open mimeapps from : https://github.com/LukeSmithxyz/voidrice/blob/master/.config/lf/lfrc
+
+cmd open ${{
+    case $(file --mime-type "$(readlink -f $f)" -b) in
+	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
+	image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f evince $fx >/dev/null 2>&1 ;;
+        text/*|application/json|inode/x-empty) gedit $fx;;
+	image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
+	image/svg+xml) display -- $f ;;
+	image/*) ristretto $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" |
+		setsid -f sxiv -aio 2>/dev/null | while read -r file; do
+			[ -z "$file" ] && continue
+			lf -remote "send select \"$file\""
+			lf -remote "send toggle"
+		done &
+		;;
+	audio/*) mpv --audio-display=no $f ;;
+	video/*|application/vnd.rn-realmedia) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
+	application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
+	application/pgp-encrypted) $EDITOR $fx ;;
+	application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text) setsid -f lowriter $fx >/dev/null 2>&1 ;;
+	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template) setsid -f localc $fx >/dev/null 2>&1 ;;
+	application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint) setsid -f loimpress $fx >/dev/null 2>&1 ;;
+	application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template) setsid -f lodraw $fx >/dev/null 2>&1 ;;
+	application/vnd.oasis.opendocument.formula) setsid -f lomath $fx >/dev/null 2>&1 ;;
+	application/vnd.oasis.opendocument.database) setsid -f lobase $fx >/dev/null 2>&1 ;;
+        *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
+    esac
+}}
+
+
+# Custom Functions
+cmd mkdir ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+  	printf "Directory Name: "
+  	read ans
+  mkdir $ans
+}}
+
+cmd mkfile ${{
+  printf "File Name: "
+  read ans
+  $EDITOR $ans
+}}
+
+#cmd setwallpaper %cp "$f" ~/.config/wall.jpg && xwallpaper --zoom "$f"
+
+# Archive bindings
+cmd unarchive ${{
+  case "$f" in
+      *.zip) unzip "$f" ;;
+      *.tar.gz) tar -xzvf "$f" ;;
+      *.tar.bz2) tar -xjvf "$f" ;;
+      *.tar) tar -xvf "$f" ;;
+      *) echo "Unsupported format" ;;
+  esac
+}}
+
+
+#######
+# Trash bindings  -> necessita de trash-cli
+cmd trash ${{
+  files=$(printf "$fx" | tr '\n' ';')
+  while [ "$files" ]; do
+    file=${files%%;*}
+
+    trash-put "$(basename "$file")"
+    if [ "$files" = "$file" ]; then
+      files=''
+    else
+      files="${files#*;}"
+    fi
+  done
+}}
+
+
+
+cmd trash_list ${{
+	clear; tput cup $(($(tput lines)/10)); tput bold
+	printf "Files at trash:"
+	printf "\n \n"  
+	trash-list
+	printf "\n" 
+ 	printf "press Enter to go back " 
+	read ans 
+}}
+
+
+cmd delete ${{
+	clear; tput cup $(($(tput lines)/10)); tput bold
+	set -f
+	printf "%s\n\t" "$fx"
+	printf "delete?[y/N]"
+	read ans
+	[ $ans = "y" ] && rm -rf -- $fx
+}}
+
+
+cmd copyto ${{
+	clear; tput cup $(($(tput lines)/10)); tput bold
+	set -f
+	  printf "Copy $f to where?: "
+	  read ans
+	 cp $f $ans
+}}
+
+map at copyto
+
+
+# ### Bindings
+# $xpto = executa comando xpto 
+# $xpto "$f" = executa o comando xpto com o argumento ficheiro
+# $xpto "$F" = executa o comando xpto na pasta actual
+
+# Remove some defaults
+map m
+map o
+map n
+map "'"
+map '"'
+map d
+map e  ##default edit
+map c   #default cut
+map p   #default paste
+
+map b quit
+
+#Open terminal @ present folder
+map W $setsid -f alacritty >/dev/null 2>&1
+
+# clear action like copy or selection
+map <esc> clear
+
+
+
+
+
+
+# Basic Functions
+
+map <c-c> copy   # este bind fora 'lf' e em qualquer terminal é para matar o comando
+map <c-x> cut
+map <c-v> paste
+
+map <f-2> rename
+map <delete> delete
+map <f-5> reload
+
+
+map . set hidden!
+
+map <enter> open
+
+map mf mkfile
+map md mkdir
+map mu unarchive
+map ma unarchive
+  
+
+#map bg setwallpaper
+
+
+map dd 	trash
+map de 	trash
+map dr 	$trash-restore
+map dm 	$trash-rm
+map dv 	trash_list
+map dp 	$trash-empty	
+
+ 
+
+# open files with:
+map oc $vscode "$f" ; exit
+map ol $leafpad "$f" ; exit
+map ov $nvim "$f" ; exit
+map og $gedit "$f" ; exit
+map oi $gimp "$f" ; exit
+map ot $thunar "$F" ; exit
+map ow $wine "$f"  ; exit
+
+# open prograns  : the & puts it in the background. The disown tells the shell to not job control it. The exit tells the shell to exit.
+
+# really need disown to open 
+map pc $code-oss "$f" & disown; exit
+map pl $leafpad "$f" & disown; exit
+map pv $vim "$f" & disown; exit
+map pg $gedit "$f" & disown; exit
+map pi $gimp & disown; exit
+map pt $thunar "$F" & disown; exit    
+map pf $firefox & disown; exit
+
+

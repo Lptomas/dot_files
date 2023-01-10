@@ -1,0 +1,19 @@
+mostra qual está associado
+
+#xdg-mime query default text/plain
+
+#xdg-mime query filetype monitors.sh
+text/plain
+
+ver se temos a app instalada
+#locale -i ristretto.desktop
+#ls /usr/share/applications/
+
+
+tornar default:
+#xdg-mime default ristretto.desktop image/jpg
+ 
+ 
+ xdg-mime default nvim.desktop text/plain
+ 
+ #xdg-mime default ristretto.desktop image/jpg
