@@ -60,3 +60,7 @@ dwm_st
 - setted a another terminal than xfce4-terminal in *helpers.rc* : TerminalEmulator=alacritty
 
 #### zsh
+ - were are the themes and pluguins storage:
+   - powerlevel10k
+   - zsh-syntax-highlighting
+   - zsh-autosuggestions
