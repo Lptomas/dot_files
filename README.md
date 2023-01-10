@@ -57,6 +57,6 @@ dwm_st
 - setted a costum action to open "terminal here" in *uca.xml* 
 
 #### xfce4
-- setted a onother terminal than xfce4-terminal in *helpers.rc* : TerminalEmulator=alacritty
+- setted a another terminal than xfce4-terminal in *helpers.rc* : TerminalEmulator=alacritty
 
 #### zsh
