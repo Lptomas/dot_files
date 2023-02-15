@@ -32,7 +32,14 @@ alias xi='sudo xbps-install'
 alias xu='sudo xbps-install -Suv'
 alias xs='sudo xbps-query -Rs'
 alias xr='sudo xbps-remove'
+alias xrc='man xbps-remove'	#Remove old
 
+
+alias klist='vkpurge list' #
+alias krm='vkpurge rm' #  add version from vkpurgue list
+
+
+alias sx="startx"
 #shutdown or reboot
 alias ssn="sudo poweroff"
 alias sr="sudo reboot"

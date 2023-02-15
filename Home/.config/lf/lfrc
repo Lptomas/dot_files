@@ -20,6 +20,7 @@ map gv cd ~/videos/recordings
 map gs cd ~/.local/bin
 map gc cd ~/.config
 map gw cd ~/.config/dwm/
+map ga cd ~/ARDUINO
 
 # open mimeapps from : https://github.com/LukeSmithxyz/voidrice/blob/master/.config/lf/lfrc
 
@@ -193,23 +194,23 @@ map dp 	$trash-empty
  
 
 # open files with:
-map oc $vscode "$f" ; exit
-map ol $leafpad "$f" ; exit
-map ov $nvim "$f" ; exit
-map og $gedit "$f" ; exit
-map oi $gimp "$f" ; exit
-map ot $thunar "$F" ; exit
-map ow $wine "$f"  ; exit
+#map oc $vscode "$f" ; exit
+#map ol $leafpad "$f" ; exit
+#map ov $nvim "$f" ; exit
+#map og $gedit "$f" ; exit
+#map oi $gimp "$f" ; exit
+#map ot $thunar "$F" ; exit
+#map ow $wine "$f"  ; exit
 
 # open prograns  : the & puts it in the background. The disown tells the shell to not job control it. The exit tells the shell to exit.
 
 # really need disown to open 
-map pc $code-oss "$f" & disown; exit
-map pl $leafpad "$f" & disown; exit
-map pv $vim "$f" & disown; exit
-map pg $gedit "$f" & disown; exit
-map pi $gimp & disown; exit
-map pt $thunar "$F" & disown; exit    
-map pf $firefox & disown; exit
-
+map oc $code-oss "$f" & disown; exit
+#map ol $leafpad "$f" & disown; exit
+map ov $vim "$f" & disown; exit
+map og $gedit "$f" & disown; exit
+map oi $gimp "$f" & disown; exit
+map ot $thunar "$F" & disown; exit    
+map of $firefox & disown; exit
+map ol $libreoffice "$f" & disown; exit
 

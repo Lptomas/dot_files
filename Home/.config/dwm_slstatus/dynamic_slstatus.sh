@@ -81,6 +81,10 @@ if [ "$( pidof flameshot )" != "" ]]; then
 	flameshot=""
 fi
 
+if [ "$( pidof pcloud )" != "" ]]; then
+	pcloud=""
+fi
+
 
 #### OUTPUT ####
-echo "$ram_used $bat $conn $sound $date $time$steam $touchpad$firefox$flameshot"
+echo "$ram_used $bat $conn $sound $date $time$steam $touchpad$firefox$flameshot$pcloud"
