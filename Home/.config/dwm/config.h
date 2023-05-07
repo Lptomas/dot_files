@@ -29,7 +29,7 @@ static const int systraypinningfailfirst = 1;   	/* 1: if pinning fails, display
 static const int showsystray        = 1;    	 	/* 0 means no systray */
 static const int showbar            = 1;       	 	/* 0 means no bar */
 static const int topbar             = 1;        	/* 0 means bottom bar */
-static const int user_bh            = 1;        	/* 2 is the default spacing around the bar's font */
+static const int user_bh            = 2;        	/* 2 is the default spacing around the bar's font */
 //static const char *fonts[]          = { "Noto Sans Mono:size=10" };
 static const char *fonts[]          = { "monospace:size=10", "Symbols Nerd Font:antialias=true:autohint=true"  };
 
@@ -239,7 +239,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 
 static const char *termcmd[]  		= { "alacritty", NULL };
 static const char *fileterminal[]  		= { "alacritty", "-e", "lf", NULL };
-static const char *editorcmd[]  		= { "gedit", NULL };
+static const char *editorcmd[]  		= { "xed", NULL };
 static const char *webcmd[]  		= { "firefox", NULL };
 static const char *monitors[]  		= { "arandr", NULL };
 static const char *filecmd[]  		= { "thunar", NULL };
@@ -250,16 +250,25 @@ static const char *office[]  			= { "libreoffice", NULL };
 static const char *calendar[]  		= { "gsimplecal", NULL };
 static const char *taskmanager[]  	= { "alacritty", "-e", "htop", NULL };
 
-static const char *light_inc[]  		= { "xbacklight", "-inc", "5", NULL };
+static const char *light_inc[]  		= { "xbacklight", "-inc", "5", NULL };  //nao detecta monitor
 static const char *light_dec[]  		= { "xbacklight", "-dec", "5", NULL };
-static const char *Audioup[]  		= { "amixer", "-c", "0", "set", "Master","2+", NULL };
-static const char *Audiodown[]  		= { "amixer", "-c", "0", "set", "Master","2-", NULL };
+
+// AUDIO 
+static const char *alsa_Audioup[]  		= { "amixer", "-c", "0", "set", "Master","2+", NULL };
+static const char *alsa_Audiodown[]  	= { "amixer", "-c", "0", "set", "Master","2-", NULL };
+static const char *pipewire_Audioup[]  		= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *pipewire_Audiodown[]  	= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+
+static const char *Audioup[]  		= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *Audiodown[]  	= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+
+
 static const char *Touchpadtoggle[]  	= { "sh", "-c", "~/my_configs/scripts/toggletouchpad.sh", NULL };
 static const char *turnoffscreens[]  	= { "xset", "dpms", "force", "off", NULL };
 
 
 
-/*
+/*+
 	
 	
 https://dev.to/wallclocks/x11-special-keyboard-keys-for-window-managers-4no2
@@ -274,20 +283,72 @@ list de  XF86XK  /usr/include/X11/XF86keysym.h
 
 
 
-
+//   /usr/include/X11/XF86keysym.h
 #include <X11/XF86keysym.h> // to use XF86XK_TouchpadToggle
+
+/*   xrandr --output HDMI1 --brightness 0.5
+showkey -a
+
+xmodmap -pk | grep PowerOff
+evtest    https://unix.stackexchange.com/questions/130656/how-to-get-all-my-keys-to-send-keycodes
+
+xev
+ 
+// HP_aero:
+#define fn_?                                //xfce4= super+F1
+#define fn_brightness_down                  //xfce4= reduzir brilho
+#define fn_brightness_up                    //xfce4= aumentar brilho 
+#define fn_volume_mute                      //xfce4= silenciar audio
+#define fn_volume_down                      //xfce4= reduzir volume
+#define fn_volume_up	                    //xfce4= aumentar volume
+#define fn_audioPrev                        //xfce4= audio anterior
+#define fn_audio_play_pause                 //xfce4= reproduzir audio
+#define fn_AudioNext                        //xfce4= audio seguinte
+#define fn_monitor                          //xfce4= super P
+#define prt_sc                              //xfce4= imprimir
+
+
+
+
+*/
+
+//#define XF86PowerOff 0x1008ff2a
+
+#define help 0x1005ff70 
 
 
 static const Key keys[] = {
 
-	/* FN keys */
+	/************** FN keys *******************/
+    //{ 0, XF86XK ,	spawn,		SHCMD("xset dpms force off") },
+
+
+
+    { WIN_KEY, XK_F1 ,	spawn,		SHCMD("xset dpms force off") },
+    { 0, XF86XK_MonBrightnessDown ,	spawn,		SHCMD("xset dpms force off") },
+    { 0, XF86XK_MonBrightnessUp ,	spawn,		SHCMD("xset dpms force off") },
+    { 0, XF86XK_AudioMute,		    spawn,		SHCMD("xset dpms force off")  },
+    { 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
+    { 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
+    { 0, XF86XK_AudioPrev ,	        spawn,		SHCMD("xset dpms force off") },
+    { 0, XF86XK_AudioPlay ,	        spawn,		SHCMD("xset dpms force off") },
+    { 0, XF86XK_AudioNext ,	        spawn,		SHCMD("xset dpms force off") },
+
+    { 0, XK_Insert, 				spawn,      SHCMD("xset dpms force off") },
+	{ 0, XK_Print, 					spawn,      {.v = printscreen } },
+
+    { 0, XF86XK_PowerOff,	        spawn,		SHCMD("xset dpms force off") },
+
+
+
+
 	/* modifier                    	key        					function        argument */
-	{ 0,      					XF86XK_TouchpadToggle , 	    spawn,          {.v = Touchpadtoggle } },  // this file uses dunst to notifi
+	//{ 0,      					XF86XK_TouchpadToggle , 	    spawn,          {.v = Touchpadtoggle } },  // this file uses dunst to notifi
 	//{ 0,      					XF86XK_TouchpadToggle , 	    spawn,          SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
 
 
-	{ 0,      					XF86XK_ScreenSaver , 	     	spawn,          {.v = turnoffscreens } },
-	{ 0,      					XK_Print, 						spawn,          {.v = printscreen } },	
+	//{ 0,      					XF86XK_ScreenSaver , 	     	spawn,          {.v = turnoffscreens } },
+
 
 
 
@@ -434,33 +495,33 @@ static const Button buttons[] = {
 
 
 { 0, XF86XK_AudioMute,		spawn,		SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioPrev,		spawn,		{.v = (const char*[]){ "mpc", "prev", NULL } } },
-	{ 0, XF86XK_AudioNext,		spawn,		{.v = (const char*[]){ "mpc",  "next", NULL } } },
-	{ 0, XF86XK_AudioPause,		spawn,		{.v = (const char*[]){ "mpc", "pause", NULL } } },
-	{ 0, XF86XK_AudioPlay,		spawn,		{.v = (const char*[]){ "mpc", "play", NULL } } },
-	{ 0, XF86XK_AudioStop,		spawn,		{.v = (const char*[]){ "mpc", "stop", NULL } } },
-	{ 0, XF86XK_AudioRewind,	spawn,		{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },
-	{ 0, XF86XK_AudioForward,	spawn,		{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },
-	{ 0, XF86XK_AudioMedia,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
-	{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
-	{ 0, XF86XK_PowerOff,		spawn,		{.v = (const char*[]){ "sysact", NULL } } }, 
-	{ 0, XF86XK_Calculator,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "bc", "-l", NULL } } },
-	{ 0, XF86XK_Sleep,		spawn,		{.v = (const char*[]){ "sudo", "-A", "zzz", NULL } } },
-	{ 0, XF86XK_WWW,		spawn,		{.v = (const char*[]){ BROWSER, NULL } } },
-	{ 0, XF86XK_DOS,		spawn,		{.v = termcmd } },
-	{ 0, XF86XK_ScreenSaver,	spawn,		SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
-	{ 0, XF86XK_TaskPane,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
-	{ 0, XF86XK_Mail,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
-	{ 0, XF86XK_MyComputer,		spawn,		{.v = (const char*[]){ TERMINAL, "-e",  "lfub",  "/", NULL } } },
-	{ 0, XF86XK_Battery,		spawn,		SHCMD("") }, 
-	{ 0, XF86XK_Launch1,		spawn,		{.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } },
-	{ 0, XF86XK_TouchpadToggle,	spawn,		SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
-	{ 0, XF86XK_TouchpadOff,	spawn,		{.v = (const char*[]){ "synclient", "TouchpadOff=1", NULL } } },
-	{ 0, XF86XK_TouchpadOn,		spawn,		{.v = (const char*[]){ "synclient", "TouchpadOff=0", NULL } } },
-	{ 0, XF86XK_MonBrightnessUp,	spawn,		{.v = (const char*[]){ "xbacklight", "-inc", "15", NULL } } },
-	{ 0, XF86XK_MonBrightnessDown,	spawn,		{.v = (const char*[]){ "xbacklight", "-dec", "15", NULL } } },
+{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+; kill -44 $(pidof dwmblocks)") },
+{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-; kill -44 $(pidof dwmblocks)") },
+{ 0, XF86XK_AudioPrev,		spawn,		{.v = (const char*[]){ "mpc", "prev", NULL } } },
+{ 0, XF86XK_AudioNext,		spawn,		{.v = (const char*[]){ "mpc",  "next", NULL } } },
+{ 0, XF86XK_AudioPause,		spawn,		{.v = (const char*[]){ "mpc", "pause", NULL } } },
+{ 0, XF86XK_AudioPlay,		spawn,		{.v = (const char*[]){ "mpc", "play", NULL } } },
+{ 0, XF86XK_AudioStop,		spawn,		{.v = (const char*[]){ "mpc", "stop", NULL } } },
+{ 0, XF86XK_AudioRewind,	spawn,		{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },
+{ 0, XF86XK_AudioForward,	spawn,		{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },
+{ 0, XF86XK_AudioMedia,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
+{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
+{ 0, XF86XK_PowerOff,		spawn,		{.v = (const char*[]){ "sysact", NULL } } }, 
+{ 0, XF86XK_Calculator,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "bc", "-l", NULL } } },
+{ 0, XF86XK_Sleep,		spawn,		{.v = (const char*[]){ "sudo", "-A", "zzz", NULL } } },
+{ 0, XF86XK_WWW,		spawn,		{.v = (const char*[]){ BROWSER, NULL } } },
+{ 0, XF86XK_DOS,		spawn,		{.v = termcmd } },
+{ 0, XF86XK_ScreenSaver,	spawn,		SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
+{ 0, XF86XK_TaskPane,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
+{ 0, XF86XK_Mail,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+{ 0, XF86XK_MyComputer,		spawn,		{.v = (const char*[]){ TERMINAL, "-e",  "lfub",  "/", NULL } } },
+{ 0, XF86XK_Battery,		spawn,		SHCMD("") }, 
+{ 0, XF86XK_Launch1,		spawn,		{.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } },
+{ 0, XF86XK_TouchpadToggle,	spawn,		SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
+{ 0, XF86XK_TouchpadOff,	spawn,		{.v = (const char*[]){ "synclient", "TouchpadOff=1", NULL } } },
+{ 0, XF86XK_TouchpadOn,		spawn,		{.v = (const char*[]){ "synclient", "TouchpadOff=0", NULL } } },
+{ 0, XF86XK_MonBrightnessUp,	spawn,		{.v = (const char*[]){ "xbacklight", "-inc", "15", NULL } } },
+{ 0, XF86XK_MonBrightnessDown,	spawn,		{.v = (const char*[]){ "xbacklight", "-dec", "15", NULL } } },
 
 
 

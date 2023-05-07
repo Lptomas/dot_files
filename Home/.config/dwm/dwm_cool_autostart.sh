@@ -6,7 +6,7 @@ setxkbmap pt &
 numlockx on &
 slstatus &
 flameshot &
-#nm-applet &  # now in indication in slstatus
-#volumeicon & # Now with a indication in slstatus
-
+nm-applet &  # now in indication in slstatus
+volumeicon & # Now with a indication in slstatus
+blueman-applet & 
 
