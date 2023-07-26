@@ -17,8 +17,8 @@ env:
 ## scartchpad sem dimensoes 
 window:
   dimensions:
-    columns:  150		#comprimento 
-    lines: 40			# altura
+    columns:  200		#comprimento 150
+    lines: 50 # altura 40
 
   #padding:
     #x: 12

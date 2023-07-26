@@ -1,4 +1,4 @@
-#!/bin/bash
++#!/bin/bash
 # LPT
 # used in slstatus-DWM
 
@@ -20,8 +20,11 @@ case $conn_aux in
 'wlp2s0')
 	conn="直"
 ;;
+'wlan0')    #HP aero
+	conn="直"
+;;
 *)
-	conn=""
+	conn=""
 esac
 
 #### Audio Volume####
@@ -31,7 +34,7 @@ esac
 
 _vol="$( amixer get Master | egrep -o '[0-9]{1,3}%')"
 
-sound=$([ "$_vol" = '0%'  ] && echo "$_vol" || echo "$_vol") #ﱝ婢
+sound=$([ "$_vol" = '0%'  ] && echo "$_vol" || echo "$_vol") #ﱝ婢
 
 
 
@@ -60,31 +63,39 @@ esac
 
 
 #### Important settings ####
-if [ $(synclient -l | grep "TouchpadOff .*=.*" |  egrep -o '[0-9]') != "0" ]]; then 
-	touchpad="!ﳶ "
-else
-	touchpad=""
-fi
+#if [ $(synclient -l | grep "TouchpadOff .*=.*" |  egrep -o '[0-9]') != "0" ]]; then 
+#	touchpad="!ﳶ "
+#else
+#	touchpad=""
+#fi
 
 
 
 #### Important Programs that are RUNNING####
-if [ "$( pidof steam )" != "" ]]; then 
+if [ "$( pidof steam )" != "" ]; then 
 	steam=""
 fi
 
-if [ "$( pidof firefox )" != "" ]]; then
+if [ "$( pidof firefox )" != "" ]; then
 	firefox="" 	#firefox=""
 fi
 
-if [ "$( pidof flameshot )" != "" ]]; then
+if [ "$( pidof flameshot )" != "" ]; then
 	flameshot=""
 fi
 
-if [ "$( pidof pcloud )" != "" ]]; then
+if [ "$( pidof pcloud )" != "" ]; then
 	pcloud=""
 fi
 
 
 #### OUTPUT ####
-echo "$ram_used $bat $conn $sound $date $time$steam $touchpad$firefox$flameshot$pcloud"
+#echo "$ram_used $bat $conn $sound $date $time $steam $touchpad $firefox $flameshot$pcloud "
+echo "$ram_used $bat  $conn $time $steam $firefox $flameshot $pcloud"
+ 
+
+
+
+
+
+

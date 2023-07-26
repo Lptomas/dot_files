@@ -33,7 +33,7 @@ static const int user_bh            = 2;        	/* 2 is the default spacing aro
 //static const char *fonts[]          = { "Noto Sans Mono:size=10" };
 static const char *fonts[]          = { "monospace:size=10", "Symbols Nerd Font:antialias=true:autohint=true"  };
 
-static const char dmenufont[]       = "monospace:size=10";
+static const char dmenufont[]       = "monospace:size=12";
 static const char col_gray1[]       = "#4d4d4d";
 static const char col_gray2[]       = "#666666";
 static const char col_gray3[]       = "#bbbbbb";
@@ -47,6 +47,7 @@ static const char col_black[]       = "#000000";
 static const char *colors[][3]      = {
 			/*               fg         bg         border   */
 			
+
 	/*[SchemeNorm] = { A, B, C }, 
 		A = cor do TEXTO do que NÂO está activo : workspaces não selecionados e slstatus
 		B=  cor do FUNDO do que NÂO está activo : workspaces não selecionados e slstatus
@@ -69,6 +70,20 @@ typedef struct {
 } Sp;
 
 
+
+
+
+/* helper for spawning shell commands in the pre dwm-5.0 fashion */
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+
+
+
+
+
+
+
+
+
 /******************** scratchpad  
 Para usar os scratchpad é necessário que pelo menos o Terminal aceite:
 https://www.youtube.com/watch?v=sTHww5r_mVU
@@ -86,12 +101,20 @@ man alacritty */
 const char *spcmd1[] = {"alacritty", "--class", "spterm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml",NULL, NULL,NULL};
 const char *spcmd2[] = {"alacritty", "--class", "spfm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "lf",NULL};
 
-const char *spcmd3[] = {"thunar", NULL }; // estava thunar
+const char *spcmd3[] = {"thunar", NULL }; 
+const char *spcmd4[] = {"firefox", "--class", "firefox",NULL }; // estava thunar
+const char *spcmd5[] = {"code", NULL }; // estava thunar
+const char *spcmd6[] = {"alacritty", "--class", "sphtop", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "htop",NULL};
+
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spranger",    spcmd2},
 	{"thunar",   	spcmd3},
+	//{"thunar",   	SHCMD("thunar")}, // nao funciona
+	{"firefox",   	spcmd4},   //nao funciona no scratchpads
+	{"code",   		spcmd5},   
+	{"sphtop",   	spcmd6},
 };
 
 
@@ -124,7 +147,7 @@ static const char *const autostart[] = {
 
 /* tagging : https://www.unicode.org/charts/PDF/U260
 0.pdf */ 
-static const char *tags[] = { "1", "", "3", "", "5", ""};
+static const char *tags[] = { "1", "", "3", "", "5", "", "7"};
 
 static const Rule rules[] = {
 	/* See windows properties with : xprop(1):
@@ -145,6 +168,9 @@ static const Rule rules[] = {
 	{ NULL,		  					"spterm",			NULL,		SPTAG(0),			1,			 	-1 },
 	{ NULL,		  					"spfm",				NULL,		SPTAG(1),			1,			 	-1 },
 	{ NULL,		  					"thunar",			NULL,		SPTAG(2),			0,			 	-1 },
+	{ NULL,		  					"firefox",			NULL,		SPTAG(3),			0,			 	-1 },
+	{ NULL,		  					"code",				NULL,		SPTAG(4),			0,			 	-1 },
+	{ NULL,		  					"sphtop",			NULL,		SPTAG(5),			1,			 	-1 },
 
 		/* class                    instance   			title      	tags mask      i	sfloating   	monitor */
 
@@ -164,35 +190,57 @@ static const Rule rules[] = {
 	/* class                       	instance    		title      	tags mask     		isfloating  	monitor */
 	{ NULL, 		   				"code",    			NULL,  	   	1,            		0,           	-1 },
 	{ "code",						NULL, 	   			NULL,  	   	1,            		0,           	-1 },
+	{ "TeamViewer",					NULL, 	   			NULL,  	   	1,            		0,           	-1 },
+
 
 	
-// Workspace 2
+// Workspace 2    // WEB
 	/* class                       	instance    	title     		tags mask     		isfloating   	monitor */
-	{ "firefox",                   	NULL,       	NULL,     		1 << 1,       		0,           	-1 },
+    { "firefox",                   	NULL,       	NULL,     		1 << 1,       		0,           	-1 },
 	{ "Firefox",                   	NULL,       	NULL,      		1 << 1,       		0,           	-1 },
-// Workspace 3
+	{ "blueman-applet",             NULL,       	NULL,      		1 << 1,       		0,           	-1 },
+
+
+	
+// Workspace 3   // File manager
 	/* class       					instance    	title     		tags mask     		isfloating  	 monitor */
 	{ "thunar", 					NULL,    		NULL,      		1 << 2,       		0,           	-1 },
 	{ "Thunar", 					NULL,    		NULL,      		1 << 2,       		0,           	-1 },
 	{ "Nemo", 						NULL,    		NULL,     		1 << 2,       		0,          	-1 },	
 	{ "lf", 						NULL,    		NULL,      		1 << 2,       		0,           	-1 },	
 	//{ NULL, 						"Nemo",    		NULL,      		1 << 2,       		0,           	-1 },
-// Workspace 4
+// Workspace 4 // OFFICE
 	/* class                    	instance    t	Title      		tags mask     		isfloating   	monitor */
 	{ NULL, 		   				"libreoffice",  NULL,     		1 << 3,      		0,           	-1 },
 	{ "libreoffice", 		   		"libreoffice",  NULL,      		1 << 3,       		0,           	-1 },
+	{ "libreoffice-writer", 		 NULL,			NULL,      		1 << 3,       		0,           	-1 },
+
+	
 	
 	//voidlinux:
 	{NULL , 		   				NULL, 			"libreoffice",  1 << 3,      		 0,           	-1 },
 
-// Workspace 5
+// Workspace 5 // PDF
 	{ NULL, 		   				"evince",    	NULL,      		1 << 4,      		 0,           	-1 },	
 
-// Workspace 6
+// Workspace 6 // Game
 	{ "Steam", 		   				NULL,    		NULL,      		1 << 5,       		0,           	-1 },
 	{ NULL, 		   				"Steam",    	NULL,      		1 << 5,       		0,           	-1 },
+	{ "steamwebhelper", 		   	NULL,    		NULL,      		1 << 5,       		0,           	-1 },
+	{ NULL, 						"steamwebhelper",   		NULL,      		1 << 5,       		0,           	-1 },
+	{ "NULL", 		   				NULL,    		"steamwebhelper",      		1 << 5,       		0,           	-1 },
+
+	{ "Special Offers", 		   	NULL,    		NULL,      		1 << 5,       		0,           	-1 },
+	{ NULL, 						"Special Offers",   		NULL,      		1 << 5,       		0,           	-1 },
+	{ "NULL", 		   				NULL,    		"Special Offers",      		1 << 5,       		0,           	-1 },
 	{ NULL, 		   				NULL,    		"Steam",   		1 << 5,      		0,           	-1 },	
 	{ "Lutris", 		   			NULL,    		NULL,      		1 << 5,       		0,           	-1 },
+
+
+// Workspace 7 // bluethood e som
+	/* class                    	instance    t	Title      		tags mask     		isfloating   	monitor */
+	{ NULL, 		   			NULL,    		"Bluetooth",      		1 << 6,       		0,           	-1 },
+	{ NULL, 					NULL,    		"Controlo de Volume",      		1 << 6,       		0,           	-1 },
 
 
 };
@@ -225,33 +273,61 @@ static const Layout layouts[] = {
 
 
 
-/* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+
 
 /* commands */
 
+//static const char *app_finder[]  	= { "xfce4-appfinder", NULL };
+//{ WIN_KEY|ShiftMask,      			XK_a, 			spawn,          {.v = app_finder } },
+
+
+
+
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 
-//																	"-nb", cor fundo, "-nf", cor_texto,"-sb", cor_Selecção 
+
+
+
+//																	
 //static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };																	
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_green, "-sb", col_green, "-sf", col_gray5, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_green, "-sb", col_green, "-sf", col_gray5, NULL };
+
+
+/*
+-fn defines the font
+-nb defines the normal background color
+-nf defines the normal foreground color (#RGB, #RRGGBB, and color names are supported).
+-sb defines the selected background color
+
+directamente no terminal
+dmenu_run -m dmenumon -fn dmenufont -nb "#4d4d4d" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
+
+dmenu_run -m dmenumon -fn "monospace:size=12" -nb "#4d4d4d" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
+dmenu_run -m "0" -fn "monospace:size=11" -nb "#000000" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
+
+SHCMD('dmenu_run -m "0" -fn "monospace:size=11" -nb "#col_black" -nf "#col_green" -sb "#col_green" -sf "#col_gray5"')  },
+
+*/
 
 
 static const char *termcmd[]  		= { "alacritty", NULL };
-static const char *fileterminal[]  		= { "alacritty", "-e", "lf", NULL };
-static const char *editorcmd[]  		= { "xed", NULL };
-static const char *webcmd[]  		= { "firefox", NULL };
+static const char *fileterminal[]  	= { "alacritty", "-e", "lf", NULL };
+static const char *editorcmd[]  	= { "xed", NULL };
+//static const char *webcmd[]  		= { "firefox", NULL };
 static const char *monitors[]  		= { "arandr", NULL };
 static const char *filecmd[]  		= { "thunar", NULL };
-static const char *printscreen[]  		= { "flameshot", "gui", NULL, NULL };
-static const char *app_finder[]  		= { "xfce4-appfinder", NULL };
+static const char *printscreen[]  	= { "flameshot", "gui", NULL, NULL };
+static const char *app_finder[]  	= { "xfce4-appfinder", NULL };
 static const char *app_pdf[]  		= { "evince", NULL };
-static const char *office[]  			= { "libreoffice", NULL };
+static const char *office[]  		= { "libreoffice", NULL };
 static const char *calendar[]  		= { "gsimplecal", NULL };
 static const char *taskmanager[]  	= { "alacritty", "-e", "htop", NULL };
 
-static const char *light_inc[]  		= { "xbacklight", "-inc", "5", NULL };  //nao detecta monitor
-static const char *light_dec[]  		= { "xbacklight", "-dec", "5", NULL };
+//static const char *light_inc[]  		= { "xbacklight", "-inc", "5", NULL };  //nao detecta monitor
+//static const char *light_dec[]  		= { "xbacklight", "-dec", "5", NULL };
+
+static const char *light_inc[]  		= { "xlight", "-A", "5", NULL };  
+static const char *light_dec[]  		= { "xlight", "-U", "5", NULL };  
 
 // AUDIO 
 static const char *alsa_Audioup[]  		= { "amixer", "-c", "0", "set", "Master","2+", NULL };
@@ -270,175 +346,144 @@ static const char *turnoffscreens[]  	= { "xset", "dpms", "force", "off", NULL }
 
 /*+
 	
-	
 https://dev.to/wallclocks/x11-special-keyboard-keys-for-window-managers-4no2
-
 xbacklight -inc -20
 { 0,                            XF86XK_MonBrightnessUp,     spawn,      {.v = inclight } },
 { 0,                            XF86XK_MonBrightnessDown,   spawn,      {.v = declight } 
 
-
 list de  XF86XK  /usr/include/X11/XF86keysym.h
 */
 
-
-
 //   /usr/include/X11/XF86keysym.h
-#include <X11/XF86keysym.h> // to use XF86XK_TouchpadToggle
 
 /*   xrandr --output HDMI1 --brightness 0.5
 showkey -a
 
 xmodmap -pk | grep PowerOff
 evtest    https://unix.stackexchange.com/questions/130656/how-to-get-all-my-keys-to-send-keycodes
-
 xev
- 
-// HP_aero:
-#define fn_?                                //xfce4= super+F1
-#define fn_brightness_down                  //xfce4= reduzir brilho
-#define fn_brightness_up                    //xfce4= aumentar brilho 
-#define fn_volume_mute                      //xfce4= silenciar audio
-#define fn_volume_down                      //xfce4= reduzir volume
-#define fn_volume_up	                    //xfce4= aumentar volume
-#define fn_audioPrev                        //xfce4= audio anterior
-#define fn_audio_play_pause                 //xfce4= reproduzir audio
-#define fn_AudioNext                        //xfce4= audio seguinte
-#define fn_monitor                          //xfce4= super P
-#define prt_sc                              //xfce4= imprimir
-
-
-
 
 */
 
-//#define XF86PowerOff 0x1008ff2a
-
-#define help 0x1005ff70 
-
+#include <X11/XF86keysym.h> // to use XF86XK_TouchpadToggle
 
 static const Key keys[] = {
 
-	/************** FN keys *******************/
-    //{ 0, XF86XK ,	spawn,		SHCMD("xset dpms force off") },
+	/************** FN keys - HP AERO *******************/
+	//{ 0, XF86XK ,	spawn,		SHCMD("xset dpms force off") },
+	/*FN+F1 */   { WIN_KEY, XK_F1 ,	            spawn,		SHCMD("xset dpms force off") },            
+	/*FN+F2 */   { 0, XF86XK_MonBrightnessDown ,spawn,		SHCMD("light -U 5") },
+	/*FN+F3 */   { 0, XF86XK_MonBrightnessUp ,	spawn,		SHCMD("light -A 5") },
+	/*FN+F4 */     // Keyboard back light
+	/*FN+F5 */   { 0, XF86XK_AudioMute,		    spawn,		SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle")  },
+	/*FN+F6 */   { 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
+	/*FN+F7 */   { 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
+	/*FN+F8 */   { 0, XF86XK_AudioPrev ,	    spawn,		SHCMD("xset dpms force off") },
+	/*FN+F9 */   { 0, XF86XK_AudioPlay ,	    spawn,		SHCMD("xset dpms force off") },
+	/*FN+F10*/   { 0, XF86XK_AudioNext ,	    spawn,		SHCMD("xset dpms force off") },
+	/*FN+F11*/   { WIN_KEY, XK_p ,	            spawn,		SHCMD("xset dpms force off") },      // monitor Symbol ->
+	/*FN+F12*/   { 0, XK_Insert, 				spawn,      SHCMD("xset dpms force off") },
+	/*prt sc*/	 { 0, XK_Print, 				spawn,      SHCMD("flameshot gui") }, 	//{.v = printscreen } },
+	/* ⏻ */	    { 0, XF86XK_PowerOff,	       spawn,		SHCMD("xset dpms force off") },  // nã0 funciona
 
 
-
-    { WIN_KEY, XK_F1 ,	spawn,		SHCMD("xset dpms force off") },
-    { 0, XF86XK_MonBrightnessDown ,	spawn,		SHCMD("xset dpms force off") },
-    { 0, XF86XK_MonBrightnessUp ,	spawn,		SHCMD("xset dpms force off") },
-    { 0, XF86XK_AudioMute,		    spawn,		SHCMD("xset dpms force off")  },
-    { 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
-    { 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
-    { 0, XF86XK_AudioPrev ,	        spawn,		SHCMD("xset dpms force off") },
-    { 0, XF86XK_AudioPlay ,	        spawn,		SHCMD("xset dpms force off") },
-    { 0, XF86XK_AudioNext ,	        spawn,		SHCMD("xset dpms force off") },
-
-    { 0, XK_Insert, 				spawn,      SHCMD("xset dpms force off") },
-	{ 0, XK_Print, 					spawn,      {.v = printscreen } },
-
-    { 0, XF86XK_PowerOff,	        spawn,		SHCMD("xset dpms force off") },
-
-
-
+	/************** DWM or patched *******************/
 
 	/* modifier                    	key        					function        argument */
 	//{ 0,      					XF86XK_TouchpadToggle , 	    spawn,          {.v = Touchpadtoggle } },  // this file uses dunst to notifi
 	//{ 0,      					XF86XK_TouchpadToggle , 	    spawn,          SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
 
 
-	//{ 0,      					XF86XK_ScreenSaver , 	     	spawn,          {.v = turnoffscreens } },
-
-
-
 
 	/* togglescratch */
-	/* modifier                 key        		function        			argument */
-	{ WIN_KEY,            		XK_s,  	   		togglescratch,  		{.ui = 0 } },
-	{ WIN_KEY,            		XK_d,	   		togglescratch,  		{.ui = 1 } },
-	{ WIN_KEY,            		XK_c,	   		togglescratch,  		{.ui = 2 } },	
-	
-	{ WIN_KEY,             		XK_f,      		togglefullscr,  		{0} },
-	
-	{ WIN_KEY,      			XK_a, 			spawn,          		{.v = dmenucmd } },
-	{ WIN_KEY|ShiftMask,      			XK_a, 			spawn,          		{.v = app_finder } },
-	
-	{ WIN_KEY,                  XK_b,      		togglebar,     			{0} },
-	{ WIN_KEY,      			XK_e, 			spawn,          		{.v = editorcmd } },
-	{ WIN_KEY,      			XK_t, 			spawn,          		{.v = filecmd } },
-	//{ WIN_KEY,      			XK_d, 			spawn,          		{.v = fileterminal } },
-	
+	/* modifier                 key        		function        	argument */
+	{ WIN_KEY,            		XK_s,  	   		togglescratch,  	{.ui = 0 } },
+	{ WIN_KEY,            		XK_d,	   		togglescratch,  	{.ui = 1 } },
+	{ WIN_KEY,            		XK_c,	   		togglescratch,  	{.ui = 2 } },
+	//{ WIN_KEY,            		XK_w,	   		togglescratch,  		{.ui = 3 } },	 não funciona para o firefox
+	{ WIN_KEY,            		XK_z,	   		togglescratch,  	{.ui = 4 } },	// 
+	{ WIN_KEY,            		XK_h,	   		togglescratch,  	{.ui = 5 } },	// htop
+
+
+
+	/* modifier                     key        		function        argument */
+	{ WIN_KEY,             		XK_f,      		togglefullscr,  	{0} },  // from patch
+	{ WIN_KEY,					XK_q, 			killclient,     	{0} },
+	{ WIN_KEY,                  XK_b,      		togglebar,     		{0} },
+	{ MODKEY,					XK_comma,  		cyclelayout,    	{.i = -1 } },
+	{ MODKEY,           		XK_space, 		cyclelayout,    	{.i = +1 } },
+	//{ MODKEY,                   XK_p,      		spawn,          	{.v = dmenucmd } },
+	//{ MODKEY|ShiftMask,      	XK_Return, 		spawn,          	{.v = termcmd } },
+	{ MODKEY,                   XK_j,      		focusstack,     	{.i = +1 } },
+	{ MODKEY,                   XK_k,      		focusstack,     	{.i = -1 } },
+	{ MODKEY,                   XK_i,     		incnmaster,    		{.i = +1 } },
+	{ MODKEY,                   XK_d,      		incnmaster,     	{.i = -1 } },
+	{ MODKEY,                   XK_h,      		setmfact,       	{.f = -0.05} },
+	{ MODKEY,                   XK_l,      		setmfact,       	{.f = +0.05} },
+	{ MODKEY,                   XK_Return, 		zoom,           	{0} },
+	{ MODKEY,                   XK_Tab,    		view,           	{0} },
+	{ MODKEY|ShiftMask,      	XK_c,      		killclient,     	{0} },
+	{ MODKEY,                   XK_t,      		setlayout,     		{.v = &layouts[0]} },
+	{ MODKEY,                   XK_f,      		setlayout,      	{.v = &layouts[1]} },
+	{ MODKEY,                   XK_m,      		setlayout,      	{.v = &layouts[2]} },
+	{ MODKEY,                   XK_space,  		setlayout,      	{0} },
+	{ MODKEY|ShiftMask,      	XK_space,  		togglefloating, 	{0} },
+	{ MODKEY,                   XK_0,      		view,           	{.ui = ~0 } },
+	{ MODKEY|ShiftMask,      	XK_0,      		tag,            	{.ui = ~0 } },
+	{ MODKEY,                   XK_comma,  		focusmon,       	{.i = -1 } },
+	{ MODKEY,                   XK_period, 		focusmon,       	{.i = +1 } },
+	{ MODKEY|ShiftMask,     	XK_comma,  		tagmon,         	{.i = -1 } },
+	{ MODKEY|ShiftMask,     	XK_period, 		tagmon,         	{.i = +1 } },
+	TAGKEYS(                    XK_1,                     			0)
+	TAGKEYS(                    XK_2,                      			1)
+	TAGKEYS(                    XK_3,                      			2)
+	TAGKEYS(                    XK_4,                      			3)
+	TAGKEYS(                    XK_5,                      			4)
+	TAGKEYS(                    XK_6,                      			5)
+	TAGKEYS(                    XK_7,                      			6)
+	TAGKEYS(                    XK_8,                      			7)
+	TAGKEYS(                    XK_9,                      			8)
+	{ MODKEY|ShiftMask,         XK_q,      		quit,           	{0} },  // restart DWM
+
+
+
+	/************** Comands + keys *******************/
+	{ WIN_KEY,      			XK_Return, 		spawn,          		SHCMD("alacritty") },
+	//{ WIN_KEY,      			XK_a, 			spawn,          		{.v = dmenucmd } },
+	{ WIN_KEY,      			XK_a, 			spawn,          		SHCMD("dmenu_run -i -m '0' -fn monospace:size=11 -nb '#000000' -nf '#07AE06' -sb '#07AE06' -sf '#060606'")  },
+	{ WIN_KEY|ShiftMask,      	XK_a, 			spawn,          		SHCMD("xfce4-appfinder") },
+	{ WIN_KEY,      			XK_t, 			spawn,          		SHCMD("thunar") },
+	{ WIN_KEY,      			XK_o, 			spawn,          		SHCMD("libreoffice : evince") },
+	{ WIN_KEY,      			XK_m, 			spawn,          		SHCMD("arandr") },
+
+	//{ WIN_KEY,      			XK_e, 			spawn,          		SHCMD("xed") },   // EDITOR
+
+
 	//{ WIN_KEY,      			XK_KP_Enter, 	spawn,          		{.v = termcmd } },
-	{ WIN_KEY,      			XK_Return, 		spawn,          		{.v = termcmd } },
-	{ WIN_KEY,      			XK_w, 			spawn,          		{.v = webcmd } },
-	
-	{ WIN_KEY,      			XK_m, 			spawn,          		{.v = monitors } },
-	
-	
-	{ WIN_KEY,      			XK_o, 			spawn,          		{.v = office } },	
-	{ WIN_KEY,      			XK_p, 			spawn,          		{.v = app_pdf } },
-	{ WIN_KEY,					XK_q, 			killclient,     		{0} },
-	
+	//{ WIN_KEY,      			XK_Return, 		spawn,          		{.v = termcmd } },
+	//{ WIN_KEY,      			XK_w, 			spawn,          		{.v = webcmd } },
+
+
+
 	
 
-	{ MODKEY,					XK_comma,  		cyclelayout,    		{.i = -1 } },
-	{ MODKEY,           		XK_space, 		cyclelayout,    		{.i = +1 } },
-	
-	
-	
-/* OLDS*/
-	/* modifier                     key        		function        	argument */
-	{ MODKEY,                       XK_p,      		spawn,          	{.v = dmenucmd } },
-	{ MODKEY|ShiftMask,      		XK_Return, 		spawn,          	{.v = termcmd } },
-	
-	{ MODKEY,                       XK_j,      		focusstack,     	{.i = +1 } },
-	{ MODKEY,                       XK_k,      		focusstack,     	{.i = -1 } },
-	{ MODKEY,                       XK_i,     		incnmaster,    		{.i = +1 } },
-	{ MODKEY,                       XK_d,      		incnmaster,     	{.i = -1 } },
-	{ MODKEY,                       XK_h,      		setmfact,       	{.f = -0.05} },
-	{ MODKEY,                       XK_l,      		setmfact,       	{.f = +0.05} },
-	{ MODKEY,                       XK_Return, 		zoom,           	{0} },
-	{ MODKEY,                       XK_Tab,    		view,           	{0} },
-	{ MODKEY|ShiftMask,      		XK_c,      		killclient,     	{0} },
-	{ MODKEY,                       XK_t,      		setlayout,     		{.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      		setlayout,      	{.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      		setlayout,      	{.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  		setlayout,      	{0} },
-	{ MODKEY|ShiftMask,      		XK_space,  		togglefloating, 	{0} },
-	{ MODKEY,                       XK_0,      		view,           	{.ui = ~0 } },
-	{ MODKEY|ShiftMask,      		XK_0,      		tag,            	{.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  		focusmon,       	{.i = -1 } },
-	{ MODKEY,                       XK_period, 		focusmon,       	{.i = +1 } },
-	{ MODKEY|ShiftMask,      		XK_comma,  		tagmon,         	{.i = -1 } },
-	{ MODKEY|ShiftMask,     		XK_period, 		tagmon,         	{.i = +1 } },
-	TAGKEYS(                        XK_1,                     			0)
-	TAGKEYS(                        XK_2,                      			1)
-	TAGKEYS(                        XK_3,                      			2)
-	TAGKEYS(                        XK_4,                      			3)
-	TAGKEYS(                        XK_5,                      			4)
-	TAGKEYS(                        XK_6,                      			5)
-	TAGKEYS(                        XK_7,                      			6)
-	TAGKEYS(                        XK_8,                      			7)
-	TAGKEYS(                        XK_9,                      			8)
-	{ MODKEY|ShiftMask,     		XK_q,      		quit,           	{0} },
 };
 
-/* button definitions */
-/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-/* Clicar na Barra de tarefas e SystemTray 
+/* button definitions
+ click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin 
+Clicar na Barra de tarefas e SystemTray 
  Rato esquerdo = Button1
  Rato centro = Button2
  Rato direito = Button3
  scroll cima= button4
  scroll baixo = button5
-*/
-/* button definitions */
-/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin 
+ 
 ClkTagBar= bar:indicadores dos workspaces
-ClkLtSymbol=
+ClkLtSymbol= bar
 ClkStatusText=   bar:Zona onde mostra o CPU, RAM, DATA, HORAS
-ClkWinTitle=  bar: titulo da janela
-ClkClientWin= Janelas 
+ClkWinTitle=  	 bar: Windows Titles
+
+ClkClientWin= 	Windows 
 ClkRootWin=
 */
 static const Button buttons[] = {
@@ -459,16 +504,16 @@ static const Button buttons[] = {
 
 // clicar no system Tray : 
 	/* click                event mask      button          function        argument */
-	{ ClkStatusText,        0,              Button1,        spawn,          {.v = taskmanager } },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = filecmd } },
-	{ ClkStatusText,        0,              Button3,        spawn,          {.v = calendar } },
-	{ ClkStatusText,        0,              Button5,        spawn,          {.v = Audiodown } },
-	{ ClkStatusText,        0,              Button4,        spawn,          {.v = Audioup } },
+	//{ ClkStatusText,        0,              Button1,        spawn,          {.v = taskmanager } }, //
+	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("alacritty -e htop") },
 
-	{ ClkStatusText,        WIN_KEY,        Button5,        spawn,          {.v = light_dec } },
-	{ ClkStatusText,        WIN_KEY,        Button4,        spawn,          {.v = light_inc } },
+	{ ClkStatusText,        0,              Button2,        spawn,          SHCMD("thunar") },
+	{ ClkStatusText,        0,              Button3,        spawn,          SHCMD("gsimplecal") },
+	{ ClkStatusText,        0,              Button5,        spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
+	{ ClkStatusText,        0,              Button4,        spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
 
-
+	{ ClkStatusText,        WIN_KEY,        Button5,        spawn,          SHCMD("light -U 5") },
+	{ ClkStatusText,        WIN_KEY,        Button4,        spawn,          SHCMD("light -A 5") },
 
 
 // Nas janelas: 
@@ -490,6 +535,9 @@ static const Button buttons[] = {
 
 
 };
+
+
+
 
 /*
 
