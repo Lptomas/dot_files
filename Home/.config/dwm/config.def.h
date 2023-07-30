@@ -31,9 +31,9 @@ static const int showbar            = 1;       	 	/* 0 means no bar */
 static const int topbar             = 1;        	/* 0 means bottom bar */
 static const int user_bh            = 2;        	/* 2 is the default spacing around the bar's font */
 //static const char *fonts[]          = { "Noto Sans Mono:size=10" };
-static const char *fonts[]          = { "monospace:size=10", "Symbols Nerd Font:antialias=true:autohint=true"  };
+static const char *fonts[]          = { "hack:size=10", "Symbols Nerd Font:antialias=true:autohint=true"  };
 
-static const char dmenufont[]       = "monospace:size=12";
+static const char dmenufont[]       = "hack:size=12";
 static const char col_gray1[]       = "#4d4d4d";
 static const char col_gray2[]       = "#666666";
 static const char col_gray3[]       = "#bbbbbb";
@@ -45,7 +45,7 @@ static const char col_dark_green[]       = "#153715"; //
 static const char col_red[]       = "#ff0000";
 static const char col_black[]       = "#000000";
 static const char *colors[][3]      = {
-			/*               fg         bg         border   */
+			/* fg         bg         border   */
 			
 
 	/*[SchemeNorm] = { A, B, C }, 
@@ -106,6 +106,9 @@ const char *spcmd4[] = {"firefox", "--class", "firefox",NULL }; // estava thunar
 const char *spcmd5[] = {"code", NULL }; // estava thunar
 const char *spcmd6[] = {"alacritty", "--class", "sphtop", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "htop",NULL};
 
+
+
+
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
@@ -147,7 +150,7 @@ static const char *const autostart[] = {
 
 /* tagging : https://www.unicode.org/charts/PDF/U260
 0.pdf */ 
-static const char *tags[] = { "1", "", "3", "", "5", "", "7"};
+static const char *tags[] = { "1", "", "3", "󰈙", "5", "󰊖", "7","󰢹"};
 
 static const Rule rules[] = {
 	/* See windows properties with : xprop(1):
@@ -179,18 +182,21 @@ static const Rule rules[] = {
 	{ "Galculator", 				NULL,      			NULL,  		0,            		1,           	-1 },
 	{ NULL, 		   	   			"xfce4-appfinder", 	NULL,   	0,           		1,           	-1 },
 	{ "Arandr", 			   		NULL,      			NULL,  		0,            		1,           	-1 },
-	{ "Gimp",                      	NULL,       		NULL,      	1,            		0,           	1 },
+	{ "Gimp",                      	NULL,       		NULL,      	1,            		0,           	-1 },
 	{ "Xfce4-terminal",            	NULL,       		NULL,      	0,            		1,           	-1 },
 	{ "Arcolinux-welcome-app.py",  	NULL,       		NULL,      	0,           		1,           	-1 },
 	{ "Arcolinux-calamares-tool.py",NULL,    			NULL,      	0,            		1,           	-1 },	
 	{ "resistor_decoder",  			NULL,    			NULL,      	0,            		1,           	-1 },	
 	{ "pixeltomatrix.exe",  		NULL,    			NULL,      	0,            		1,           	-1 },
 	{ "pavucontrol",  				NULL,    			NULL,      	0,            		1,           	-1 },
+	{ "power",  					NULL,    			NULL,      	0,            		1,           	-1 },
+
+
 // Workspace 1
 	/* class                       	instance    		title      	tags mask     		isfloating  	monitor */
 	{ NULL, 		   				"code",    			NULL,  	   	1,            		0,           	-1 },
 	{ "code",						NULL, 	   			NULL,  	   	1,            		0,           	-1 },
-	{ "TeamViewer",					NULL, 	   			NULL,  	   	1,            		0,           	-1 },
+
 
 
 	
@@ -221,27 +227,43 @@ static const Rule rules[] = {
 	{NULL , 		   				NULL, 			"libreoffice",  1 << 3,      		 0,           	-1 },
 
 // Workspace 5 // PDF
+	/* class                    	instance    t	Title      		tags mask     		isfloating   	monitor */
 	{ NULL, 		   				"evince",    	NULL,      		1 << 4,      		 0,           	-1 },	
 
 // Workspace 6 // Game
+	/* class                    	instance    t	Title      		tags mask     		isfloating   	monitor */
 	{ "Steam", 		   				NULL,    		NULL,      		1 << 5,       		0,           	-1 },
 	{ NULL, 		   				"Steam",    	NULL,      		1 << 5,       		0,           	-1 },
 	{ "steamwebhelper", 		   	NULL,    		NULL,      		1 << 5,       		0,           	-1 },
 	{ NULL, 						"steamwebhelper",   		NULL,      		1 << 5,       		0,           	-1 },
-	{ "NULL", 		   				NULL,    		"steamwebhelper",      		1 << 5,       		0,           	-1 },
+	{ NULL, 		   				NULL,    		"steamwebhelper",      		1 << 5,       		0,           	-1 },
 
 	{ "Special Offers", 		   	NULL,    		NULL,      		1 << 5,       		0,           	-1 },
 	{ NULL, 						"Special Offers",   		NULL,      		1 << 5,       		0,           	-1 },
-	{ "NULL", 		   				NULL,    		"Special Offers",      		1 << 5,       		0,           	-1 },
+	{ NULL, 		   				NULL,    		"Special Offers",      		1 << 5,       		0,           	-1 },
 	{ NULL, 		   				NULL,    		"Steam",   		1 << 5,      		0,           	-1 },	
 	{ "Lutris", 		   			NULL,    		NULL,      		1 << 5,       		0,           	-1 },
 
+	{ "chromium", 		   				NULL,    		NULL,      		1 << 5,       		0,           	-1 },
 
-// Workspace 7 // bluethood e som
-	/* class                    	instance    t	Title      		tags mask     		isfloating   	monitor */
-	{ NULL, 		   			NULL,    		"Bluetooth",      		1 << 6,       		0,           	-1 },
-	{ NULL, 					NULL,    		"Controlo de Volume",      		1 << 6,       		0,           	-1 },
 
+// Workspace 7 // bluethood e som e comfig
+	/* class                    	instance    	Title      		tags mask     		isfloating   		monitor */
+	{ NULL, 		   			NULL,    		"Bluetooth",      			1 << 6,       		0,           	2 },
+	{ NULL, 					NULL,    		"Controlo de Volume",      	1 << 6,       		0,          	2 },
+	{ NULL, 					NULL,    		"JBL E65BTNC",      		1 << 6,       		0,           	2 },
+	{ NULL, 					NULL,    		"Flipbuds Lite",      		1 << 6,       		0,           	2 },
+	{ NULL, 					NULL,    		"Xiaomi Buds 3",      		1 << 6,       		0,           	2 },
+	{ NULL, 					NULL,    		"blueman-applet",      		1 << 6,       		0,           	2 },
+	{ NULL, 					NULL,    		"Dispositivos Bluetooth",   1 << 6,       		0,           	2 },
+
+
+// Workspace 8 // Remote
+	/* class                    	instance    t	Title      								tags mask     		isfloating   		monitor */
+	{ "TeamViewer",					NULL, 	   		NULL,  	   								1 << 7,             		0,           	-1 },
+	{ NULL,							NULL, 	   		"133 - Srv EPLAN — TeamViewer",  	   	1 << 7,             		0,           	-1 },
+	{ NULL,							NULL, 	   		"Luis-Nuc — TeamViewer",  	   			1 << 7,             		0,           	-1 },
+	
 
 };
 
@@ -286,7 +308,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 //																	
 //static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };																	
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_green, "-sb", col_green, "-sf", col_gray5, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-i", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_green, "-sb", col_green, "-sf", col_gray5, NULL };
 
 
 /*
@@ -299,7 +321,7 @@ directamente no terminal
 dmenu_run -m dmenumon -fn dmenufont -nb "#4d4d4d" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
 
 dmenu_run -m dmenumon -fn "monospace:size=12" -nb "#4d4d4d" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
-dmenu_run -m "0" -fn "monospace:size=11" -nb "#000000" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
+dmenu_run -m "0" -fn "hack:size=11" -nb "#000000" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
 
 SHCMD('dmenu_run -m "0" -fn "monospace:size=11" -nb "#col_black" -nf "#col_green" -sb "#col_green" -sf "#col_gray5"')  },
 
@@ -446,6 +468,8 @@ static const Key keys[] = {
 	/************** Comands + keys *******************/
 	{ WIN_KEY,      			XK_Return, 		spawn,          		SHCMD("alacritty") },
 	{ WIN_KEY,      			XK_a, 			spawn,          		{.v = dmenucmd } },
+	{ WIN_KEY,      			XK_a, 			spawn,          		SHCMD("sh ~/.config/dwm/dmenu_favoritos.sh") },
+
 																		// com o SHCMD só aparece no munitor 1
 	//{ WIN_KEY,      			XK_a, 			spawn,          		SHCMD("dmenu_run -i -m '0' -fn monospace:size=11 -nb '#000000' -nf '#07AE06' -sb '#07AE06' -sf '#060606'")  },
 	{ WIN_KEY|ShiftMask,      	XK_a, 			spawn,          		SHCMD("xfce4-appfinder") },

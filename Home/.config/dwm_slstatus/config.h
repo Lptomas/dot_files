@@ -18,8 +18,14 @@ static const char dynamic_slstatus[] = "sh ~/.config/dwm_slstatus/dynamic_slstat
 static const struct arg args[] = {
 	/* function format          argument */
 	
-	{ cpu_perc, 		"|%s%%:",	NULL  },
-	{ run_command, 	"%s", 		dynamic_slstatus }
+	{ netspeed_rx, 	"D:%s:","wlan0"},
+	{ netspeed_tx, 	" U:%s ","wlan0"},		
+	{ cpu_perc, 		"%s%%:",	NULL  },
+	{ ram_perc, 		"%s%% ",	NULL  },
+
+
+	{ run_command, 	"%s", 		dynamic_slstatus },
+
 	
 };	
 
@@ -28,6 +34,9 @@ static const struct arg args[] = {
 
 
 /*
+
+Nome da Rede : ifconfig
+
 //static const char vol[]         = "[ `amixer sget Master | tail -n 1 | awk '{print $6;}'` = \"[on]\" ] \
                                    && printf \"`amixer sget Master | tail -n 1 | awk '{print $5;}' | grep -Po '\\[\\K[^%]*'`%%\" \
                                    || printf 'Off'";

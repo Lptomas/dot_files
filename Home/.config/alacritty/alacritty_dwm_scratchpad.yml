@@ -6,23 +6,27 @@
 ## See, /usr/share/doc/alacritty/example/alacritty.yml
 
 ## Import files (Colors, Fonts, Etc)
+## Import files (Colors, Fonts, Etc)
+import:
+  - ~/.config/alacritty/colors.yml
+  - ~/.config/alacritty/fonts.yml
 
 ## Set environment variables
 env:
   TERM: alacritty
   TERM: xterm-256color
-  WINIT_X11_SCALE_FACTOR: '1.0'
+  WINIT_X11_SCALE_FACTOR: '1.2'
 
 ## Terminal window settings
 ## scartchpad sem dimensoes 
 window:
   dimensions:
-    columns:  200		#comprimento 150
-    lines: 50 # altura 40
+    columns:  120		#comprimento 150
+    lines: 30 # altura 40
 
-  #padding:
-    #x: 12
-    #y: 12
+  padding:
+    x: 12
+    y: 12
 
   decorations: full
   startup_mode: Windowed
