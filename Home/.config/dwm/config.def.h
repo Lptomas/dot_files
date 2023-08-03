@@ -31,7 +31,7 @@ static const int showbar            = 1;       	 	/* 0 means no bar */
 static const int topbar             = 1;        	/* 0 means bottom bar */
 static const int user_bh            = 2;        	/* 2 is the default spacing around the bar's font */
 //static const char *fonts[]          = { "Noto Sans Mono:size=10" };
-static const char *fonts[]          = { "hack:size=10", "Symbols Nerd Font:antialias=true:autohint=true"  };
+static const char *fonts[]          = { "hack:size=11", "Symbols Nerd Font:antialias=true:autohint=true"  };
 
 static const char dmenufont[]       = "hack:size=12";
 static const char col_gray1[]       = "#4d4d4d";
