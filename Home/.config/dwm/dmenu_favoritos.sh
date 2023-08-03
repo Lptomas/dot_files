@@ -5,28 +5,63 @@
 
 #apps='Firefox \nCode \nThunar \npCloud \nIcedrive \nEasyEda \nTeamviewer 󰢹\nApps 󰀻\nTODOS\nAudio \nPower 󰐥\nShutdown 󰐥\nReboot 󰐥\nYoutube \nEmail 󰇮\nMaps 󰗵\nBlueBerry 󰂰\nblueman 󰂰\nExit dwm\nVolume\nGforceNow 󰊖\nWhastApp 󰖣'
 
-
 FIREFOX="Firefox "
 WHASTAPP="WhastApp 󰖣"
 YOUTUBE="Youtube "
 
+########################################################################################################
+#### #### #### TouchPAD ####
+# #"xinput list" dá o numero do List-Props ,  no aero é 11
+if [ $(xinput list-props "11" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
+	touchpad="Off"
+else #touchpad is disabled: we want to turn ON, 
+	touchpad="On"
+fi
+
+########################################################################################################
+#### #### #### bluetooth devices####
+#1st - Check if bluetooth is Powered ON, iF yes, show the other options
+
+
+bluetooth_power="$( bluetoothctl show | grep -E "Powered" )"
+bluetooth_connected="$( bluetoothctl "info" | grep -E "Name")"
+
+case $bluetooth_power in
+	'	Powered: yes') 		bluetooth_power="Bluetooth Off\n" ;; 
+	'	Powered: no') 		bluetooth_power="Bluetooth On\n" ;;     
+	*)  bluetooth_power="Bluetooth Power ?" ;;   
+esac
+
+if [ "$bluetooth_power" == "Bluetooth Off\n" ]; then
+		case $bluetooth_connected in
+			'	Name: Xiaomi Buds 3') 		bluetooth_connected="Bluetooth_Xiaomi Off\nBluetooth_JBL On\n" ;; 
+			'	Name: JBL E65BTNC') 		bluetooth_connected="Bluetooth_JBL Off\nBluetooth_Xiaomi On" ;;    
+			*)  bluetooth_connected="Bluetooth_Xiaomi On\nBluetooth_JBL On\n" ;;   
+		esac
+
+fi
+
+
+
+########################################################################################################
 WEB="$FIREFOX\n$WHASTAPP\n$YOUTUBE\nEmail 󰇮\nMaps 󰗵\n"
 FM="Thunar \npCloud \nIcedrive \n"
 OFFICE="LibreOffice 󰈙\nPDF \nPDFarranger 󰕕\nNotas \n"
 REMOTE="Teamviewer 󰢹\n"
-AUDIO="Audio \nBlueBerry 󰂰\nblueman 󰂰\n"
+AUDIO="Audio \n$bluetooth_connected\n$bluetooth_power\nBlueBerry 󰂰\nblueman 󰂰\n"
 DEV="Code \nEasyEda \n"
 PW="Shutdown 󰐥\nReboot 󰐥\nExit dwm 󰩈\n\nPW_saver\nPW_balanced\nPW_performance\n"
 GAME="Steam \nGforceNow 󰊖\nDoom 󰊖\n"
 APPS="Apps 󰀻\nTODOS\n"
 NET="NetWork\nSafing\nNetWork cli\n"
-OPT="Power 󰐥\n"
+OPT="Power 󰐥\nTouchPad $touchpad\n"
 SCREENS="Monitors 2 ON\nMonitor Main\nMonitors Options\n"
 CLI="SpeedTest cli \nDisk Analizer cli \nfind cli \n"
+TOOL="Calculadora\n"
 
 
 
-all="$WEB$FM$OFFICE$DEV$PW$REMOTE$AUDIO$OPT$GAME$APPS$SCREENS$NET$CLI"
+all="$WEB$FM$OFFICE$DEV$PW$REMOTE$TOOL$AUDIO$OPT$GAME$APPS$SCREENS$NET$CLI"
 
 
 
@@ -63,14 +98,30 @@ case "$(printf "$all" | dmenu )" in
 	"PW_performance") powerprofilesctl set performance ;;
 
 
+	#"TouchPad") alacritty --class power --config-file /home/lpt/.config/alacritty/alacritty_dwm_power.ym -e ~/dot_files/Home/.config/dwm/toggletouchpad.sh ;;
+	# #"xinput list" dá o numero do List-Props ,  no aero é 11
+	"TouchPad Off") xinput disable 11 ;;
+	"TouchPad On") xinput enable 11 ;;
 
 # *** REMOTE
     "Teamviewer 󰢹") teamviewer ;;				 		# funciona ????
+
+
+# *** TOOLS
+	"Calculadora") galculator ;;
 
 # *** Audio 
 	"Audio ") pavucontrol ;;
 	"BlueBerry 󰂰") blueberry ;;
 	"Blueman 󰂰") bluebman-applet ;;
+
+	
+	"Bluetooth On") bluetoothctl power on ;;
+	"Bluetooth Off") bluetoothctl power off ;;
+	"Bluetooth_Xiaomi On")bluetoothctl disconnect 88:D0:39:8C:4F:A4 && bluetoothctl connect 14:0A:29:30:0E:A9 ;;
+	"Bluetooth_Xiaomi Off") bluetoothctl disconnect 14:0A:29:30:0E:A9 ;;
+	"Bluetooth_JBL On") bluetoothctl disconnect 14:0A:29:30:0E:A9  && bluetoothctl connect 88:D0:39:8C:4F:A4 ;;
+	"Bluetooth_JBL Off") bluetoothctl disconnect 88:D0:39:8C:4F:A4 ;;	
 
 # *** NET 
 	"NetWork") nm-applet ;;
@@ -84,7 +135,6 @@ case "$(printf "$all" | dmenu )" in
 	"Monitors Options") arandr ;;   
 
 	
-	
 # *** APPS	
     "Apps 󰀻") xfce4-appfinder ;;				 		# funciona 
 	"TODOS") dmenu_run -m "0" -fn "hack:size=11" -nb "#000000" -nf "#07AE06" -sb "#07AE06" -sf "#060606" ;;
@@ -93,9 +143,6 @@ case "$(printf "$all" | dmenu )" in
 	"Steam ") steam ;;
 	"GforceNow 󰊖") chromium https://play.geforcenow.com/mall/#/layout/games ;;
 	"Doom 󰊖") gzdoom ;;
-
-
-
 
 # ** Comandline Interface
 
@@ -116,7 +163,3 @@ case "$(printf "$all" | dmenu )" in
 esac
 
 
-
-
-#pactl set-card-profile bluez_card.88_D0_39_8C_4F_A4 a2dp-sink-sbc_xq JBL  
-#pactl set-card-profile alsa_card.pci-0000_03_00.1 hifi

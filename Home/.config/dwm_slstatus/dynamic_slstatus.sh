@@ -2,13 +2,15 @@
 # LPT
 # used in slstatus-DWM
 
-
+########################################################################################################
 #### DATE + TIME ####
 time="$(date +"%H:%M")"
 
 #date="$(date +"%d-%m-%y")"
 date="$(date +"%a.%d.%b")"
 
+
+########################################################################################################
 #### Power profile ####
 PF="$(powerprofilesctl get)"
 PF_icon=""
@@ -21,7 +23,7 @@ case $PF in
 esac
 
 
-
+########################################################################################################
 #### INTERNET Connection TYPE ####
 #show possible connections names, all most be tourned on
 #ip -o -4 route show to default | awk '{print $5}'
@@ -47,7 +49,7 @@ case $name_conn in
 esac
 
 
-
+########################################################################################################
 #### Audio Volume####
 #_vol="$( amixer get Master | egrep -o '[0-9]{1,3}%')"
 #sound=$([ "$_vol" = '0%'  ] && echo "$_vol" || echo "$_vol") #ﱝ婢
@@ -57,11 +59,31 @@ _vol="$( amixer get Master | egrep -o '[0-9]{1,3}%')"
 
 sound=$([ "$_vol" = '0%'  ] && echo "$_vol" || echo "$_vol") #ﱝ婢
 
+########################################################################################################
+#### #### #### bluetooth ####
+
+bluetooth_power="$( bluetoothctl show | grep -E "Powered")"
+bluetooth_connected="$( bluetoothctl "info" | grep -E "Name")"
+if [ "$bluetooth_power" == "	Powered: yes" ]; then
+		case $bluetooth_connected in
+			'	Name: Xiaomi Buds 3') 		bluetooth="X" ;; 
+			'	Name: JBL E65BTNC') 		bluetooth="J" ;; 
+			*) 		bluetooth="󰂯" ;; 
+		esac
+else
+	bluetooth="󰂲"
+fi
 
 
+
+
+
+
+########################################################################################################
 #### RAM ####
 ram_used="$( free | grep Mem | awk '{printf "%1.0f%", $3/$2 * 100.0}' )"
 
+########################################################################################################
 #### BATTERY ####
 bat_percentage="$(cat /sys/class/power_supply/BAT0/capacity)"
 bat_state="$(cat /sys/class/power_supply/BAT0/status)"
@@ -101,15 +123,21 @@ if [ "$bat_state" == 'Full' ] || ["$bat_percentage"-gt 95 ] ; then
 fi
 
 
+
+########################################################################################################
 #### Important settings ####
+#void
 #if [ $(synclient -l | grep "TouchpadOff .*=.*" |  egrep -o '[0-9]') != "0" ]]; then 
-#	touchpad="!ﳶ "
-#else
-#	touchpad=""
-#fi
+
+# #"xinput list" dá o numero do List-Props ,  no aero é 11
+if [ $(xinput list-props "11" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
+	touchpad=""
+else #OFF
+	touchpad="󱘃"
+fi
 
 
-
+########################################################################################################
 #### Important Programs that are RUNNING####
 if [ "$( pidof steam )" != "" ]; then 
 	steam=""
@@ -127,10 +155,10 @@ if [ "$( pidof pcloud )" != "" ]; then
 	pcloud=""
 fi
 
-
+########################################################################################################
 #### OUTPUT ####
 #echo "$ram_used $bat $conn $sound $date $time $steam $touchpad $firefox $flameshot$pcloud "
-echo "$PF_icon $bat $time $conn$name_conn $steam $firefox $flameshot $pcloud"
+echo " $PF_icon $bat $time $conn$name_conn $touchpad$steam $firefox $flameshot $pcloud $bluetooth"
  
 
 

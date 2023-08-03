@@ -9,7 +9,7 @@ slstatus &
 flameshot &
 #nm-applet &  # now in indication in slstatus
 volumeicon & # Now with a indication in slstatus
-blueman-applet & 
+#blueman-applet & 
 #pavucontrol & 
 #blueberry &
 firefox &
