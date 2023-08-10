@@ -16,10 +16,10 @@ PF="$(powerprofilesctl get)"
 PF_icon=""
 
 case $PF in
-	'performance') 	PF_icon="󰊖" ;;
-	'balanced')	PF_icon="󰡵" ;;
-	'power-saver') 	PF_icon="󰸿" ;;
-	*) 	conn="" 
+	'performance'	) 	PF_icon="󰊖" ;;
+	'balanced'		)	PF_icon="󰡵" ;;
+	'power-saver'	) 	PF_icon="󰸿" ;;
+	*				) 	PF_icon="" ;;
 esac
 
 
@@ -29,23 +29,20 @@ esac
 #ip -o -4 route show to default | awk '{print $5}'
 conn_aux="$( ip route get 8.8.8.8 | sed -nr 's/.*dev ([^\ ]+).*/\1/p' )"
 case $conn_aux in
-	'enp3s0f2') conn="" ;;
-	'enp3s0f3u2') conn="󱎔" ;;
-	'wlp2s0') 	conn="󰀃" ;;
-	'wlan0') conn="󰀃" ;;  #HP aero
-*) conn="";;
+	'enp3s0f2'	) conn="󱎔" ;;
+	'enp3s0f3u2') conn="󱎔"	;;
+	'wlp2s0'	) conn="󰀃"	;;
+	'wlan0'		) conn="󰀃"	;;  #HP aero
+	*			) conn="" ;;
 esac
 
 
-# name of the connected wirelles;
-
-
-name_conn="$(iw dev | grep ssid)"
-
+# name of the connected NetWork wirelles;
+name_conn="$(iw dev | grep ssid | awk '{print $2}')"
 case $name_conn in
-	'		ssid Desvio_5G') name_conn="5" ;;
-	'		ssid Desvio') name_conn="2.4" ;;
-*) name_conn="$name_conn";;
+	'Desvio_5G'	) name_conn="5" 		;;
+	'Desvio'	) name_conn="2.4" 		;;
+	*			) name_conn="$name_conn";;
 esac
 
 
@@ -54,28 +51,27 @@ esac
 #_vol="$( amixer get Master | egrep -o '[0-9]{1,3}%')"
 #sound=$([ "$_vol" = '0%'  ] && echo "$_vol" || echo "$_vol") #ﱝ婢
 
-
 _vol="$( amixer get Master | egrep -o '[0-9]{1,3}%')"
-
 sound=$([ "$_vol" = '0%'  ] && echo "$_vol" || echo "$_vol") #ﱝ婢
 
-########################################################################################################
-#### #### #### bluetooth ####
 
-bluetooth_power="$( bluetoothctl show | grep -E "Powered")"
-bluetooth_connected="$( bluetoothctl "info" | grep -E "Name")"
-if [ "$bluetooth_power" == "	Powered: yes" ]; then
-		case $bluetooth_connected in
-			'	Name: Xiaomi Buds 3') 		bluetooth="X" ;; 
-			'	Name: JBL E65BTNC') 		bluetooth="J" ;; 
-			*) 		bluetooth="󰂯" ;; 
+
+########################################################################################################
+#### #### #### bluetooth ####  Indicate The connected Headphone device
+
+bluetooth_power="$( bluetoothctl show | grep -E "Powered"  | awk '{print $2}' )"
+bluetooth_connected="$( bluetoothctl "info" | grep -E "Name"  | awk '{print $2}' )"
+if [ "$bluetooth_power" == "yes" ]; then     # bluetooth is ON
+		case $bluetooth_connected in 
+			''			)	bluetooth="󰂯"	;;	  # laptop		
+			'Xiaomi'	)	bluetooth="X" ;; 
+			'JBL'		)	bluetooth="J" ;;
+			'HG00085'	)	bluetooth="C" ;;
+			*			)	bluetooth="󰂯?" ;; 
 		esac
 else
-	bluetooth="󰂲"
+	bluetooth="󰂲"   # bluetooth is OFF
 fi
-
-
-
 
 
 
@@ -111,10 +107,10 @@ fi
 bat=""
 
 case $bat_state in
-	'Full') 		bat="󰁹" ;;    #    $bat_percentage%
-	'Charging') 	bat="$bat_percentage%󰚥" ;;
-	'Not charging') bat="$bat_percentage%" ;;
-	'Discharging') 	bat="$bat_icon $bat_percentage%󱐤" ;;
+	'Full'			)	bat="󰁹" ;;    #    $bat_percentage%
+	'Charging'		) 	bat="$bat_percentage%󰚥" ;;
+	'Not charging'	)	bat="$bat_percentage%" ;;
+	'Discharging'	) 	bat="$bat_icon $bat_percentage%󱐤" ;;
 esac
 
 
@@ -138,10 +134,6 @@ fi
 
 
 ########################################################################################################
-#### Important Programs that are RUNNING####
-if [ "$( pidof steam )" != "" ]; then 
-	steam=""
-fi
 
 if [ "$( pidof firefox )" != "" ]; then
 	firefox="" 	#firefox=""
@@ -151,14 +143,21 @@ if [ "$( pidof flameshot )" != "" ]; then
 	flameshot=""
 fi
 
-if [ "$( pidof pcloud )" != "" ]; then
-	pcloud=""
-fi
+#if [ "$( pidof pcloud )" != "" ]; then
+#	pcloud=""
+#fi
+
+#### Important Programs that are RUNNING####
+#if [ "$( pidof steam )" != "" ]; then 
+#	steam=""
+#fi
+
+
 
 ########################################################################################################
 #### OUTPUT ####
-#echo "$ram_used $bat $conn $sound $date $time $steam $touchpad $firefox $flameshot$pcloud "
-echo " $PF_icon $bat $time $conn$name_conn $touchpad$steam $firefox $flameshot $pcloud $bluetooth"
+#echo "$ram_used $bat $conn $sound $date $time $steam $touchpad $firefox $flameshot$pcloud " $pcloud  $steam
+echo "$monitores_connected $PF_icon $bat $time $touchpad $conn$name_conn $bluetooth $firefox $flameshot $sound"
  
 
 

@@ -16,22 +16,21 @@ dwm-cool-autostart-6.2.diff  -> configurated to have a autostart file: dwm_cool_
 
 */
 
-
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  	 = 1;       /* border pixel of windows */
-static const unsigned int snap      	 = 25;      /* snap pixel */
-static const unsigned int systraypinning = 0;   	/* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft  = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 1;   	/* systray spacing */
-static const int systraypinningfailfirst = 1;   	/* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;    	 	/* 0 means no systray */
-static const int showbar            = 1;       	 	/* 0 means no bar */
-static const int topbar             = 1;        	/* 0 means bottom bar */
-static const int user_bh            = 2;        	/* 2 is the default spacing around the bar's font */
+static const unsigned int borderpx  	 = 1;	/* border pixel of windows */
+static const unsigned int snap      	 = 25;	/* snap pixel */
+static const unsigned int systraypinning = 0;	/* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayonleft  = 0;	/* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayspacing = 1;	/* systray spacing */
+static const int systraypinningfailfirst = 1;	/* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray        = 1;		/* 0 means no systray */
+static const int showbar            = 1;		/* 0 means no bar */
+static const int topbar             = 1;		 /* 0 means bottom bar */
+static const int user_bh            = 2;		/* 2 is the default spacing around the bar's font */
 //static const char *fonts[]          = { "Noto Sans Mono:size=10" };
-static const char *fonts[]          = { "hack:size=10", "Symbols Nerd Font:antialias=true:autohint=true"  };
+static const char *fonts[]          = { "hack:size=11", "Symbols Nerd Font:antialias=true:autohint=true"  };
 
 static const char dmenufont[]       = "hack:size=12";
 static const char col_gray1[]       = "#4d4d4d";
@@ -41,27 +40,21 @@ static const char col_gray4[]       = "#eeeeee";
 static const char col_gray5[]       = "#060606";
 static const char col_cyan[]        = "#005577";
 static const char col_green[]       = "#07AE06";
-static const char col_dark_green[]       = "#153715"; //
-static const char col_red[]       = "#ff0000";
+static const char col_dark_green[]  = "#153715"; //
+static const char col_red[]       	= "#ff0000";
 static const char col_black[]       = "#000000";
-static const char *colors[][3]      = {
-			/* fg         bg         border   */
-			
-
+static const char *colors[][3]      = {		
 	/*[SchemeNorm] = { A, B, C }, 
 		A = cor do TEXTO do que NÂO está activo : workspaces não selecionados e slstatus
 		B=  cor do FUNDO do que NÂO está activo : workspaces não selecionados e slstatus
-		C = Cor da borda das janelas que não está em foco
-	*/
+		C = Cor da borda das janelas que não está em foco				*/
 	[SchemeNorm] = { col_green, col_black, col_gray5 },
 	
 	/*[SchemeSel]  = {A , B,  C  }, 
 		A = Cor texto em Focus e cor texto da designação das janelas
 		B = Cor Fundo worksapce em focus e cor fundo da designação das janelas
-		C = Cor da borda das janelas que estão em foco
-	*/	
+		C = Cor da borda das janelas que estão em foco				*/		
 	[SchemeSel]  = { col_green , col_dark_green,  col_green  },
-	
 };
 
 typedef struct {
@@ -71,15 +64,8 @@ typedef struct {
 
 
 
-
-
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-
-
-
-
-
 
 
 
@@ -97,60 +83,44 @@ man alacritty */
 //const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
 //const char *spcmd2[] = {"st", "-n", "spfm", "-g", "120x34", "-e", "lf", NULL };
 
-// o tamnho definido no alacritty_dwm_scratchpad.yml depende da resolução do ecrã
-const char *spcmd1[] = {"alacritty", "--class", "spterm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml",NULL, NULL,NULL};
-const char *spcmd2[] = {"alacritty", "--class", "spfm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "lf",NULL};
+// O tamanho da janela depende da resolução do ecrã e do: "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=30"
 
+//const char *spcmd1[] = {"alacritty", "--class", "spterm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml",NULL, NULL,NULL};
+//const char *spcmd2[] = {"alacritty", "--class", "spfm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "lf",NULL};
+//const char *spcmd6[] = {"alacritty", "--class", "sphtop", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "htop",NULL};
+const char *spcmd1[] = {"alacritty", "--class", "spterm", "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=30",NULL, NULL,NULL};
+const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=30", "-e", "lf",NULL};
 const char *spcmd3[] = {"thunar", NULL }; 
-const char *spcmd4[] = {"firefox", "--class", "firefox",NULL }; // estava thunar
+const char *spcmd4[] = {"firefox", "--class", "firefox",NULL }; // Nao funciona
 const char *spcmd5[] = {"code", NULL }; // estava thunar
-const char *spcmd6[] = {"alacritty", "--class", "sphtop", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "htop",NULL};
+const char *spcmd6[] = {"alacritty", "--class", "sphtop", "-o", "window.dimensions.columns=130", "-o", "window.dimensions.lines=35","-e", "htop",NULL};
 
 
 
-
-static Sp scratchpads[] = {
+static Sp scratchpads[] = {   	//{"thunar",   	SHCMD("thunar")}, // nao funciona
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spranger",    spcmd2},
 	{"thunar",   	spcmd3},
-	//{"thunar",   	SHCMD("thunar")}, // nao funciona
 	{"firefox",   	spcmd4},   //nao funciona no scratchpads
 	{"code",   		spcmd5},   
 	{"sphtop",   	spcmd6},
 };
 
 
+/******************** Autostart  : dwm-cool-autostart-6.2.diff 
+* Everything to start after DWM is in ~/.config/dwm/dwm_cool_autostart.sh file 			*/
 
-
-/******************** Autostart  
- * Everything to start after DWM is in ~/.config/dwm/dwm_cool_autostart.sh file
-*/
 static const char *const autostart[] = {
 //	"st", NULL,
 	"sh", "-c", "~/.config/dwm/dwm_cool_autostart.sh",
 	NULL /* terminate */
 };
 
-/*
-static const char *const autostart[] = {
-	"mpd-notification", NULL,
-	"hsetroot", "-center", "/usr/home/bit6tream/pic/wallapper.png", NULL,
-	"xrdb", "/usr/home/bit6tream/.config/X/Xresources", NULL,
-	"sh", "-c", "while :; do dwmstatus.sh -; sleep 60; done", NULL,
-	"dunst", NULL,
-	"picom", NULL,
-	"bash", "-c", "~/.febg"
-	"bash", "-c", "~/.scrits../xpto.sh"
-	NULL
-};
-
-*/
-
 
 /* tagging : https://www.unicode.org/charts/PDF/U260
 0.pdf */ 
-static const char *tags[] = { "1", "", "3", "󰈙", "5", "󰊖", "7","󰢹"};
+static const char *tags[] = { " ", "", "3", "󰈙", "5", "󰊖", "7","󰢹"};
 
 static const Rule rules[] = {
 	/* See windows properties with : xprop(1):
@@ -163,7 +133,7 @@ static const Rule rules[] = {
 	 * *tags[] = 00100 = FM   -> 1 << 2 : 1 is shifted 2 times to left: 
 	 * 
 	 * 
-	 * monitor: "-1"= actual monitor ; "1"=VGA1 caso esteja ligado
+	 * monitor: "-1"= actual monitor ; "0"= main Monitor ? ;  "1"=2nd monitor  ; 
 	 */
 	 
 	 //multiple scratchpads
@@ -174,8 +144,6 @@ static const Rule rules[] = {
 	{ NULL,		  					"firefox",			NULL,		SPTAG(3),			0,			 	-1 },
 	{ NULL,		  					"code",				NULL,		SPTAG(4),			0,			 	-1 },
 	{ NULL,		  					"sphtop",			NULL,		SPTAG(5),			1,			 	-1 },
-
-		/* class                    instance   			title      	tags mask      i	sfloating   	monitor */
 
 // Actual workspace
 	/* class                      	instance    		title      	Tags mask     		isfloating   	monitor */
@@ -189,80 +157,71 @@ static const Rule rules[] = {
 	{ "resistor_decoder",  			NULL,    			NULL,      	0,            		1,           	-1 },	
 	{ "pixeltomatrix.exe",  		NULL,    			NULL,      	0,            		1,           	-1 },
 	{ "pavucontrol",  				NULL,    			NULL,      	0,            		1,           	-1 },
-	{ "power",  					NULL,    			NULL,      	0,            		1,           	-1 },
-
+	{ "float_windows",  			NULL,    			NULL,      	0,            		1,           	-1 },
 
 // Workspace 1
 	/* class                       	instance    		title      	tags mask     		isfloating  	monitor */
 	{ NULL, 		   				"code",    			NULL,  	   	1,            		0,           	-1 },
 	{ "code",						NULL, 	   			NULL,  	   	1,            		0,           	-1 },
 
-
-
-	
 // Workspace 2    // WEB
-	/* class                       	instance    	title     		tags mask     		isfloating   	monitor */
-    { "firefox",                   	NULL,       	NULL,     		1 << 1,       		0,           	-1 },
-	{ "Firefox",                   	NULL,       	NULL,      		1 << 1,       		0,           	-1 },
-	{ "blueman-applet",             NULL,       	NULL,      		1 << 1,       		0,           	-1 },
+	/* class                       	instance    		title     		tags mask     		isfloating   	monitor */
+    { "firefox",                   	NULL,       		NULL,     		1 << 1,       		0,           	-1 },
+	{ "Firefox",                   	NULL,       		NULL,      		1 << 1,       		0,           	-1 },
+	{ "blueman-applet",             NULL,       		NULL,      		1 << 1,       		0,           	-1 },
 
-
-	
 // Workspace 3   // File manager
-	/* class       					instance    	title     		tags mask     		isfloating  	 monitor */
-	{ "thunar", 					NULL,    		NULL,      		1 << 2,       		0,           	-1 },
-	{ "Thunar", 					NULL,    		NULL,      		1 << 2,       		0,           	-1 },
-	{ "Nemo", 						NULL,    		NULL,     		1 << 2,       		0,          	-1 },	
-	{ "lf", 						NULL,    		NULL,      		1 << 2,       		0,           	-1 },	
-	//{ NULL, 						"Nemo",    		NULL,      		1 << 2,       		0,           	-1 },
+	/* class       					instance    		title     		tags mask     		isfloating  	 monitor */
+	{ "thunar", 					NULL,    			NULL,      		1 << 2,       		0,           	-1 },
+	{ "Thunar", 					NULL,    			NULL,      		1 << 2,       		0,           	-1 },
+	{ "Nemo", 						NULL,    			NULL,     		1 << 2,       		0,          	-1 },	
+	{ "lf", 						NULL,    			NULL,      		1 << 2,       		0,           	-1 },	
+	//{ NULL, 						"Nemo",    			NULL,      		1 << 2,       		0,           	-1 },
 // Workspace 4 // OFFICE
-	/* class                    	instance    t	Title      		tags mask     		isfloating   	monitor */
-	{ NULL, 		   				"libreoffice",  NULL,     		1 << 3,      		0,           	-1 },
-	{ "libreoffice", 		   		"libreoffice",  NULL,      		1 << 3,       		0,           	-1 },
-	{ "libreoffice-writer", 		 NULL,			NULL,      		1 << 3,       		0,           	-1 },
+	/* class                    	instance    		Title      		tags mask     		isfloating   	monitor */
+	{ NULL, 		   				"libreoffice",  	NULL,     		1 << 3,      		0,           	-1 },
+	{ "libreoffice", 		   		"libreoffice",  	NULL,      		1 << 3,       		0,           	-1 },
+	{ "libreoffice-writer", 		 NULL,				NULL,      		1 << 3,       		0,           	-1 },
 
-	
 	
 	//voidlinux:
-	{NULL , 		   				NULL, 			"libreoffice",  1 << 3,      		 0,           	-1 },
+	{NULL , 		   				NULL, 				"libreoffice",  1 << 3,      		 0,           	-1 },
 
 // Workspace 5 // PDF
-	/* class                    	instance    t	Title      		tags mask     		isfloating   	monitor */
-	{ NULL, 		   				"evince",    	NULL,      		1 << 4,      		 0,           	-1 },	
+	/* class                    	instance    		Title      		tags mask     		isfloating   	monitor */
+	{ NULL, 		   				"evince",    		NULL,      		1 << 4,      		 0,           	-1 },	
 
 // Workspace 6 // Game
-	/* class                    	instance    t	Title      		tags mask     		isfloating   	monitor */
-	{ "Steam", 		   				NULL,    		NULL,      		1 << 5,       		0,           	-1 },
-	{ NULL, 		   				"Steam",    	NULL,      		1 << 5,       		0,           	-1 },
-	{ "steamwebhelper", 		   	NULL,    		NULL,      		1 << 5,       		0,           	-1 },
-	{ NULL, 						"steamwebhelper",   		NULL,      		1 << 5,       		0,           	-1 },
-	{ NULL, 		   				NULL,    		"steamwebhelper",      		1 << 5,       		0,           	-1 },
-
-	{ "Special Offers", 		   	NULL,    		NULL,      		1 << 5,       		0,           	-1 },
-	{ NULL, 						"Special Offers",   		NULL,      		1 << 5,       		0,           	-1 },
-	{ NULL, 		   				NULL,    		"Special Offers",      		1 << 5,       		0,           	-1 },
-	{ NULL, 		   				NULL,    		"Steam",   		1 << 5,      		0,           	-1 },	
-	{ "Lutris", 		   			NULL,    		NULL,      		1 << 5,       		0,           	-1 },
-
-	{ "chromium", 		   				NULL,    		NULL,      		1 << 5,       		0,           	-1 },
+	/* class                    	instance    		Title      			tags mask     	isfloating   	monitor */
+	{ "Steam", 		   				NULL,    			NULL,      			1 << 5,       		0,           	-1 },
+	{ NULL, 		   				"Steam",    		NULL,      			1 << 5,       		0,           	-1 },
+	{ "steamwebhelper", 		   	NULL,    			NULL,      			1 << 5,       		0,           	-1 },
+	{ NULL, 						"steamwebhelper",   NULL,      			1 << 5,       		0,           	-1 },
+	{ NULL, 		   				NULL,    			"steamwebhelper",	1 << 5,       		0,           	-1 },
+	{ "Special Offers", 		   	NULL,    			NULL,      			1 << 5,       		0,           	-1 },
+	{ NULL, 						"Special Offers",   NULL,      			1 << 5,       		0,           	-1 },
+	{ NULL, 		   				NULL,    			"Special Offers",   1 << 5,       		0,           	-1 },
+	{ NULL, 		   				NULL,    			"Steam",   			1 << 5,      		0,           	-1 },	
+	{ "Lutris", 		   			NULL,    			NULL,      			1 << 5,       		0,           	-1 },
+	{ "chromium", 		   			NULL,    			NULL,      			1 << 5,       		0,           	-1 },
 
 
 // Workspace 7 // bluethood e som e comfig
-	/* class                    	instance    	Title      		tags mask     		isfloating   		monitor */
-	{ NULL, 		   			NULL,    		"Bluetooth",      			1 << 6,       		0,           	2 },
-	{ NULL, 					NULL,    		"Controlo de Volume",      	1 << 6,       		0,          	2 },
-	{ NULL, 					NULL,    		"JBL E65BTNC",      		1 << 6,       		0,           	2 },
-	{ NULL, 					NULL,    		"Flipbuds Lite",      		1 << 6,       		0,           	2 },
-	{ NULL, 					NULL,    		"Xiaomi Buds 3",      		1 << 6,       		0,           	2 },
-	{ NULL, 					NULL,    		"blueman-applet",      		1 << 6,       		0,           	2 },
-	{ NULL, 					NULL,    		"Dispositivos Bluetooth",   1 << 6,       		0,           	2 },
+	/* class                    	instance    		Title      				tags mask     isfloating   		monitor */
+	{ NULL, 		   				NULL,    			"Bluetooth",      			1 << 6,       		0,           	0 },
+	{ NULL, 						NULL,    			"Controlo de Volume",      	1 << 6,       		0,          	0 },
+	{ NULL, 						NULL,    			"JBL E65BTNC",      		1 << 6,       		0,           	0 },
+	{ NULL, 						NULL,    			"Flipbuds Lite",      		1 << 6,       		0,           	0 },
+	{ NULL, 						NULL,    			"Xiaomi Buds 3",      		1 << 6,       		0,           	0 },
+	{ NULL, 						NULL,    			"blueman-applet",      		1 << 6,       		0,           	0 },
+	{ NULL, 						NULL,    			"Dispositivos Bluetooth",   1 << 6,       		0,           	0 },
 
 
 // Workspace 8 // Remote
-	/* class                    	instance    t	Title      								tags mask     		isfloating   		monitor */
-	{ "TeamViewer",					NULL, 	   		NULL,  	   								1 << 7,             		0,           	-1 },
-	{ NULL,							NULL, 	   		"133 - Srv EPLAN — TeamViewer",  	   	1 << 7,             		0,           	-1 },
-	{ NULL,							NULL, 	   		"Luis-Nuc — TeamViewer",  	   			1 << 7,             		0,           	-1 },
+	/* class                    	instance    		Title      								tags mask     		isfloating   		monitor */
+	{ "TeamViewer",					NULL, 	   			NULL,  	   								1 << 7,             		0,           	-1 },
+	{ NULL,							NULL, 	   			"133 - Srv EPLAN — TeamViewer",  	   	1 << 7,             		0,           	-1 },
+	{ NULL,							NULL, 	   			"Luis-Nuc — TeamViewer",  	   			1 << 7,             		0,           	-1 },
 	
 
 };
@@ -271,7 +230,7 @@ static const Rule rules[] = {
 static const float mfact    	= 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster    	= 1;    /* number of clients in master area */
 static const int resizehints 	= 1;    /* 1 means respect size hints in tiled resizals */
-static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+static const int lockfullscreen = 1; 	/* 1 will force focus on the fullscreen window */
 
 #include "grid.c"
 static const Layout layouts[] = {
@@ -284,17 +243,14 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define WIN_KEY Mod4Mask   // SUPER
-#define MODKEY Mod1Mask   // left ALT
+#define WIN_KEY Mod4Mask  	// SUPER
+#define MODKEY Mod1Mask   	// left ALT
 
 #define TAGKEYS(KEY,TAG) \
 	{ WIN_KEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ WIN_KEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ WIN_KEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ WIN_KEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
-
-
-
 
 
 /* commands */
@@ -325,7 +281,6 @@ dmenu_run -m "0" -fn "hack:size=11" -nb "#000000" -nf "#07AE06" -sb "#07AE06" -s
 
 SHCMD('dmenu_run -m "0" -fn "monospace:size=11" -nb "#col_black" -nf "#col_green" -sb "#col_green" -sf "#col_gray5"')  },
 
-*/
 
 
 static const char *termcmd[]  		= { "alacritty", NULL };
@@ -353,12 +308,13 @@ static const char *alsa_Audiodown[]  	= { "amixer", "-c", "0", "set", "Master","
 static const char *pipewire_Audioup[]  		= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
 static const char *pipewire_Audiodown[]  	= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
 
-static const char *Audioup[]  		= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
-static const char *Audiodown[]  	= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+static const char *Audioup[]  				= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *Audiodown[]  			= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
 
 
-static const char *Touchpadtoggle[]  	= { "sh", "-c", "~/my_configs/scripts/toggletouchpad.sh", NULL };
-static const char *turnoffscreens[]  	= { "xset", "dpms", "force", "off", NULL };
+static const char *Touchpadtoggle[]  		= { "sh", "-c", "~/my_configs/scripts/toggletouchpad.sh", NULL };
+static const char *turnoffscreens[]  		= { "xset", "dpms", "force", "off", NULL };
+*/
 
 
 
@@ -401,8 +357,8 @@ static const Key keys[] = {
 	/*FN+F10*/   { 0, XF86XK_AudioNext ,	    spawn,		SHCMD("xset dpms force off") },
 	/*FN+F11*/   { WIN_KEY, XK_p ,	            spawn,		SHCMD("xset dpms force off") },      // monitor Symbol ->
 	/*FN+F12*/   { 0, XK_Insert, 				spawn,      SHCMD("xset dpms force off") },
-	/*prt sc*/	 { 0, XK_Print, 				spawn,      SHCMD("flameshot gui") }, 	//{.v = printscreen } },
-	/* ⏻ */	    { 0, XF86XK_PowerOff,	       spawn,		SHCMD("xset dpms force off") },  // nã0 funciona
+	/*prt sc*/	 { 0, XK_Print, 				spawn,      SHCMD("flameshot gui") },
+	/* ⏻ */	     { 0, XF86XK_PowerOff,	        spawn,		SHCMD("xset dpms force off") },  // NÂO funciona
 
 
 	/************** DWM or patched *******************/
@@ -467,7 +423,7 @@ static const Key keys[] = {
 
 	/************** Comands + keys *******************/
 	{ WIN_KEY,      			XK_Return, 		spawn,          		SHCMD("alacritty") },
-	{ WIN_KEY,      			XK_a, 			spawn,          		{.v = dmenucmd } },
+	//{ WIN_KEY,      			XK_a, 			spawn,          		{.v = dmenucmd } },
 	{ WIN_KEY,      			XK_a, 			spawn,          		SHCMD("sh ~/.config/dwm/dmenu_favoritos.sh") },
 
 																		// com o SHCMD só aparece no munitor 1
@@ -478,16 +434,9 @@ static const Key keys[] = {
 	{ WIN_KEY,      			XK_m, 			spawn,          		SHCMD("arandr") },
 
 	//{ WIN_KEY,      			XK_e, 			spawn,          		SHCMD("xed") },   // EDITOR
-
-
 	//{ WIN_KEY,      			XK_KP_Enter, 	spawn,          		{.v = termcmd } },
 	//{ WIN_KEY,      			XK_Return, 		spawn,          		{.v = termcmd } },
 	//{ WIN_KEY,      			XK_w, 			spawn,          		{.v = webcmd } },
-
-
-
-	
-
 };
 
 /* button definitions
@@ -527,12 +476,10 @@ static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	//{ ClkStatusText,        0,              Button1,        spawn,          {.v = taskmanager } }, //
 	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("alacritty -e htop") },
-
 	{ ClkStatusText,        0,              Button2,        spawn,          SHCMD("thunar") },
 	{ ClkStatusText,        0,              Button3,        spawn,          SHCMD("gsimplecal") },
 	{ ClkStatusText,        0,              Button5,        spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
 	{ ClkStatusText,        0,              Button4,        spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
-
 	{ ClkStatusText,        WIN_KEY,        Button5,        spawn,          SHCMD("light -U 5") },
 	{ ClkStatusText,        WIN_KEY,        Button4,        spawn,          SHCMD("light -A 5") },
 
@@ -558,37 +505,35 @@ static const Button buttons[] = {
 };
 
 
-
-
 /*
 
-
-{ 0, XF86XK_AudioMute,		spawn,		SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -44 $(pidof dwmblocks)") },
+Exemplos
+{ 0, XF86XK_AudioMute,			spawn,		SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -44 $(pidof dwmblocks)") },
 { 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+; kill -44 $(pidof dwmblocks)") },
 { 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-; kill -44 $(pidof dwmblocks)") },
-{ 0, XF86XK_AudioPrev,		spawn,		{.v = (const char*[]){ "mpc", "prev", NULL } } },
-{ 0, XF86XK_AudioNext,		spawn,		{.v = (const char*[]){ "mpc",  "next", NULL } } },
-{ 0, XF86XK_AudioPause,		spawn,		{.v = (const char*[]){ "mpc", "pause", NULL } } },
-{ 0, XF86XK_AudioPlay,		spawn,		{.v = (const char*[]){ "mpc", "play", NULL } } },
-{ 0, XF86XK_AudioStop,		spawn,		{.v = (const char*[]){ "mpc", "stop", NULL } } },
-{ 0, XF86XK_AudioRewind,	spawn,		{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },
-{ 0, XF86XK_AudioForward,	spawn,		{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },
-{ 0, XF86XK_AudioMedia,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
-{ 0, XF86XK_AudioMicMute,	spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
-{ 0, XF86XK_PowerOff,		spawn,		{.v = (const char*[]){ "sysact", NULL } } }, 
-{ 0, XF86XK_Calculator,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "bc", "-l", NULL } } },
-{ 0, XF86XK_Sleep,		spawn,		{.v = (const char*[]){ "sudo", "-A", "zzz", NULL } } },
-{ 0, XF86XK_WWW,		spawn,		{.v = (const char*[]){ BROWSER, NULL } } },
-{ 0, XF86XK_DOS,		spawn,		{.v = termcmd } },
-{ 0, XF86XK_ScreenSaver,	spawn,		SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
-{ 0, XF86XK_TaskPane,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
-{ 0, XF86XK_Mail,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
-{ 0, XF86XK_MyComputer,		spawn,		{.v = (const char*[]){ TERMINAL, "-e",  "lfub",  "/", NULL } } },
-{ 0, XF86XK_Battery,		spawn,		SHCMD("") }, 
-{ 0, XF86XK_Launch1,		spawn,		{.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } },
-{ 0, XF86XK_TouchpadToggle,	spawn,		SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
-{ 0, XF86XK_TouchpadOff,	spawn,		{.v = (const char*[]){ "synclient", "TouchpadOff=1", NULL } } },
-{ 0, XF86XK_TouchpadOn,		spawn,		{.v = (const char*[]){ "synclient", "TouchpadOff=0", NULL } } },
+{ 0, XF86XK_AudioPrev,			spawn,		{.v = (const char*[]){ "mpc", "prev", NULL } } },
+{ 0, XF86XK_AudioNext,			spawn,		{.v = (const char*[]){ "mpc",  "next", NULL } } },
+{ 0, XF86XK_AudioPause,			spawn,		{.v = (const char*[]){ "mpc", "pause", NULL } } },
+{ 0, XF86XK_AudioPlay,			spawn,		{.v = (const char*[]){ "mpc", "play", NULL } } },
+{ 0, XF86XK_AudioStop,			spawn,		{.v = (const char*[]){ "mpc", "stop", NULL } } },
+{ 0, XF86XK_AudioRewind,		spawn,		{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },
+{ 0, XF86XK_AudioForward,		spawn,		{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },
+{ 0, XF86XK_AudioMedia,			spawn,		{.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
+{ 0, XF86XK_AudioMicMute,		spawn,		SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
+{ 0, XF86XK_PowerOff,			spawn,		{.v = (const char*[]){ "sysact", NULL } } }, 
+{ 0, XF86XK_Calculator,			spawn,		{.v = (const char*[]){ TERMINAL, "-e", "bc", "-l", NULL } } },
+{ 0, XF86XK_Sleep,				spawn,		{.v = (const char*[]){ "sudo", "-A", "zzz", NULL } } },
+{ 0, XF86XK_WWW,				spawn,		{.v = (const char*[]){ BROWSER, NULL } } },
+{ 0, XF86XK_DOS,				spawn,		{.v = termcmd } },
+{ 0, XF86XK_ScreenSaver,		spawn,		SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
+{ 0, XF86XK_TaskPane,			spawn,		{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
+{ 0, XF86XK_Mail,				spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+{ 0, XF86XK_MyComputer,			spawn,		{.v = (const char*[]){ TERMINAL, "-e",  "lfub",  "/", NULL } } },
+{ 0, XF86XK_Battery,			spawn,		SHCMD("") }, 
+{ 0, XF86XK_Launch1,			spawn,		{.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } },
+{ 0, XF86XK_TouchpadToggle,		spawn,		SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
+{ 0, XF86XK_TouchpadOff,		spawn,		{.v = (const char*[]){ "synclient", "TouchpadOff=1", NULL } } },
+{ 0, XF86XK_TouchpadOn,			spawn,		{.v = (const char*[]){ "synclient", "TouchpadOff=0", NULL } } },
 { 0, XF86XK_MonBrightnessUp,	spawn,		{.v = (const char*[]){ "xbacklight", "-inc", "15", NULL } } },
 { 0, XF86XK_MonBrightnessDown,	spawn,		{.v = (const char*[]){ "xbacklight", "-dec", "15", NULL } } },
 
