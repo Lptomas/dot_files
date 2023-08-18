@@ -30,7 +30,7 @@ static const int showbar            = 1;		/* 0 means no bar */
 static const int topbar             = 1;		 /* 0 means bottom bar */
 static const int user_bh            = 2;		/* 2 is the default spacing around the bar's font */
 //static const char *fonts[]          = { "Noto Sans Mono:size=10" };
-static const char *fonts[]          = { "hack:size=11", "Symbols Nerd Font:antialias=true:autohint=true"  };
+static const char *fonts[]          = { "hack:size=12", "Symbols Nerd Font:antialias=true:autohint=true"  };
 
 static const char dmenufont[]       = "hack:size=12";
 static const char col_gray1[]       = "#4d4d4d";
@@ -89,7 +89,7 @@ man alacritty */
 //const char *spcmd2[] = {"alacritty", "--class", "spfm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "lf",NULL};
 //const char *spcmd6[] = {"alacritty", "--class", "sphtop", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "htop",NULL};
 const char *spcmd1[] = {"alacritty", "--class", "spterm", "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=30",NULL, NULL,NULL};
-const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=30", "-e", "lf",NULL};
+const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=140", "-o", "window.dimensions.lines=40", "-e", "sh", "-c", "~/.local/bin/lfub", NULL};
 const char *spcmd3[] = {"thunar", NULL }; 
 const char *spcmd4[] = {"firefox", "--class", "firefox",NULL }; // Nao funciona
 const char *spcmd5[] = {"code", NULL }; // estava thunar
@@ -120,7 +120,7 @@ static const char *const autostart[] = {
 
 /* tagging : https://www.unicode.org/charts/PDF/U260
 0.pdf */ 
-static const char *tags[] = { " ", "", "3", "󰈙", "5", "󰊖", "7","󰢹"};
+static const char *tags[] = {"", "", "3", "󰈙", "5", "󰊖", "7", "󰢹"};
 
 static const Rule rules[] = {
 	/* See windows properties with : xprop(1):
@@ -159,16 +159,16 @@ static const Rule rules[] = {
 	{ "pavucontrol",  				NULL,    			NULL,      	0,            		1,           	-1 },
 	{ "float_windows",  			NULL,    			NULL,      	0,            		1,           	-1 },
 
-// Workspace 1
-	/* class                       	instance    		title      	tags mask     		isfloating  	monitor */
-	{ NULL, 		   				"code",    			NULL,  	   	1,            		0,           	-1 },
-	{ "code",						NULL, 	   			NULL,  	   	1,            		0,           	-1 },
+// Workspace 1 // WEB
+	/* class                       	instance    		title      		tags mask     		isfloating  	monitor */
+	 { "firefox", 	            	NULL,       		NULL,     		1,       			0,           	-1 },
 
-// Workspace 2    // WEB
+
+// Workspace 2    // code
 	/* class                       	instance    		title     		tags mask     		isfloating   	monitor */
-    { "firefox",                   	NULL,       		NULL,     		1 << 1,       		0,           	-1 },
-	{ "Firefox",                   	NULL,       		NULL,      		1 << 1,       		0,           	-1 },
-	{ "blueman-applet",             NULL,       		NULL,      		1 << 1,       		0,           	-1 },
+	{ NULL, 		   				"code",    			NULL,  	   		1 << 1,             0,           	-1 },
+	{ "code",						NULL, 	   			NULL,  	   		1 << 1,             0,           	-1 },
+
 
 // Workspace 3   // File manager
 	/* class       					instance    		title     		tags mask     		isfloating  	 monitor */
@@ -215,6 +215,7 @@ static const Rule rules[] = {
 	{ NULL, 						NULL,    			"Xiaomi Buds 3",      		1 << 6,       		0,           	0 },
 	{ NULL, 						NULL,    			"blueman-applet",      		1 << 6,       		0,           	0 },
 	{ NULL, 						NULL,    			"Dispositivos Bluetooth",   1 << 6,       		0,           	0 },
+
 
 
 // Workspace 8 // Remote
@@ -421,7 +422,7 @@ static const Key keys[] = {
 	{ WIN_KEY,      			XK_Return, 		spawn,          		SHCMD("alacritty") },
 	//{ WIN_KEY,      			XK_a, 			spawn,          		{.v = dmenucmd } },
 	{ WIN_KEY,      			XK_a, 			spawn,          		SHCMD("sh ~/.config/dwm/dmenu_favoritos.sh") },
-
+	{ WIN_KEY,      			XK_v, 			spawn,          		SHCMD("alacritty -e sh ~/.local/bin/lfub") },
 																		// com o SHCMD só aparece no munitor 1
 	//{ WIN_KEY,      			XK_a, 			spawn,          		SHCMD("dmenu_run -i -m '0' -fn monospace:size=11 -nb '#000000' -nf '#07AE06' -sb '#07AE06' -sf '#060606'")  },
 	{ WIN_KEY|ShiftMask,      	XK_a, 			spawn,          		SHCMD("xfce4-appfinder") },

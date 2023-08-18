@@ -1,5 +1,13 @@
 #!/bin/sh
 
+
+
+
+# PODEMos acabar com o serviço do teamvieer antes de desligar e liga-lo quando inicoiamos o team viere
+
+
+
+
 #This script create a personal costum and dynamic menu for dmenu.
 
 # Script for system states https://www.youtube.com/watch?v=Pl2mT9oAuec
@@ -48,10 +56,15 @@ MAPS="Maps 󰗵"
 MAPS_CMD="$BROWSER_SET_CMD https://www.google.com/maps/"
 PHOTOS="Maps 󰗵"
 PHOTOS_CMD="$BROWSER_SET_CMD https://photos.google.com/"
-MYCUF="MYCUF"
+MYCUF="MYCUF 󰩂"
 MYCUF_CMD="$BROWSER_SET_CMD https://www.saudecuf.pt/mycuf/login"
+NETFLIX="Netflix 󰝆"
+NETFLIX_CMD="$BROWSER_SET_CMD https://www.netflix.com/browse"
 
-WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n"
+
+
+
+WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n"
 
 ############################################################################################################ 
 ######  FM - File manager
@@ -85,15 +98,20 @@ OFFICE="$NOTAS\n$OFFICE\n$PDF\n$PDF_Arranger\n"
 ######  DEV
 CODE="Code "
 CODE_CMD="code"
+CODE_ARDUINO="Code  ARDUINO"
+CODE_ARDUINO_CMD="code ~/Área\ de\ Trabalho/Programação"
+CODE_DOTFILES="Code  DOTFILES"
+CODE_DOTFILES_CMD="code ~/dot_files"
+
 EASYEDA="EasyEda "
 EASYEDA_CMD="/opt/easyeda/easyeda %f "
 
-DEV="$CODE\n$EASYEDA\n"
+DEV="$CODE\n$CODE_ARDUINO\n$CODE_DOTFILES\n$EASYEDA\n"
 
 ############################################################################################################  		 
 # *** POWER
 #alacritty.yml
-alacritty_power="alacritty --hold --class float_windows --config-file /home/lpt/.config/alacritty/alacritty_big_float.yml -o window.dimensions.columns=30 -o window.dimensions.lines=1"
+alacritty_power="alacritty --hold --class float_windows --config-file /home/lpt/.config/alacritty/alacritty.yml -o window.dimensions.columns=30 -o window.dimensions.lines=1"
 
 SHUNTDOWN="Shutdown 󰐥"
 SHUNTDOWN_CMD="$alacritty_power -e sudo shutdown now"
@@ -119,7 +137,7 @@ REMOTE="$TEAMVIEWER\n"
 
 ############################################################################################################  		 
 # *** CLI   - Comand Line Interface
-alacritty_float="alacritty --hold --class float_windows --config-file /home/lpt/.config/alacritty/alacritty_big_float.yml "
+alacritty_float="alacritty --hold --class float_windows --config-file /home/lpt/.config/alacritty/alacritty.yml"
 
 SPEEDTEST="SpeedTest cli "
 SPEEDTEST_CMD="$alacritty_float -o window.dimensions.columns=40 -o window.dimensions.lines=3 -e speedtest-cli --simple"
@@ -134,10 +152,11 @@ TEMPO_CMD="$alacritty_float -o window.dimensions.columns=125 -o window.dimension
 
 CALENDARIO="Calendario cli"
 #CALENDARIO_CMD='alacritty --hold --class float_windows --config-file /home/lpt/.config/alacritty/alacritty_big_float.yml -e cal -y'
-CALENDARIO_CMD="$alacritty_float -o window.dimensions.columns=70 -o window.dimensions.lines=35 -e cal -y"
+CALENDARIO_CMD="$alacritty_float -o window.dimensions.columns=80 -o window.dimensions.lines=37 -e cal -y"
+TGPT="TGPT CLI"
+TGPT_CMD="sh /home/lpt/.config/dwm/tgpt.sh"
 
-
-CLI="$SPEEDTEST\n$DISK_ANALIZER\n$FIND\n$TEMPO\n$CALENDARIO\n"
+CLI="$SPEEDTEST\n$DISK_ANALIZER\n$FIND\n$TEMPO\n$CALENDARIO\n$TGPT\n"
 
 ############################################################################################################  		 
 # *** GAMES
@@ -176,7 +195,14 @@ MONITORES_CMD="arandr"
 MONITOR_ALL_OFF="Monitors OFF ALL"
 MONITOR_ALL_OFF_CMD="xrandr --output eDP --primary --mode 1920x1200 --pos 0x0 --rotate normal --output HDMI-A-0 --off --output DisplayPort-0 --off"
 MONITOR_OFFICE_ON="Monitor ON HMI"
-MONITOR_OFFICE_ON_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 1680x0 --rotate normal --output HDMI-A-0 --mode 1680x1050 --pos 0x0 --rotate normal --output DisplayPort-0 --off'
+MONITOR_OFFICE_GET='cvt 1680 1050 59'   # get the Modeline for the resolution 
+MONITOR_OFFICE_NEW='xrandr  --newmode "1680x1050_59.00"  143.75  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync' # Create a new Mode
+MONITOR_OFFICE_ADD='xrandr --addmode HDMI-A-0 1680x1050_59.00'  # add the new resolution mode to the avaliable  HDMI-A-0 list 
+MONITOR_OFFICE_ON_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 1680x0 --rotate normal --output HDMI-A-0 --mode 1680x1050_59.00 --pos 0x0 --rotate normal --output DisplayPort-0 --off'
+#MONITOR_OFFICE_ON_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 1680x0 --rotate normal --output HDMI-A-0 --mode 1680x1050 --pos 0x0 --rotate normal --output DisplayPort-0 --off'
+
+
+
 
 
 #check_ports = $(xrandr -q)
@@ -185,11 +211,22 @@ MONITOR_OFFICE_ON_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 1680
 #check_Display_port= $(xrandr -q | grep 'DisplayPort-0' | awk '{print $2}' )		#	#Check if DisplayPort-0 is connected
 #check_hmdi_active=$(xrandr --listmonitors | grep 'HDMI'  | awk '{print $4}')	# 	#Check if HDMI-A-0 is ACTIVE
 
+#add new mode to randr 
+#	$	cvt 1680 1050 59
+#	$	xrandr --newmode "1680x1050_59.00"  143.75  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync
+# 	$	xrandr --addmode HDMI-A-0 1680x1050_59.00 
+#	$	xrandr --output HDMI-A-0 1680x1050_59.00 
+#cvt 1680 1050 60
+#"1680x1050_60.00"  146.25  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync
+
+#xrandr --newmode "1680x1050_60.00"  146.25  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +v
+
+
 monitores_connected=""
 
 if [ "$( xrandr -q | grep 'HDMI-A-0' | awk '{print $2}')" == "connected" ] || [ "$( xrandr -q | grep 'DisplayPort-0' | awk '{print $2}')" == "connected" ] ; then
 		if [ "$(xrandr --listmonitors | grep 'HDMI'  | awk '{print $4}')" == "HDMI-A-0" ]; then   # Está activo . podemos desligar
-				monitores_connected="$MONITOR_ALL_OFF"
+				monitores_connected="$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON"
 		else
 				monitores_connected="$MONITOR_OFFICE_ON" 	   # NÃO Está activo . podemos Ligar
 		fi	
@@ -322,6 +359,7 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$BROWSER	) $BROWSER_CMD 	;;
 	$WHASTAPP 	) $WHASTAPP_CMD ;;
 	$YOUTUBE 	) $YOUTUBE_CMD	;;
+	$NETFLIX	) $NETFLIX_CMD	;;
 	$EMAIL		) $EMAIL_CMD 	;;
 	$MAPS		) $MAPS_CMD 	;;
 	$PHOTOS		) $PHOTOS_CMD 	;;
@@ -342,7 +380,10 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$PDF_Arranger 	) $PDF_Arranger_CMD ;;
 
 # *** DEV
-	$CODE 		) $CODE_CMD 	;;
+	$CODE 			) $CODE_CMD 			;;
+	$CODE_ARDUINO 	) $CODE_ARDUINO_CMD 	;;
+	$CODE_DOTFILES 	) $CODE_DOTFILES_CMD 	;;
+
 	$EASYEDA	) $EASYEDA_CMD 	;;  
 
 # *** POWER
@@ -366,7 +407,8 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 # *** SCREENS
 	$MONITORES	) $MONITORES_CMD	;;
 	$MONITOR_ALL_OFF	) $MONITOR_ALL_OFF_CMD 	;;
-	$MONITOR_OFFICE_ON	) $MONITOR_OFFICE_ON_CMD 	;;
+	$MONITOR_OFFICE_ON	) 	$MONITOR_ALL_OFF_CMD
+							$MONITOR_OFFICE_ON_CMD 	;;
 
 # *** BLUETOOTH
 	$BLUETOOTH_ON		) 	$BLUETOOTH_ON_CMD 		;;
@@ -408,6 +450,7 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$DOOM	) $DOOM_CMD		;;
 
 # ** CLI  
+	$TGPT			) $TGPT_CMD 			;;
 	$SPEEDTEST 		) $SPEEDTEST_CMD 		;;
 	$DISK_ANALIZER 	) $DISK_ANALIZER_CMD 	;;
 	$FIND 			) $FIND_CMD 			;;

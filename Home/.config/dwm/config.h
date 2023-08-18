@@ -30,7 +30,7 @@ static const int showbar            = 1;		/* 0 means no bar */
 static const int topbar             = 1;		 /* 0 means bottom bar */
 static const int user_bh            = 2;		/* 2 is the default spacing around the bar's font */
 //static const char *fonts[]          = { "Noto Sans Mono:size=10" };
-static const char *fonts[]          = { "hack:size=11", "Symbols Nerd Font:antialias=true:autohint=true"  };
+static const char *fonts[]          = { "hack:size=12", "Symbols Nerd Font:antialias=true:autohint=true"  };
 
 static const char dmenufont[]       = "hack:size=12";
 static const char col_gray1[]       = "#4d4d4d";
@@ -89,7 +89,7 @@ man alacritty */
 //const char *spcmd2[] = {"alacritty", "--class", "spfm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "lf",NULL};
 //const char *spcmd6[] = {"alacritty", "--class", "sphtop", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "htop",NULL};
 const char *spcmd1[] = {"alacritty", "--class", "spterm", "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=30",NULL, NULL,NULL};
-const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=30", "-e", "lf",NULL};
+const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=140", "-o", "window.dimensions.lines=40", "-e", "sh", "-c", "~/.local/bin/lfub", NULL};
 const char *spcmd3[] = {"thunar", NULL }; 
 const char *spcmd4[] = {"firefox", "--class", "firefox",NULL }; // Nao funciona
 const char *spcmd5[] = {"code", NULL }; // estava thunar
@@ -120,7 +120,7 @@ static const char *const autostart[] = {
 
 /* tagging : https://www.unicode.org/charts/PDF/U260
 0.pdf */ 
-static const char *tags[] = { " ", "", "3", "󰈙", "5", "󰊖", "7","󰢹"};
+static const char *tags[] = {"", " ", "3", "󰈙", "5", "󰊖", "7", "󰢹"};
 
 static const Rule rules[] = {
 	/* See windows properties with : xprop(1):
@@ -159,16 +159,16 @@ static const Rule rules[] = {
 	{ "pavucontrol",  				NULL,    			NULL,      	0,            		1,           	-1 },
 	{ "float_windows",  			NULL,    			NULL,      	0,            		1,           	-1 },
 
-// Workspace 1
-	/* class                       	instance    		title      	tags mask     		isfloating  	monitor */
-	{ NULL, 		   				"code",    			NULL,  	   	1,            		0,           	-1 },
-	{ "code",						NULL, 	   			NULL,  	   	1,            		0,           	-1 },
+// Workspace 1 // WEB
+	/* class                       	instance    		title      		tags mask     		isfloating  	monitor */
+	 { "firefox", 	            	NULL,       		NULL,     		1,       			0,           	-1 },
 
-// Workspace 2    // WEB
+
+// Workspace 2    // code
 	/* class                       	instance    		title     		tags mask     		isfloating   	monitor */
-    { "firefox",                   	NULL,       		NULL,     		1 << 1,       		0,           	-1 },
-	{ "Firefox",                   	NULL,       		NULL,      		1 << 1,       		0,           	-1 },
-	{ "blueman-applet",             NULL,       		NULL,      		1 << 1,       		0,           	-1 },
+	{ NULL, 		   				"code",    			NULL,  	   		1 << 1,             0,           	-1 },
+	{ "code",						NULL, 	   			NULL,  	   		1 << 1,             0,           	-1 },
+
 
 // Workspace 3   // File manager
 	/* class       					instance    		title     		tags mask     		isfloating  	 monitor */
@@ -217,6 +217,7 @@ static const Rule rules[] = {
 	{ NULL, 						NULL,    			"Dispositivos Bluetooth",   1 << 6,       		0,           	0 },
 
 
+
 // Workspace 8 // Remote
 	/* class                    	instance    		Title      								tags mask     		isfloating   		monitor */
 	{ "TeamViewer",					NULL, 	   			NULL,  	   								1 << 7,             		0,           	-1 },
@@ -261,8 +262,7 @@ static const Layout layouts[] = {
 
 
 
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-//																	
+static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */																
 //static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };																	
 static const char *dmenucmd[] = { "dmenu_run", "-i", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_green, "-sb", col_green, "-sf", col_gray5, NULL };
 
@@ -280,8 +280,6 @@ dmenu_run -m dmenumon -fn "monospace:size=12" -nb "#4d4d4d" -nf "#07AE06" -sb "#
 dmenu_run -m "0" -fn "hack:size=11" -nb "#000000" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
 
 SHCMD('dmenu_run -m "0" -fn "monospace:size=11" -nb "#col_black" -nf "#col_green" -sb "#col_green" -sf "#col_gray5"')  },
-
-
 
 static const char *termcmd[]  		= { "alacritty", NULL };
 static const char *fileterminal[]  	= { "alacritty", "-e", "lf", NULL };
@@ -315,7 +313,6 @@ static const char *Audiodown[]  			= { "pactl", "set-sink-volume", "@DEFAULT_SIN
 static const char *Touchpadtoggle[]  		= { "sh", "-c", "~/my_configs/scripts/toggletouchpad.sh", NULL };
 static const char *turnoffscreens[]  		= { "xset", "dpms", "force", "off", NULL };
 */
-
 
 
 /*+
@@ -355,7 +352,7 @@ static const Key keys[] = {
 	/*FN+F8 */   { 0, XF86XK_AudioPrev ,	    spawn,		SHCMD("xset dpms force off") },
 	/*FN+F9 */   { 0, XF86XK_AudioPlay ,	    spawn,		SHCMD("xset dpms force off") },
 	/*FN+F10*/   { 0, XF86XK_AudioNext ,	    spawn,		SHCMD("xset dpms force off") },
-	/*FN+F11*/   { WIN_KEY, XK_p ,	            spawn,		SHCMD("xset dpms force off") },      // monitor Symbol ->
+	/*FN+F11*/   { WIN_KEY, XK_p,	            spawn,		SHCMD("xset dpms force off") },      // monitor ?? / touchpad ?? Symbol ->
 	/*FN+F12*/   { 0, XK_Insert, 				spawn,      SHCMD("xset dpms force off") },
 	/*prt sc*/	 { 0, XK_Print, 				spawn,      SHCMD("flameshot gui") },
 	/* ⏻ */	     { 0, XF86XK_PowerOff,	        spawn,		SHCMD("xset dpms force off") },  // NÂO funciona
@@ -364,8 +361,8 @@ static const Key keys[] = {
 	/************** DWM or patched *******************/
 
 	/* modifier                    	key        					function        argument */
-	//{ 0,      					XF86XK_TouchpadToggle , 	    spawn,          {.v = Touchpadtoggle } },  // this file uses dunst to notifi
-	//{ 0,      					XF86XK_TouchpadToggle , 	    spawn,          SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
+	//{ 0,      					XF86XK_TouchpadToggle , 	spawn,          {.v = Touchpadtoggle } },  // this file uses dunst to notifi
+	//{ 0,      					XF86XK_TouchpadToggle , 	spawn,          SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
 
 
 
@@ -407,7 +404,7 @@ static const Key keys[] = {
 	{ MODKEY,                   XK_comma,  		focusmon,       	{.i = -1 } },
 	{ MODKEY,                   XK_period, 		focusmon,       	{.i = +1 } },
 	{ MODKEY|ShiftMask,     	XK_comma,  		tagmon,         	{.i = -1 } },
-	{ MODKEY|ShiftMask,     	XK_period, 		tagmon,         	{.i = +1 } },
+	{ MODKEY|ShiftMask,     	XK_period, 		tagmon,         	{.i = +1 } },	// move windows to another monitor
 	TAGKEYS(                    XK_1,                     			0)
 	TAGKEYS(                    XK_2,                      			1)
 	TAGKEYS(                    XK_3,                      			2)
@@ -425,7 +422,7 @@ static const Key keys[] = {
 	{ WIN_KEY,      			XK_Return, 		spawn,          		SHCMD("alacritty") },
 	//{ WIN_KEY,      			XK_a, 			spawn,          		{.v = dmenucmd } },
 	{ WIN_KEY,      			XK_a, 			spawn,          		SHCMD("sh ~/.config/dwm/dmenu_favoritos.sh") },
-
+	{ WIN_KEY,      			XK_v, 			spawn,          		SHCMD("alacritty -e sh ~/.local/bin/lfub") },
 																		// com o SHCMD só aparece no munitor 1
 	//{ WIN_KEY,      			XK_a, 			spawn,          		SHCMD("dmenu_run -i -m '0' -fn monospace:size=11 -nb '#000000' -nf '#07AE06' -sb '#07AE06' -sf '#060606'")  },
 	{ WIN_KEY|ShiftMask,      	XK_a, 			spawn,          		SHCMD("xfce4-appfinder") },
@@ -485,11 +482,11 @@ static const Button buttons[] = {
 
 
 // Nas janelas: 
-/* click                	event mask      button         function        argument */
-	{ ClkClientWin,         WIN_KEY,        Button1,       movemouse,      {0} },
-	{ ClkClientWin,         WIN_KEY,        Button2,       togglefloating, {0} }, // FLOATING TO TILE
-	{ ClkClientWin,         WIN_KEY,        Button3,       resizemouse,    {0} },
-	{ ClkClientWin,	  		WIN_KEY,	   	Button4,       focusstack,     {.i = -1  }  }, 
+/* click                	event mask      button         function        	argument */
+	{ ClkClientWin,         WIN_KEY,        Button1,       movemouse,      	{0} },
+	{ ClkClientWin,         WIN_KEY,        Button2,       togglefloating, 	{0} }, // FLOATING TO TILE
+	{ ClkClientWin,         WIN_KEY,        Button3,       resizemouse,    	{0} },
+	{ ClkClientWin,	  		WIN_KEY,	   	Button4,       focusstack,     	{.i = -1  }  }, 
 
 
 // nos indicadores dos workspaces

@@ -156,8 +156,8 @@ fi
 
 ########################################################################################################
 #### OUTPUT ####
-#echo "$ram_used $bat $conn $sound $date $time $steam $touchpad $firefox $flameshot$pcloud " $pcloud  $steam
-echo "$monitores_connected $PF_icon $bat $time $touchpad $conn$name_conn $bluetooth $firefox $flameshot $sound"
+#echo "$ram_used $bat $conn $sound $date $time $steam $touchpad $firefox $flameshot$pcloud " $pcloud  $steam$ firefox 
+echo "$monitores_connected $PF_icon $bat $time $touchpad $conn$name_conn $bluetooth $flameshot $sound"
  
 
 

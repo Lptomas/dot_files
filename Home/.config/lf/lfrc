@@ -2,16 +2,26 @@
 # open mimeapps and othes from : https://github.com/LukeSmithxyz/voidrice/blob/master/.config/lf/lfrc
 # https://www.thegeekstuff.com/2011/01/tput-command-examples/
 
+
+# https://blog.fbmello.com/posts/guidelf/
+
 #set hidden true 
 set ignorecase true
+set autoquit true
 set icons true
-set autoquit on
 set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
+set previewer ~/.config/lf/preview
+set preview true  #https://www.youtube.com/watch?v=mM_OWfaKfcg
+set cleaner ~/.config/lf/cleaner
+set ratios 1:2:3
 
 
-# Movement
+#set drawbox on
+
+# Movement    Check the names of the folders
 map gh cd ~/
-map gd cd ~/documents
+map gd cd ~/Documentos
+map gt cd ~/Transferências
 map gD cd ~/downloads
 map gi cd ~/Imagens
 map gg cd ~/Desktop
@@ -24,6 +34,8 @@ map ga cd ~/ARDUINO
 
 # open mimeapps from : https://github.com/LukeSmithxyz/voidrice/blob/master/.config/lf/lfrc
 
+
+# Custom Functions
 cmd open ${{
     case $(file --mime-type "$(readlink -f $f)" -b) in
 	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
@@ -52,15 +64,15 @@ cmd open ${{
     esac
 }}
 
-
-# Custom Functions
+## Create FOLDER
 cmd mkdir ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
   	printf "Directory Name: "
   	read ans
-  mkdir $ans
+  	mkdir $ans
 }}
 
+## Create FILE
 cmd mkfile ${{
   printf "File Name: "
   read ans
@@ -72,18 +84,29 @@ cmd mkfile ${{
 # Archive bindings
 cmd unarchive ${{
   case "$f" in
-      *.zip) unzip "$f" ;;
-      *.tar.gz) tar -xzvf "$f" ;;
+	  *.tar.bz) tar -xjvf "$f" ;;
       *.tar.bz2) tar -xjvf "$f" ;;
+	  *.tar.tbz) tar -xjvf "$f" ;;
+      *.tar.tbz2) tar -xjvf "$f" ;;
+	  *.tar.gz) tar -xzvf "$f" ;;
+	  *.tar.tgz) tar -xzvf "$f" ;;	 
+	  *.tar.xz) tar -xJvf "$f" ;; 
       *.tar) tar -xvf "$f" ;;
+	  *.zip) unzip "$f" ;;
+	  +.rar) unrar x "$f" ;;
+	  *.7z) 7z x "$f" ;;
       *) echo "Unsupported format" ;;
   esac
 }}
 
 
+
+
+
+
 #######
 # Trash bindings  -> necessita de trash-cli
-cmd trash ${{
+cmd move_to_trash ${{
   files=$(printf "$fx" | tr '\n' ';')
   while [ "$files" ]; do
     file=${files%%;*}
@@ -99,6 +122,11 @@ cmd trash ${{
 
 
 
+cmd trash_undo ${{
+	$trash-put --undo
+}}
+
+
 cmd trash_list ${{
 	clear; tput cup $(($(tput lines)/10)); tput bold
 	printf "Files at trash:"
@@ -108,6 +136,22 @@ cmd trash_list ${{
  	printf "press Enter to go back " 
 	read ans 
 }}
+
+
+cmd trash_restore ${{
+	$trash-restore
+}}
+
+cmd trash_clean_all ${{
+	$trash-empty
+}}
+
+
+#  é preciso especificar o ficheiro a recoperar
+cmd trash_delete_one ${{  
+	$trash-rm
+}}
+
 
 
 cmd delete ${{
@@ -143,7 +187,7 @@ map n
 map "'"
 map '"'
 map d
-map e  ##default edit
+map e  	##default edit
 map c   #default cut
 map p   #default paste
 
@@ -184,12 +228,27 @@ map ma unarchive
 #map bg setwallpaper
 
 
-map dd 	trash
-map de 	trash
+map dd 	move_to_trash
+map dm 	move_back_from_trash
 map dr 	$trash-restore
-map dm 	$trash-rm
-map dv 	trash_list
-map dp 	$trash-empty	
+#map do 	trash_delete_one
+map dl 	trash_list
+map dc 	trash_clean_all	
+map du 	trash_undo 
+
+
+
+map zr set reverse!
+map zn set info
+map zs set info size
+map zt set info time
+map za set info size:time
+map sn :set sortby natural; set info
+map ss :set sortby size; set info size
+map st :set sortby time; set info time
+map sa :set sortby atime; set info atime
+map sc :set sortby ctime; set info ctime
+map se :set sortby ext; set info
 
  
 
@@ -213,4 +272,6 @@ map oi $gimp "$f" & disown; exit
 map ot $thunar "$F" & disown; exit    
 map of $firefox & disown; exit
 map ol $libreoffice "$f" & disown; exit
-
+map ox $xed "$f" & disown; exit
+map oV $vlc "$f" & disown; exit
+map oM $mpv "$f" & disown; exit

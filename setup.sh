@@ -50,9 +50,9 @@ echo "creating: ln -s $git_folder/file_or_folder $HOME"
 read a
 ln -s $git_folder/.xinitrc 		$HOME
 ln -s $git_folder/.bashrc 		$HOME
-ln -s $git_folder/.bash_profile 		$HOME
+ln -s $git_folder/.bash_profile $HOME
 ln -s $git_folder/.zshenv 		$HOME
-ln -s $git_folder/.zshrc 			$HOME
+ln -s $git_folder/.zshrc 		$HOME
 echo ""
 echo "creating: ln -s $git_dot_folder/file_forder $home_dot_folder"
 read a

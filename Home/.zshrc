@@ -5,16 +5,28 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# History in cache directory:
+# History in cache directory:   
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+HISTFILE=~/.cache/zsh/history   # need to create this folder
 
 
-# Bind Keys:
-bindkey '^a' beginning-of-line	#Home 
-bindkey '^e' end-of-line			#end
-bindkey "\e[3~" delete-char		#delete
+# Bind Keys:   $ zle -al     # for all comands
+#HP aero
+bindkey "\e[3~" delete-char		    #delete
+bindkey "[H" beginning-of-line	  #Home 
+bindkey "[5~" beginning-of-line   # PG UP
+bindkey "[6~" beginning-of-line   # PG DW
+bindkey "[F" end-of-line			    #end 
+
+bindkey "^[" beginning-of-line                   #ESC
+
+#ASUS 
+#bindkey '^[begin' beginning-of-line	#Home 
+#bindkey "^a" beginning-of-line	#Home 
+#bindkey '^e' end-of-line			  #end
+#bindkey "\e[3~" delete-char		  #delete
+
 
 
 # theme/plugins
@@ -59,4 +71,9 @@ ZSH_HIGHLIGHT_STYLES[assign]=none
 # work around: fast syntax highlighting may crash zsh without this
 #FAST_HIGHLIGHT[chroma-git]="chroma/-ogit.ch"
 
+# lf File manager
+export LF_ICONS=$(cat ~/.config/lf/icons)
+export LF_COLORS=$(cat ~/.config/lf/colors)
+export PATH="~/.local/bin:$PATH" # use the preview os image and videos #sudo pacman -S ueberzug graphicsmagick ghostscript 
 
+export LC_ALL=en_US.UTF-8

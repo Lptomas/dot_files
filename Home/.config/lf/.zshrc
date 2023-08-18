@@ -1,24 +1,27 @@
-### Configuração
+unsetopt nomatch
+setopt share_history
+
+eval "$(starship init zsh)"
+
+export PATH="/home/sandip/.nvm/versions/node/v18.12.1/bin/:$PATH"
+export PATH="/home/sandip/.local/bin:$PATH"
+
+#custom aliases
+alias python='python3'
+alias xampp='sudo /opt/lampp/lampp'
+alias venv="source /home/sandip/env/bin/activate"
+alias d="cd /media/sandipsky"
+alias php='php7'
+alias lf='lfub'
+alias clear='clear && colorscript random'
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 
-+ Instalar Nerdfonts
-
-
-
-# abrir videos
-+ .config/lf/lfrc
-video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
-
+colorscript random
 
 # lf icons
-
-
-set icons true
-
-
-
-+ Add .bashrc or .zahenv:
-
 export LF_ICONS="\
 tw=:\
 st=:\
@@ -90,7 +93,7 @@ ex=:\
 *.xz=:\
 *.zst=:\
 *.tzst=:\
-*ts.bz2=:\
+*.bz2=:\
 *.bz=:\
 *.tbz=:\
 *.tbz2=:\
@@ -181,5 +184,3 @@ ex=:\
 *.pdf=:\
 *.nix=:\
 "
-
-
