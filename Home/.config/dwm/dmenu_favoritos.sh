@@ -101,7 +101,7 @@ CODE_CMD="code"
 CODE_ARDUINO="Code  ARDUINO"
 CODE_ARDUINO_CMD="code ~/Área\ de\ Trabalho/Programação"
 CODE_DOTFILES="Code  DOTFILES"
-CODE_DOTFILES_CMD="code ~/dot_files"
+CODE_DOTFILES_CMD="code ~/dot_files/"
 
 EASYEDA="EasyEda "
 EASYEDA_CMD="/opt/easyeda/easyeda %f "
@@ -129,9 +129,11 @@ POWER_PERFORMANCE_CMD="powerprofilesctl set performance"
 PW="$SHUNTDOWN\n$REBOOT\n$EXIT\n$POWER_SAVER\n$POWER_BALANCE\n$POWER_PERFORMANCE\n"
 
 ############################################################################################################  		 
-# *** REMOTE 
+# *** REMOTE    https://bbs.archlinux.org/viewtopic.php?id=258188
 TEAMVIEWER="Teamviewer 󰢹"
 TEAMVIEWER_CMD="teamviewer"
+TEAMVIEWER_START="$alacritty_power -e sudo systemctl start teamviewerd"
+TEAMVIEWER_STOP=""
 
 REMOTE="$TEAMVIEWER\n"
 

@@ -89,7 +89,7 @@ man alacritty */
 //const char *spcmd2[] = {"alacritty", "--class", "spfm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "lf",NULL};
 //const char *spcmd6[] = {"alacritty", "--class", "sphtop", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "htop",NULL};
 const char *spcmd1[] = {"alacritty", "--class", "spterm", "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=30",NULL, NULL,NULL};
-const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=140", "-o", "window.dimensions.lines=40", "-e", "sh", "-c", "~/.local/bin/lfub", NULL};
+const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=160", "-o", "window.dimensions.lines=45", "-e", "sh", "-c", "~/.local/bin/lfub", NULL};
 const char *spcmd3[] = {"thunar", NULL }; 
 const char *spcmd4[] = {"firefox", "--class", "firefox",NULL }; // Nao funciona
 const char *spcmd5[] = {"code", NULL }; // estava thunar
@@ -120,7 +120,7 @@ static const char *const autostart[] = {
 
 /* tagging : https://www.unicode.org/charts/PDF/U260
 0.pdf */ 
-static const char *tags[] = {"", " ", "3", "󰈙", "5", "󰊖", "7", "󰢹"};
+static const char *tags[] = {"", "", "3", "󰈙", "5", "󰊖", "7", "󰢹"};
 
 static const Rule rules[] = {
 	/* See windows properties with : xprop(1):

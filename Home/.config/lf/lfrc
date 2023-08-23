@@ -263,12 +263,17 @@ map se :set sortby ext; set info
 
 # open prograns  : the & puts it in the background. The disown tells the shell to not job control it. The exit tells the shell to exit.
 
-# really need disown to open 
+#Using the disown command, you can remove a background job from the shell's job table, effectively "disowning" it from the shell. Once a job is disowned, it
+#will continue running even if you close the terminal session that originally started it
+
+# really need disown to open ?
 map oc $code-oss "$f" & disown; exit
 #map ol $leafpad "$f" & disown; exit
 map ov $vim "$f" & disown; exit
-map og $gedit "$f" & disown; exit
-map oi $gimp "$f" & disown; exit
+map og $gedit "$f" ; exit
+#map or $ristretto "$f" & disown; exit
+map ors $ristretto "$f" & disown; exit
+map oG $gimp "$f" & disown; exit
 map ot $thunar "$F" & disown; exit    
 map of $firefox & disown; exit
 map ol $libreoffice "$f" & disown; exit
