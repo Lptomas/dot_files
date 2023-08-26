@@ -98,10 +98,21 @@ OFFICE="$NOTAS\n$OFFICE\n$PDF\n$PDF_Arranger\n"
 ######  DEV
 CODE="Code "
 CODE_CMD="code"
+#Open with CODE in specfic folder:   dmenu does't open alias or "  code ~/path/to/folfer/"
+# 1st - Create a new BIN with the same permition of code:     sudo cp /usr/bin/code /usr/bin/code_new      
+# 2nd - Open the code_new:  sudo EDITOR /usr/bin/code_new
+# 3th - Add this line: exec /opt/visual-studio-code/bin/code ~/path/to/use/ "$@" $CODE_USER_FLAGS
+# 4th - The "code_new" appers in avaliable commands, to run in DMENU just call it: code_new  
+
+# Testar assim-
+# 1st echo "exec /opt/visual-studio-code/bin/code ~/path/to/use/ "$@" $CODE_USER_FLAGS" > code_new
+# 2nd - sudo chmod u=rwx,g=rx,o=rx code_new
+# 3th - sudo mv code_new /usr/bin/code_new
+
 CODE_ARDUINO="Code  ARDUINO"
-CODE_ARDUINO_CMD="code ~/Área\ de\ Trabalho/Programação"
-CODE_DOTFILES="Code  DOTFILES"
-CODE_DOTFILES_CMD="code ~/dot_files/"
+CODE_ARDUINO_CMD="code_arduino"
+CODE_DOTFILES="Code   DOTFILES"
+CODE_DOTFILES_CMD="code_dot_files"       # Added in  
 
 EASYEDA="EasyEda "
 EASYEDA_CMD="/opt/easyeda/easyeda %f "
@@ -119,11 +130,11 @@ REBOOT="Reboot 󰐥"
 REBOOT_CMD="$alacritty_power -e sudo reboot"
 EXIT="Exit dwm 󰩈"
 EXIT_CMD="pkill dwm "
-POWER_SAVER="PW_saver"
+POWER_SAVER="PW_saver 󰸿"
 POWER_SAVER_CMD="powerprofilesctl set power-saver"
-POWER_BALANCE="PW_balanced"
+POWER_BALANCE="PW_balanced 󰡵"
 POWER_BALANCE_CMD="powerprofilesctl set balanced"
-POWER_PERFORMANCE="PW_performance"
+POWER_PERFORMANCE="PW_performance 󰊖"
 POWER_PERFORMANCE_CMD="powerprofilesctl set performance"
 
 PW="$SHUNTDOWN\n$REBOOT\n$EXIT\n$POWER_SAVER\n$POWER_BALANCE\n$POWER_PERFORMANCE\n"
@@ -344,10 +355,9 @@ APP="$APPS\n"
 
 ########################################################################################################
 ########################################################################################################
-# ***  SET ALL TAGSs
-FAVORITOS="$BROWSER\n$DOLPHIN\n$CODE\n"
 
-all="$FAVORITOS$WEB$FM$OFFICE$DEV$PW$REMOTE$TOOL$BLUETOOTH$OPT$GAME$APP$SCREENS$NET$CLI$WIFI"
+
+all="$WEB$FM$OFFICE$DEV$PW$REMOTE$TOOL$BLUETOOTH$OPT$GAME$APP$SCREENS$NET$CLI$WIFI"
 
 
 
@@ -397,7 +407,8 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$POWER_PERFORMANCE	) $POWER_PERFORMANCE_CMD	;;	
 
 # *** REMOTE
-    $TEAMVIEWER	) $TEAMVIEWER_CMD ;;
+    $TEAMVIEWER	) 	$TEAMVIEWER_START
+					$TEAMVIEWER_CMD ;;
 
 # *** OPT
 	$AUDIO			) $AUDIO_CMD 			;;

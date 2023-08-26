@@ -110,7 +110,7 @@ case $bat_state in
 	'Full'			)	bat="󰁹" ;;    #    $bat_percentage%
 	'Charging'		) 	bat="$bat_percentage%󰚥" ;;
 	'Not charging'	)	bat="$bat_percentage%" ;;
-	'Discharging'	) 	bat="$bat_icon $bat_percentage%󱐤" ;;
+	'Discharging'	) 	bat="$bat_icon$bat_percentage%󱐤" ;;
 esac
 
 
@@ -156,8 +156,8 @@ fi
 
 ########################################################################################################
 #### OUTPUT ####
-#echo "$ram_used $bat $conn $sound $date $time $steam $touchpad $firefox $flameshot$pcloud " $pcloud  $steam$ firefox 
-echo "$monitores_connected $PF_icon $bat $time $touchpad $conn$name_conn $bluetooth $flameshot $sound"
+#echo "$ram_used $bat $conn $sound $date $time $steam $touchpad $firefox $flameshot$pcloud " $pcloud  $steam$ firefox $monitores_connected 
+echo "$PF_icon $bat $time $touchpad $conn$name_conn $bluetooth $flameshot $sound"
  
 
 
