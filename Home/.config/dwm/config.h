@@ -16,6 +16,13 @@ dwm-cool-autostart-6.2.diff  -> configurated to have a autostart file: dwm_cool_
 
 */
 
+/*
+
+xkill   -  select window with mouse to kill
+*/
+
+
+
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
@@ -378,6 +385,9 @@ static const Key keys[] = {
 
 
 	/* modifier                     key        		function        argument */
+	{ MODKEY,					XK_F4,  		spawn,   			SHCMD("xdotool getwindowfocus windowkill") }, // KILL current window
+	{ MODKEY,					XK_F5,  		spawn,   			SHCMD("xkill") }, // KILL selected window with mouse
+
 	{ WIN_KEY,             		XK_f,      		togglefullscr,  	{0} },  // from patch
 	{ WIN_KEY,					XK_q, 			killclient,     	{0} },
 	{ WIN_KEY,                  XK_b,      		togglebar,     		{0} },

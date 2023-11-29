@@ -18,19 +18,7 @@ set ratios 1:2:3
 
 #set drawbox on
 
-# Movement    Check the names of the folders
-map gh cd ~/
-map gd cd ~/Documentos
-map gt cd ~/Transferências
-map gD cd ~/downloads
-map gi cd ~/Imagens
-map gg cd ~/Desktop
-map gp cd ~/pCloudDrive
-map gv cd ~/videos/recordings
-map gs cd ~/.local/bin
-map gc cd ~/.config
-map gw cd ~/.config/dwm/
-map ga cd ~/ARDUINO
+
 
 # open mimeapps from : https://github.com/LukeSmithxyz/voidrice/blob/master/.config/lf/lfrc
 
@@ -105,7 +93,7 @@ cmd unarchive ${{
 
 
 #######
-# Trash bindings  -> necessita de trash-cli
+# Trash bindings  -> necessita de "trash-cli"
 cmd move_to_trash ${{
   files=$(printf "$fx" | tr '\n' ';')
   while [ "$files" ]; do
@@ -199,12 +187,25 @@ map W $setsid -f alacritty >/dev/null 2>&1
 # clear action like copy or selection
 map <esc> clear
 
+# Movement    Check the names of the folders
+map gh cd ~/
+map gt cd ~/Transferências   # ~/Documentos
+map gD cd ~/downloads
+map gi cd ~/Imagens
+#map gg cd ~/Desktop
+map gg cd ~/Área\ de\ Trabalho
+map gp cd ~/pCloudDrive
+map gv cd ~/videos/recordings
+map gs cd ~/.local/bin
+map gc cd ~/.config
+map gw cd ~/.config/dwm/
+map gd cd ~/dot_files
+map ga cd ~/ARDUINO
 
 
 
 
-
-# Basic Functions
+# Functions : Basic in LF 
 
 map <c-c> copy   # este bind fora 'lf' e em qualquer terminal é para matar o comando
 map <c-x> cut
@@ -214,15 +215,16 @@ map <f-2> rename
 map <delete> delete
 map <f-5> reload
 
-
 map . set hidden!
-
 map <enter> open
 
+
+
+# Functions : custom
 map mf mkfile
 map md mkdir
 map mu unarchive
-map ma unarchive
+map ma archive
   
 
 #map bg setwallpaper
@@ -280,3 +282,4 @@ map ol $libreoffice "$f" & disown; exit
 map ox $xed "$f" & disown; exit
 map oV $vlc "$f" & disown; exit
 map oM $mpv "$f" & disown; exit
+map ow $wine "$f" & disown; exit

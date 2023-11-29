@@ -3,7 +3,8 @@
 
 
 
-# PODEMos acabar com o serviço do teamvieer antes de desligar e liga-lo quando inicoiamos o team viere
+# PODEMos acabar com o serviço do teamvieer antes de desligar e liga-lo quando inicoiamos o team viere ??
+# para isto é necessario usar PW para fazer start ao Serviço ...
 
 
 
@@ -17,10 +18,10 @@
 
 ##  HOW TO:
 # Make sure that all programs are instaled
-# 1º Create a VARIABLE and set the "Name" to use in dmenu - Exemple: BROWSER="Firefox "
+# 1º Create a VARIABLE and set the "Name" to use in dmenu - Exemple: BROWSER="Firefox  "
 # 2º Create a VARIABLE_CMD and set the Comand to be executed when select the "Name" to use in dmenu - Exemple: BROWSER_CMD="firefox"
-# 3º ATIBUTE the VARIABLE to catagory - Exemple WEB="$BROWSER...." VARABLES are separated with " \n"  - Exemple: WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n...\n...\n....\n"
-# 4º SET the Name to the comand in the CASE function: $VARIABLE ) VARIABLE_CMD ;;
+# 3º ATIBUTE the VARIABLE to catagory - Exemple WEB="$BROWSER...." VARIABLES are separated with " \n"  - Exemple: WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n...\n...\n....\n"
+# 4º SET the Name to the comand in the CASE function: $VARIABLE ) VARIABLE_CMD ;;   -->  $BROWSER )  BROWSER_CMD ;;
 # ALL is set Manualy - Bluetooh devices, comands, windows sizes etc etc:
 # 
 
@@ -50,6 +51,8 @@ WHASTAPP="WhastApp 󰖣"
 WHASTAPP_CMD="whatsapp-nativefier"
 YOUTUBE="Youtube "
 YOUTUBE_CMD="$BROWSER_SET_CMD https://www.youtube.com/"
+YOUTUBE_Invidious="Youtube No Google "
+YOUTUBE_CMD_Invidious="$BROWSER_SET_CMD https://inv.bp.projectsegfau.lt/feed/popular"
 EMAIL="Email 󰇮"
 EMAIL_CMD="$BROWSER_SET_CMD https://mail.google.com/mail/u/0/#inbox"
 MAPS="Maps 󰗵"
@@ -64,7 +67,7 @@ NETFLIX_CMD="$BROWSER_SET_CMD https://www.netflix.com/browse"
 
 
 
-WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n"
+WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$YOUTUBE_Invidious\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n"
 
 ############################################################################################################ 
 ######  FM - File manager
@@ -75,7 +78,7 @@ NEMO_CMD="nemo  FM"
 DOLPHIN="Dolphin  FM"
 DOLPHIN_CMD="dolphin"
 PCLOUD="pCloud "
-PCLOUD_CMD='~/AppImage_snaps_etc/pcloud.AppImage'   # NAO funciona ...no terminal trabalha
+PCLOUD_CMD='/home/lpt/AppImage_snaps_etc/pcloud'   # NAO funciona ...no terminal trabalha   PCLOUD_CMD='~/AppImage_snaps_etc/pcloud.AppImage'
 ICEDRIVE="iceDrive "
 ICEDRIVE_CMD="/usr/bin/icedrive"
 
@@ -278,8 +281,6 @@ BLUETOOTH_3_OFF="Bluetooth_Lild Off"
 BLUETOOTH_3_OFF_CMD="bluetoothctl disconnect FC:58:FA:42:44:93"
 
 
-
-
 # Directamente no SWITCH-CASE podemos fazer:     bluetoothctl disconnect 14:0A:29:30:0E:A9 &&  bluetoothctl connect 88:D0:39:8C:4F:A4 ;;
 #     echo -e "show\ndisconnect 14:0A:29:30:0E:A9\nconnect 88:D0:39:8C:4F:A4\nquit" | bluetoothctl    - turn on JBL   
 #     echo -e "show\ndisconnect 88:D0:39:8C:4F:A4\nconnect 14:0A:29:30:0E:A9\nquit" | bluetoothctl    - turn on XIAOMI
@@ -371,6 +372,7 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$BROWSER	) $BROWSER_CMD 	;;
 	$WHASTAPP 	) $WHASTAPP_CMD ;;
 	$YOUTUBE 	) $YOUTUBE_CMD	;;
+	$YOUTUBE_Invidious 	) $YOUTUBE_CMD_Invidious	;;
 	$NETFLIX	) $NETFLIX_CMD	;;
 	$EMAIL		) $EMAIL_CMD 	;;
 	$MAPS		) $MAPS_CMD 	;;
@@ -453,6 +455,8 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$NETWORK 	) $NETWORK_CMD 	;;
 	$SAFING  	) $SAFING_CMD 	;;
 	$NETWORK 	) $NETWORK_CMD 	;;
+
+    $NETWORKCLI ) $NETWORKCLI_CMD ;;
 
 # *** TOOLS   + Monitores 
 	$CALCULADORA )  $CALCULADORA_CMD ;;
