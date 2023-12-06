@@ -88,14 +88,14 @@ FM="$DOLPHIN\n$THUNAR\n$NEMO\n$PCLOUD\n$ICEDRIVE\n"
 ######  OFFICE
 NOTAS="Notas "
 NOTAS_CMD="xed"
-OFFICE="LibreOffice 󰈙"
+OFFICE_DE="LibreOffice 󰈙"
 OFFICE_CMD="libreoffice"
 PDF="PDF "
 PDF_CMD="evince"
 PDF_Arranger="PDFarranger 󰕕"
 PDF_Arranger_CMD="pdfarranger"
 
-OFFICE="$NOTAS\n$OFFICE\n$PDF\n$PDF_Arranger\n"
+OFFICE="$NOTAS\n$OFFICE_DE\n$PDF\n$PDF_Arranger\n"
 
 ############################################################################################################ 
 ######  DEV
@@ -389,7 +389,7 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 
 # *** OFFICE
 	$NOTAS			) $NOTAS_CMD		;;
-	$OFFICE			) $OFFICE_CMD		;;
+	$OFFICE_DE			) $OFFICE_CMD		;;
 	$PDF			) $PDF_CMD			;;
 	$PDF_Arranger 	) $PDF_Arranger_CMD ;;
 
