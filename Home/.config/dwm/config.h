@@ -385,6 +385,8 @@ static const Key keys[] = {
 
 
 	/* modifier                     key        		function        argument */
+	//https://www.fosslinux.com/20109/7-best-ways-to-kill-unresponsive-programs-in-linux.htm
+	//https://superuser.com/questions/757160/kill-the-currently-active-window-with-a-keyboard-shortcut
 	{ MODKEY,					XK_F4,  		spawn,   			SHCMD("xdotool getwindowfocus windowkill") }, // KILL current window
 	{ MODKEY,					XK_F5,  		spawn,   			SHCMD("xkill") }, // KILL selected window with mouse
 

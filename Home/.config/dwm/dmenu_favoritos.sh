@@ -144,6 +144,7 @@ PW="$SHUNTDOWN\n$REBOOT\n$EXIT\n$POWER_SAVER\n$POWER_BALANCE\n$POWER_PERFORMANCE
 
 ############################################################################################################  		 
 # *** REMOTE    https://bbs.archlinux.org/viewtopic.php?id=258188
+# https://www.teamviewer.com/en/download/linux/
 TEAMVIEWER="Teamviewer 󰢹"
 TEAMVIEWER_CMD="teamviewer"
 TEAMVIEWER_START="$alacritty_power -e sudo systemctl start teamviewerd"
@@ -409,7 +410,7 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$POWER_PERFORMANCE	) $POWER_PERFORMANCE_CMD	;;	
 
 # *** REMOTE
-    $TEAMVIEWER	) 	$TEAMVIEWER_START
+    $TEAMVIEWER	) 	$TEAMVIEWER_START     
 					$TEAMVIEWER_CMD ;;
 
 # *** OPT

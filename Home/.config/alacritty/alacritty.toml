@@ -1,0 +1,25 @@
+import = ["/home/lpt/.config/alacritty/colors.toml", "/home/lpt/.config/alacritty/fonts.toml"]
+live_config_reload = true
+
+[cursor]
+unfocused_hollow = false
+
+[cursor.style]
+blinking = "On"
+shape = "Beam"
+
+[env]
+TERM = "xterm-256color"
+WINIT_X11_SCALE_FACTOR = "1.2"
+
+[window]
+
+multiplier = 3
+opacity = 1.0
+
+[scrolling]
+history = 10000
+
+[window.dimensions]
+columns = 1000
+lines = 800
