@@ -19,7 +19,7 @@ case $PF in
 	'performance'	) 	PF_icon="󰊖" ;;
 	'balanced'		)	PF_icon="󰡵" ;;
 	'power-saver'	) 	PF_icon="󰸿" ;;
-	*				) 	PF_icon="" ;;
+	*				) 	PF_icon="?" ;;
 esac
 
 
@@ -42,7 +42,7 @@ name_conn="$(iw dev | grep ssid | awk '{print $2}')"
 case $name_conn in
 	'Desvio_5G'	) name_conn="5" 		;;
 	'Desvio'	) name_conn="2.4" 		;;
-	*			) name_conn="$name_conn";;
+	*			) name_conn="";; #name_conn="$name_conn";;
 esac
 
 

@@ -13,12 +13,11 @@ TERM = "xterm-256color"
 WINIT_X11_SCALE_FACTOR = "1.2"
 
 [window]
-
-multiplier = 3
 opacity = 1.0
 
 [scrolling]
 history = 10000
+multiplier = 3
 
 [window.dimensions]
 columns = 1000
