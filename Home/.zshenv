@@ -60,7 +60,7 @@ alias cd..='cd ..'
 alias calculator='galculator'
 alias clean='clear'
 
-
+alias yt-find="ytfzf -t"
 alias yt-mp3="yt-dlp --extract-audio --audio-format mp3 " #  then paste link
 alias yt-video="yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 " # "URL"  then paste link inside of COTES
 #youtube-dl --merge-output-format mp4 -f "bestvideo+bestaudio[ext=m4a]/best" --embed-thumbnail --add-metadata [url]

@@ -42,10 +42,14 @@ alias hw="hwinfo --short"
 alias cdwm='cd ~/.config/dwm/'
 alias makedwm='sudo make clean install'
 
-
-
+# search and show with tumbnails
+alias yt-find="ytfzf -t"
+# Downsload from Youtube as MP3 audio
 alias yt-mp3="yt-dlp --extract-audio --audio-format mp3 "
+# Downsload from Youtube as MP4 VIDEO
 alias yt-video="yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4 "
+
+
 
 # lf icons
 export LF_ICONS="\

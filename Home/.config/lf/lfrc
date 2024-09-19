@@ -200,8 +200,7 @@ map gs cd ~/.local/bin
 map gc cd ~/.config
 map gw cd ~/.config/dwm/
 map gd cd ~/dot_files
-map ga cd ~/ARDUINO
-
+map gp cd ~/Área\ de\ Trabalho/Programação/ARDUINO/
 
 
 
@@ -269,7 +268,7 @@ map se :set sortby ext; set info
 #will continue running even if you close the terminal session that originally started it
 
 # really need disown to open ?
-map oc $code-oss "$f" & disown; exit
+map oc $vscodium "$f" & disown; exit
 #map ol $leafpad "$f" & disown; exit
 map ov $vim "$f" & disown; exit
 map og $gedit "$f" ; exit

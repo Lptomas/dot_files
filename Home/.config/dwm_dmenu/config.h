@@ -2,16 +2,11 @@
 /* Default settings; can be overriden by command line. */
 
 
-static const char dmenufont[]       = "hack:size=12";
-static const char col_gray1[]       = "#4d4d4d";
-static const char col_gray2[]       = "#666666";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_gray5[]       = "#060606";
+// mesmas cores do dmwn_run
 static const char col_cyan[]        = "#005577";
 static const char col_green[]       = "#07AE06";
-static const char col_dark_green[]       = "#153715"; //
-static const char col_red[]       = "#ff0000";
+static const char col_dark_green[]  = "#153715"; //
+static const char col_red[]       	= "#ff0000";
 static const char col_black[]       = "#000000";
 
 

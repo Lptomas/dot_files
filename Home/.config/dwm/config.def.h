@@ -1,4 +1,7 @@
 /*
+
+EDIT:    config.def.h     NOT   config.h   remove "config.h" before compiling
+
 patch -p1 < /path/to/patch.diff
 remove "config.h" before compiling
 
@@ -165,6 +168,27 @@ static const Rule rules[] = {
 	{ "pixeltomatrix.exe",  		NULL,    			NULL,      	0,            		1,           	-1 },
 	{ "pavucontrol",  				NULL,    			NULL,      	0,            		1,           	-1 },
 	{ "float_windows",  			NULL,    			NULL,      	0,            		1,           	-1 },
+	
+	
+	/* "Picture-in-Picture" do firefox--nao está a funcionar
+	{ "Toolkit",  					NULL,    			NULL,      	0,            		1,           	-1 },	
+	{ NULL,  						"Toolkit",  		NULL,      	0,            		1,           	-1 },
+	{ NULL,  		   				NULL,      			"Toolkit",  0,            		1,           	-1 },
+	{ "Picture-in-Picture",  		NULL,    			NULL,      	0,            		1,           	-1 },	
+	{ NULL,  						"Picture-in-Picture", NULL,     0,            		1,           	-1 },
+	{ NULL,  		   				NULL,      			"Picture-in-Picture",  0,       1,           	-1 },
+*/
+	{ NULL,  "Toolkit",  		   				     			"Picture-in-Picture",  0,       1,           	-1 },
+
+/*
+	 *	WM_CLASS(STRING) = instance, class
+	 *	WM_NAME(STRING) = title
+WM_CLASS(STRING) = "Toolkit", "firefox"
+WM_NAME(STRING) = "Picture-in-Picture"
+
+*/
+
+
 
 // Workspace 1 // WEB
 	/* class                       	instance    		title      		tags mask     		isfloating  	monitor */

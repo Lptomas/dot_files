@@ -47,27 +47,40 @@ BROWSER_SET_CMD="firefox"
 
 BROWSER="Firefox "
 BROWSER_CMD="$BROWSER_SET_CMD"
-WHASTAPP="WhastApp 󰖣"
-WHASTAPP_CMD="whatsapp-nativefier"
-YOUTUBE="Youtube "
+YOUTUBE="  Youtube "
 YOUTUBE_CMD="$BROWSER_SET_CMD https://www.youtube.com/"
 YOUTUBE_Invidious="Youtube No Google "
 YOUTUBE_CMD_Invidious="$BROWSER_SET_CMD https://inv.bp.projectsegfau.lt/feed/popular"
-EMAIL="Email 󰇮"
+EMAIL=" Email 󰇮"
 EMAIL_CMD="$BROWSER_SET_CMD https://mail.google.com/mail/u/0/#inbox"
-MAPS="Maps 󰗵"
+MAPS=" Maps 󰗵"
 MAPS_CMD="$BROWSER_SET_CMD https://www.google.com/maps/"
-PHOTOS="Maps 󰗵"
+PHOTOS=" Photos "
 PHOTOS_CMD="$BROWSER_SET_CMD https://photos.google.com/"
+SHEETS=" SHEETS 󱎏"
+SHEETS_CMD="$BROWSER_SET_CMD https://docs.google.com/spreadsheets/u/0/"
+DOCS=" DOCs "
+DOCS_CMD="$BROWSER_SET_CMD https://docs.google.com/document/u/0/"
+KEEP=" KEEP Notas 󰛜"
+KEEP_CMD="$BROWSER_SET_CMD https://keep.google.com/u/0/"
+
 MYCUF="MYCUF 󰩂"
 MYCUF_CMD="$BROWSER_SET_CMD https://www.saudecuf.pt/mycuf/login"
 NETFLIX="Netflix 󰝆"
 NETFLIX_CMD="$BROWSER_SET_CMD https://www.netflix.com/browse"
+IPMA="IPMA 󰖙 tempo"
+IPMA_CMD="$BROWSER_SET_CMD https://www.ipma.pt/pt/index.html"
+WHASTAPP="WhastApp 󰖣"
+WHASTAPP_CMD="whatsapp-nativefier"
+NERDFONTS="NerdFonts  "
+NERDFONTS_CMD="$BROWSER_SET_CMD https://www.nerdfonts.com/cheat-sheet"
 
 
 
 
-WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$YOUTUBE_Invidious\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n"
+
+
+WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$YOUTUBE_Invidious\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n$IPMA\n$NERDFONTS\n$SHEETS\n$DOCS\n$KEEP\n"
 
 ############################################################################################################ 
 ######  FM - File manager
@@ -82,7 +95,17 @@ PCLOUD_CMD='/home/lpt/AppImage_snaps_etc/pcloud'   # NAO funciona ...no terminal
 ICEDRIVE="iceDrive "
 ICEDRIVE_CMD="/usr/bin/icedrive"
 
-FM="$DOLPHIN\n$THUNAR\n$NEMO\n$PCLOUD\n$ICEDRIVE\n"
+SYNCTHING="sycnthing 󱓎 start"
+SYNCTHING_CMD="syncthing"
+
+if [ "$( pidof syncthing )" != "" ]; then
+	SYNCTHING="sycnthing 󱓎 OFF"
+	SYNCTHING_CMD="killall syncthing"
+fi
+
+
+
+FM="$DOLPHIN\n$THUNAR\n$NEMO\n$PCLOUD\n$ICEDRIVE\n$SYNCTHING\n"
 
 ############################################################################################################ 
 ######  OFFICE
@@ -91,7 +114,8 @@ NOTAS_CMD="xed"
 OFFICE_DE="LibreOffice 󰈙"
 OFFICE_CMD="libreoffice"
 PDF="PDF "
-PDF_CMD="evince"
+#PDF_CMD="evince"
+PDF_CMD="okular"
 PDF_Arranger="PDFarranger 󰕕"
 PDF_Arranger_CMD="pdfarranger"
 
@@ -117,10 +141,12 @@ CODE_ARDUINO_CMD="code_arduino"
 CODE_DOTFILES="Code   DOTFILES"
 CODE_DOTFILES_CMD="code_dot_files"       # Added in  
 
+ARDUINO="Arduino"
+ARDUINO_CMD="arduino-ide"
 EASYEDA="EasyEda "
 EASYEDA_CMD="/opt/easyeda/easyeda %f "
 
-DEV="$CODE\n$CODE_ARDUINO\n$CODE_DOTFILES\n$EASYEDA\n"
+DEV="$CODE\n$CODE_ARDUINO\n$CODE_DOTFILES\n$ARDUINO\n$EASYEDA\n"
 
 ############################################################################################################  		 
 # *** POWER
@@ -243,7 +269,7 @@ monitores_connected=""
 
 if [ "$( xrandr -q | grep 'HDMI-A-0' | awk '{print $2}')" == "connected" ] || [ "$( xrandr -q | grep 'DisplayPort-0' | awk '{print $2}')" == "connected" ] ; then
 		if [ "$(xrandr --listmonitors | grep 'HDMI'  | awk '{print $4}')" == "HDMI-A-0" ]; then   # Está activo . podemos desligar
-				monitores_connected="$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON"
+				monitores_connected="$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON"  #$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON
 		else
 				monitores_connected="$MONITOR_OFFICE_ON" 	   # NÃO Está activo . podemos Ligar
 		fi	
@@ -253,7 +279,7 @@ fi
 
 
 #SCREENS="$MONITORES\n$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON\n"
-SCREENS="$MONITORES\n$monitores_connected\n"
+SCREENS="$monitores_connected\n$MONITORES\n$MONITOR_ALL_OFF\n"
 
 ############################################################################################################  		 
 # *** BLUETOOTH
@@ -349,7 +375,7 @@ TOOL="$CALCULADORA\n"
 
 ########################################################################################################
 # ***  APPS   -  Gestores de APPs
-APPS="Apps 󰀻"
+APPS="Apps All 󰀻"
 APPS_CMD="xfce4-appfinder"
 
 APP="$APPS\n"
@@ -359,7 +385,7 @@ APP="$APPS\n"
 ########################################################################################################
 
 
-all="$WEB$FM$OFFICE$DEV$PW$REMOTE$TOOL$BLUETOOTH$OPT$GAME$APP$SCREENS$NET$CLI$WIFI"
+all="$WEB$PW$FM$OFFICE$DEV$REMOTE$TOOL$BLUETOOTH$OPT$GAME$APP$SCREENS$NET$CLI$WIFI"
 
 
 
@@ -379,18 +405,26 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$MAPS		) $MAPS_CMD 	;;
 	$PHOTOS		) $PHOTOS_CMD 	;;
 	$MYCUF		) $MYCUF_CMD 	;;
-
+	$IPMA		) $IPMA_CMD 	;;
+	$NERDFONTS	) $NERDFONTS_CMD ;;
+	$DOCS		) $DOC_CMD 		;;
+	$SHEETS		) $SHEETS_CMD 	;;
+	$KEEP		) $KEEP_CMD 	;;
 # *** FM
 	$THUNAR		) $THUNAR_CMD 	;;
 	$NEMO		) $NEMO_CMD 	;;
 	$DOLPHIN	) $DOLPHIN_CMD	;;
 
+# *** Clould
 	$PCLOUD		) $PCLOUD_CMD 	;;
 	$ICEDRIVE	) $ICEDRIVE_CMD ;;
+	$SYNCTHING	) $SYNCTHING_CMD ;;
+
+
 
 # *** OFFICE
 	$NOTAS			) $NOTAS_CMD		;;
-	$OFFICE_DE			) $OFFICE_CMD		;;
+	$OFFICE_DE		) $OFFICE_CMD		;;
 	$PDF			) $PDF_CMD			;;
 	$PDF_Arranger 	) $PDF_Arranger_CMD ;;
 
@@ -398,7 +432,7 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$CODE 			) $CODE_CMD 			;;
 	$CODE_ARDUINO 	) $CODE_ARDUINO_CMD 	;;
 	$CODE_DOTFILES 	) $CODE_DOTFILES_CMD 	;;
-
+	$ARDUINO		) $ARDUINO_CMD			;;
 	$EASYEDA	) $EASYEDA_CMD 	;;  
 
 # *** POWER

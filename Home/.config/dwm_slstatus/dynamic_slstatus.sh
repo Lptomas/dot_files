@@ -37,13 +37,18 @@ case $conn_aux in
 esac
 
 
-# name of the connected NetWork wirelles;
-name_conn="$(iw dev | grep ssid | awk '{print $2}')"
-case $name_conn in
-	'Desvio_5G'	) name_conn="5" 		;;
-	'Desvio'	) name_conn="2.4" 		;;
-	*			) name_conn="";; #name_conn="$name_conn";;
-esac
+
+if [ "$conn" != "" ]; then  # don't know what appens with the other $conn_aux
+
+		# name of the connected NetWork wirelles;
+		name_conn="$( iw dev | grep ssid | awk '{print $2}' )"
+		case $name_conn in
+			'Desvio_5G'	) name_conn="5 " 		;;
+			'Desvio'	) name_conn="2.4" 		;;
+			*			) name_conn=""			;; #name_conn="$name_conn";;
+		esac
+
+fi
 
 
 ########################################################################################################
@@ -86,7 +91,15 @@ bat_state="$(cat /sys/class/power_supply/BAT0/status)"
 
 bat_icon="";
 
-if [ $bat_percentage -lt 15 ]; then
+if [ $bat_percentage -lt 5 ]; then
+
+	if [ $bat_state -eq 'Not charging' ]; then	
+		notify-send -h string:bgcolor:#000000 -h string:fgcolor:#c61616 -h string:frcolor:#c61616 "BATERIA"
+	fi
+	
+elif [ $bat_percentage -lt 10 ]; then
+	bat_icon="󰂎"
+elif [ $bat_percentage -lt 15 ]; then
 	bat_icon="󰂎"
 elif [ $bat_percentage -lt 40 ]; then
 	bat_icon=""
@@ -96,6 +109,7 @@ elif [ $bat_percentage -lt 90 ]; then
 	bat_icon=""
 elif [ $bat_percentage -lt 100 ]; then
 	bat_icon=""
+	
 else
 	bat_icon="?%"
 fi
@@ -143,6 +157,14 @@ if [ "$( pidof flameshot )" != "" ]; then
 	flameshot=""
 fi
 
+if [ "$( pidof syncthing )" != "" ]; then
+	sycnthing="󱓎"  # 󱍸 󱟆 󱓎  󰓦 󱦕
+else #OFF
+	sycnthing=""
+fi
+
+
+
 #if [ "$( pidof pcloud )" != "" ]; then
 #	pcloud=""
 #fi
@@ -157,7 +179,7 @@ fi
 ########################################################################################################
 #### OUTPUT ####
 #echo "$ram_used $bat $conn $sound $date $time $steam $touchpad $firefox $flameshot$pcloud " $pcloud  $steam$ firefox $monitores_connected 
-echo "$PF_icon $bat $time $touchpad $conn$name_conn $bluetooth $flameshot $sound"
+echo " $PF_icon $bat $time $touchpad $conn$name_conn $sycnthing $flameshot $bluetooth $sound"
  
 
 
