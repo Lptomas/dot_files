@@ -422,7 +422,16 @@ all="$WEB$PW$FM$OFFICE$DEV$REMOTE$TOOL$BLUETOOTH$OPT$GAME$APP$SCREENS$NET$CLI$WI
 ########################################################################################################
 # set the "NAME" with the comand to execute in this CASE function
 
-case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
+
+title_up_time="$(awk '{print int($1/3600)":"int(($1%3600)/60)":"int($1%60)}' /proc/uptime)"
+title_date="$(date +"%a.%d.%b")"
+
+
+
+####case "$(printf "$all" | dmenu -p   "$title_date" )" in
+case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
+
+
 
 # *** WEB
 	$BROWSER	) $BROWSER_CMD 	;;
