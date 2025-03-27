@@ -2,6 +2,10 @@
 # LPT
 # used in slstatus-DWM
 
+#Attention: 
+# Arch and VOID have some diferent setting in this FILE
+# test this file on TERMINAL:  #sh ~/path/dynamic:skstatus.sh
+
 ########################################################################################################
 #### DATE + TIME ####
 time="$(date +"%H:%M")"
@@ -12,15 +16,15 @@ date="$(date +"%a.%d.%b")"
 
 ########################################################################################################
 #### Power profile ####
-PF="$(powerprofilesctl get)"
+#PF="$(powerprofilesctl get)"
 PF_icon=""
 
-case $PF in
-	'performance'	) 	PF_icon="󰊖" ;;
-	'balanced'		)	PF_icon="󰡵" ;;
-	'power-saver'	) 	PF_icon="󰸿" ;;
-	*				) 	PF_icon="?" ;;
-esac
+#case $PF in
+#	'performance'	) 	PF_icon="󰊖" ;;
+#	'balanced'		)	PF_icon="󰡵" ;;
+#	'power-saver'	) 	PF_icon="󰸿" ;;
+#	*				) 	PF_icon="?" ;;
+#esac
 
 
 ########################################################################################################
@@ -32,7 +36,8 @@ case $conn_aux in
 	'enp3s0f2'	) conn="󱎔" ;;
 	'enp3s0f3u2') conn="󱎔"	;;
 	'wlp2s0'	) conn="󰀃"	;;
-	'wlan0'		) conn="󰀃"	;;  #HP aero
+	'wlp1s0'	) conn="󰀃"	;;  #HP aero Voidlinux
+	'wlan0'		) conn="󰀃"	;;  #HP aero arch
 	*			) conn="" ;;
 esac
 
@@ -43,8 +48,8 @@ if [ "$conn" != "" ]; then  # don't know what appens with the other $conn_aux
 		# name of the connected NetWork wirelles;
 		name_conn="$( iw dev | grep ssid | awk '{print $2}' )"
 		case $name_conn in
-			'Desvio_5G'	) name_conn="5 " 		;;
-			'Desvio'	) name_conn="2.4" 		;;
+			'Desviado'	) name_conn="5 " 		;;
+			'Desvioado_2G5'	) name_conn="2.4" 		;;
 			*			) name_conn=""			;; #name_conn="$name_conn";;
 		esac
 
@@ -62,11 +67,17 @@ sound=$([ "$_vol" = '0%'  ] && echo "$_vol" || echo "$_vol") #ﱝ婢
 
 
 ########################################################################################################
-#### #### #### bluetooth ####  Indicate The connected Headphone device
-
+#### bluetooth ####  Indicate The connected Headphone device
+# check if bluetooth is ON
 bluetooth_power="$( bluetoothctl show | grep -E "Powered"  | awk '{print $2}' )"
-bluetooth_connected="$( bluetoothctl "info" | grep -E "Name"  | awk '{print $2}' )"
-if [ "$bluetooth_power" == "yes" ]; then     # bluetooth is ON
+
+#ARCH: if [ "$bluetooth_power" == "yes" ]; then     # bluetooth is ON
+#VOID: if [ "$bluetooth_power" = "yes" ]; then     # bluetooth is ON
+if [ "$bluetooth_power" = "yes" ]; then     # bluetooth is ON
+	#echo "entrou"
+	# check the connected devide
+	bluetooth_connected="$( bluetoothctl "info" | grep -E "Name"  | awk '{print $2}' )"
+
 		case $bluetooth_connected in 
 			''			)	bluetooth="󰂯"	;;	  # laptop		
 			'Xiaomi'	)	bluetooth="X" ;; 
@@ -137,10 +148,12 @@ fi
 ########################################################################################################
 #### Important settings ####
 #void
+
 #if [ $(synclient -l | grep "TouchpadOff .*=.*" |  egrep -o '[0-9]') != "0" ]]; then 
 
-# #"xinput list" dá o numero do List-Props ,  no aero é 11
-if [ $(xinput list-props "11" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
+# #"xinput list" dá o numero do List-Props ,  no aero-Arch é 11 no void é 10
+#Arch
+if [ $(xinput list-props "10" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
 	touchpad=""
 else #OFF
 	touchpad="󱘃"
@@ -179,7 +192,7 @@ fi
 ########################################################################################################
 #### OUTPUT ####
 #echo "$ram_used $bat $conn $sound $date $time $steam $touchpad $firefox $flameshot$pcloud " $pcloud  $steam$ firefox $monitores_connected 
-echo " $PF_icon $bat $time $touchpad $conn$name_conn $sycnthing $flameshot $bluetooth $sound"
+echo " $PF_icon $bat $time $touchpad $conn $name_conn $sycnthing $flameshot $bluetooth $sound"
  
 
 

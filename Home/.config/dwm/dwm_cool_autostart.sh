@@ -2,8 +2,8 @@
 
 
 # Used in "../dwm/config.def.h" with : dwm-cool-autostart-6.2.diff 
-
-devmon &            #mount removable devices: pens etc 
+slstatus &
+devmon &            #mount removable devices: pens etc --verificar ARCH , void nao existe
 cvt 1680 1050 59    # generate resolution for second Screen
 xrandr  --newmode "1680x1050_59.00"  143.75  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync # Create a new Mode
 xrandr --addmode HDMI-A-0 1680x1050_59.00  # add the new resolution mode to the avaliable  HDMI-A-0 list 
@@ -13,15 +13,22 @@ xrandr --output eDP --primary --mode 1920x1200 --pos 0x0 --rotate normal --outpu
 #autorandr -c &
 setxkbmap pt &
 numlockx on &
-slstatus &
+
 flameshot &
-#nm-applet &         # for slstatus  
+#nm-applet &         # for slstatus  net woek
 #volumeicon &        # for slstatus
-xfce4-clipman &
+
 #blueman-applet &    # for slstatus
 #blueberry &         # for slstatus
 #pavucontrol & 
 dunst &              # for notifications, it is needed for " flameshot"
 firefox &
+pipewire &           # void linux: need for sound
+pipewire-pulse &    # void linux: need for sound
+dbus-run-session &
 
-
+#xfce4-clipman &
+clipit &    # for slstatus - clipboard manager
+synclient tapbutton1=1 & # Enable double tap in touchpad
+# ver se isto resolve o TEARing no ecra, mais visivel no youtube
+xrandr |grep ' connected'|cut -f 1 -d ' '|while read display;do xrandr --output $display --set TearFree on;done

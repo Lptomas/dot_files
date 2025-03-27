@@ -1,4 +1,6 @@
 /*
+To compile : # cd ~/.config/dwm/ ; rm -f config.h ; sudo make clean install'
+
 
 EDIT:    config.def.h     NOT   config.h   remove "config.h" before compiling
 
@@ -98,8 +100,15 @@ man alacritty */
 //const char *spcmd1[] = {"alacritty", "--class", "spterm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml",NULL, NULL,NULL};
 //const char *spcmd2[] = {"alacritty", "--class", "spfm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "lf",NULL};
 //const char *spcmd6[] = {"alacritty", "--class", "sphtop", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "htop",NULL};
+
 const char *spcmd1[] = {"alacritty", "--class", "spterm", "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=30",NULL, NULL,NULL};
+/*Arch
 const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=160", "-o", "window.dimensions.lines=45", "-e", "sh", "-c", "~/.local/bin/lfub", NULL};
+*/
+/*Void*/
+const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=160", "-o", "window.dimensions.lines=45", "-e", "sh", "-c", "lf", NULL};
+
+
 const char *spcmd3[] = {"thunar", NULL }; 
 const char *spcmd4[] = {"firefox", "--class", "firefox",NULL }; // Nao funciona
 const char *spcmd5[] = {"code", NULL }; // estava thunar
@@ -235,7 +244,7 @@ WM_NAME(STRING) = "Picture-in-Picture"
 	{ NULL, 		   				NULL,    			"Steam",   			1 << 5,      		0,           	-1 },	
 	{ "Lutris", 		   			NULL,    			NULL,      			1 << 5,       		0,           	-1 },
 	{ "chromium", 		   			NULL,    			NULL,      			1 << 5,       		0,           	-1 },
-
+	{ "steam_proton", 		   		NULL,    			NULL,      			1 << 5,       		0,           	-1 },
 
 // Workspace 7 // bluethood e som e comfig
 	/* class                    	instance    		Title      				tags mask     isfloating   		monitor */

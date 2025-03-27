@@ -1,5 +1,11 @@
 #!/bin/sh
 
+#Attention: 
+# Arch and VOID have some diferent setting in this FILE
+# test this file on TERMINAL:  #sh ~/path/dmenu_favoritos.sh
+
+#Software necessário:
+# xinput para habilitar/desabilitar o touchpad
 
 
 
@@ -90,8 +96,8 @@ NEMO="Nemo  FM"
 NEMO_CMD="nemo  FM" 
 DOLPHIN="Dolphin  FM"
 DOLPHIN_CMD="dolphin"
-PCLOUD="pCloud "
-PCLOUD_CMD='/home/lpt/AppImage_snaps_etc/pcloud'   # NAO funciona ...no terminal trabalha   PCLOUD_CMD='~/AppImage_snaps_etc/pcloud.AppImage'
+PCLOUD="pCloud "    #
+PCLOUD_CMD='/home/et/AppImage_snaps_etc/pcloud'
 ICEDRIVE="iceDrive "
 ICEDRIVE_CMD="/usr/bin/icedrive"
 
@@ -114,8 +120,8 @@ NOTAS_CMD="xed"
 OFFICE_DE="LibreOffice 󰈙"
 OFFICE_CMD="libreoffice"
 PDF="PDF "
-#PDF_CMD="evince"
-PDF_CMD="okular"
+PDF_CMD="evince"
+#PDF_CMD="okular"
 PDF_Arranger="PDFarranger 󰕕"
 PDF_Arranger_CMD="pdfarranger"
 
@@ -124,7 +130,7 @@ OFFICE="$NOTAS\n$OFFICE_DE\n$PDF\n$PDF_Arranger\n"
 ############################################################################################################ 
 ######  DEV
 CODE="Code "
-CODE_CMD="code"
+CODE_CMD="code-oss"
 #Open with CODE in specfic folder:   dmenu does't open alias or "  code ~/path/to/folfer/"
 # 1st - Create a new BIN with the same permition of code:     sudo cp /usr/bin/code /usr/bin/code_new      
 # 2nd - Open the code_new:  sudo EDITOR /usr/bin/code_new
@@ -154,7 +160,7 @@ DEV="$CODE\n$CODE_ARDUINO\n$CODE_DOTFILES\n$ARDUINO\n$EASYEDA\n"
 alacritty_power="alacritty --hold --class float_windows --config-file /home/lpt/.config/alacritty/alacritty.yml -o window.dimensions.columns=30 -o window.dimensions.lines=1"
 
 SHUNTDOWN="Shutdown 󰐥"
-SHUNTDOWN_CMD="$alacritty_power -e sudo shutdown now"
+SHUNTDOWN_CMD="$alacritty_power -e sudo shutdown -h now"
 REBOOT="Reboot 󰐥"
 REBOOT_CMD="$alacritty_power -e sudo reboot"
 EXIT="Exit dwm 󰩈"
@@ -209,21 +215,35 @@ GFORCE="GforceNow 󰊖"
 GFORCE_CMD="chromium https://play.geforcenow.com/mall/#/layout/games"
 DOOM="Doom 󰊖"
 DOOM_CMD="gzdoom"
+FLATPAK_BOTTLES="bottles 󰡔 Flatpak"
+FLATPAK_BOTTLES_CMD="flatpak run com.usebottles.bottles"
+FLATPAK_BOTTLES_BATTLE_NET=" Battle net bottles "
+FLATPAK_BOTTLES_BATTLE_NET_CMD="xdg-open bottles:run/Battle/Battle.net"
+FLATPAK_BOTTLES_BMX_MH="BMX Matt H bottles"
+FLATPAK_BOTTLES_BMX_MH_CMD="xdg-open bottles:run/BMX/BMX"
+FLATPAK_BOTTLES_BMX_DM="BMX Dave M bottles"
+FLATPAK_BOTTLES_BMX_DM_CMD="xdg-open bottles:run/BMX/NgBMX"
 
-GAME="$STEAM\n$GFORCE\n$DOOM\n"
+
+
+
+GAME="$STEAM\n$GFORCE\n$DOOM\n$FLATPAK_BOTTLES\n$FLATPAK_BOTTLES_BATTLE_NET\n$FLATPAK_BOTTLES_BMX_DM\n$FLATPAK_BOTTLES_BMX_MH\n"
 
 ############################################################################################################  		 
 # *** OPT
+#### TouchPAD #### Tongle input in dmenu
+# #"xinput list" dá o numero do List-Props ,  no aero-ARCH é 11 no void é 10. 
+
+
 AUDIO="audio "
 AUDIO_CMD="pavucontrol"
 TOUCHPAD_OFF="Touchpad Off"					# se ele está ON .. queremos por a OFF
-TOUCHPAD_OFF_CMD="xinput disable 11"		#"xinput list" dá o numero do List-Props ,  no aero o touchpad é 11
+TOUCHPAD_OFF_CMD="xinput disable 10"		#"xinput list" dá o numero do List-Props ,  no aero ARCH o touchpad é 11
 TOUCHPAD_ON="Touchpad On" 					# se ele está OFF .. queremos por a ON
-TOUCHPAD_ON_CMD="xinput enable 11"			#"xinput list" dá o numero do List-Props ,  no aero o touchpad é 11
+TOUCHPAD_ON_CMD="xinput enable 10"			#"xinput list" dá o numero do List-Props ,  no aero o touchpad é 11
 
-#### TouchPAD #### Tongle input in dmenu
-# #"xinput list" dá o numero do List-Props ,  no aero é 11
-if [ $(xinput list-props "11" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
+
+if [ $(xinput list-props "10" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
 	touchpad=$TOUCHPAD_OFF
 else #touchpad is disabled: we want to turn ON, 
 	touchpad=$TOUCHPAD_ON
@@ -237,13 +257,14 @@ MONITORES="Monitores OPT"
 MONITORES_CMD="arandr"
 MONITOR_ALL_OFF="Monitors OFF ALL"
 MONITOR_ALL_OFF_CMD="xrandr --output eDP --primary --mode 1920x1200 --pos 0x0 --rotate normal --output HDMI-A-0 --off --output DisplayPort-0 --off"
-MONITOR_OFFICE_ON="Monitor ON HMI"
+MONITOR_OFFICE_ON_L="Monitor LEFT ON HMI"
+MONITOR_OFFICE_ON_R="Monitor RIGHT ON HMI"
 MONITOR_OFFICE_GET='cvt 1680 1050 59'   # get the Modeline for the resolution 
 MONITOR_OFFICE_NEW='xrandr  --newmode "1680x1050_59.00"  143.75  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync' # Create a new Mode
 MONITOR_OFFICE_ADD='xrandr --addmode HDMI-A-0 1680x1050_59.00'  # add the new resolution mode to the avaliable  HDMI-A-0 list 
-MONITOR_OFFICE_ON_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 1680x0 --rotate normal --output HDMI-A-0 --mode 1680x1050_59.00 --pos 0x0 --rotate normal --output DisplayPort-0 --off'
+MONITOR_OFFICE_ON_L_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 1680x0 --rotate normal --output HDMI-A-0 --mode 1680x1050_59.00 --pos 0x0 --rotate normal --output DisplayPort-0 --off'
+MONITOR_OFFICE_ON_R_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 0x0 --rotate normal --output HDMI-A-0 --mode 1680x1050_59.00 --pos 1920x0 --rotate normal --output DisplayPort-0 --off'
 #MONITOR_OFFICE_ON_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 1680x0 --rotate normal --output HDMI-A-0 --mode 1680x1050 --pos 0x0 --rotate normal --output DisplayPort-0 --off'
-
 
 
 
@@ -267,19 +288,18 @@ MONITOR_OFFICE_ON_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 1680
 
 monitores_connected=""
 
-if [ "$( xrandr -q | grep 'HDMI-A-0' | awk '{print $2}')" == "connected" ] || [ "$( xrandr -q | grep 'DisplayPort-0' | awk '{print $2}')" == "connected" ] ; then
-		if [ "$(xrandr --listmonitors | grep 'HDMI'  | awk '{print $4}')" == "HDMI-A-0" ]; then   # Está activo . podemos desligar
-				monitores_connected="$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON"  #$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON
-		else
-				monitores_connected="$MONITOR_OFFICE_ON" 	   # NÃO Está activo . podemos Ligar
-		fi	
-else
-	monitores_connected="not_ok"
-fi
+#if [ "$( xrandr -q | grep 'HDMI-A-0' | awk '{print $2}')" == "connected" ] || [ "$( xrandr -q | grep 'DisplayPort-0' | awk '{print $2}')" == "connected" ] ; then
+#		if [ "$(xrandr --listmonitors | grep 'HDMI'  | awk '{print $4}')" == "HDMI-A-0" ]; then   # Está activo . podemos desligar
+#				monitores_connected="$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON"  #$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON
+#		else
+#				monitores_connected="$MONITOR_OFFICE_ON" 	   # NÃO Está activo . podemos Ligar
+#		fi	
+#else
+#	monitores_connected="not_ok"
+#fi
 
-
-#SCREENS="$MONITORES\n$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON\n"
-SCREENS="$monitores_connected\n$MONITORES\n$MONITOR_ALL_OFF\n"
+#SCREENS="$monitores_connected\n$MONITORES\n$MONITOR_ALL_OFF\n"
+SCREENS="$MONITOR_OFFICE_ON_R\n$MONITORES\n$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON_L\n"
 
 ############################################################################################################  		 
 # *** BLUETOOTH
@@ -316,9 +336,7 @@ BLUETOOTH_3_OFF_CMD="bluetoothctl disconnect FC:58:FA:42:44:93"
 
 #### bluetooth devices ####
 #1st - Check if bluetooth is Powered ON, iF yes, show the other options
-
 bluetooth_power="$( bluetoothctl show | grep -E "Powered"  | awk '{print $2}')"    # awk vai retirar a palavra: $2
-bluetooth_connected="$(bluetoothctl "info" | grep -E "Name" | awk '{print $2}' )"
 
 case $bluetooth_power in
 	'yes'	) 	bluetooth_power="$BLUETOOTH_OFF" ;;   # se está on queremos por OFF
@@ -326,7 +344,18 @@ case $bluetooth_power in
 	*		)  	bluetooth_power="Bluetooth Power ?" ;;   
 esac
 
-if [ "$bluetooth_power" == "$BLUETOOTH_OFF" ]; then   # bluetooth_power =  
+
+#ARCH: if [ "$bluetooth_power" == "$BLUETOOTH_OFF" ]; then   # bluetooth_power =  
+#VOID: if [ "$bluetooth_power" = "yes" ]; then     # bluetooth is ON
+
+
+
+
+
+if [ "$bluetooth_power" = "$BLUETOOTH_OFF" ]; then   # bluetooth_power =  
+		#2st - Check if bluetooth is Powered ON, iF yes, show the other options
+		bluetooth_connected="$(bluetoothctl "info" | grep -E "Name" | awk '{print $2}' )"
+
 		case $bluetooth_connected in
 			# 	se está ligado ao Xiaomi, queremos ligar ao JBL ou Outro Device
 			'Xiaomi'	) 	bluetooth_connected="$BLUETOOTH_1_OFF\n$BLUETOOTH_2_ON\n$BLUETOOTH_3_ON" ;; 
@@ -407,7 +436,7 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$MYCUF		) $MYCUF_CMD 	;;
 	$IPMA		) $IPMA_CMD 	;;
 	$NERDFONTS	) $NERDFONTS_CMD ;;
-	$DOCS		) $DOC_CMD 		;;
+	$DOCS		) $DOCS_CMD 	;;
 	$SHEETS		) $SHEETS_CMD 	;;
 	$KEEP		) $KEEP_CMD 	;;
 # *** FM
@@ -433,7 +462,7 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$CODE_ARDUINO 	) $CODE_ARDUINO_CMD 	;;
 	$CODE_DOTFILES 	) $CODE_DOTFILES_CMD 	;;
 	$ARDUINO		) $ARDUINO_CMD			;;
-	$EASYEDA	) $EASYEDA_CMD 	;;  
+	$EASYEDA		) $EASYEDA_CMD 	;;  
 
 # *** POWER
 	$SHUNTDOWN			) $SHUNTDOWN_CMD 			;;
@@ -455,10 +484,12 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$BLUEMAN		) $BLUEMAN_CMD 			;;
 
 # *** SCREENS
-	$MONITORES	) $MONITORES_CMD	;;
-	$MONITOR_ALL_OFF	) $MONITOR_ALL_OFF_CMD 	;;
-	$MONITOR_OFFICE_ON	) 	$MONITOR_ALL_OFF_CMD
-							$MONITOR_OFFICE_ON_CMD 	;;
+	$MONITORES			) 	$MONITORES_CMD	;;
+	$MONITOR_ALL_OFF	) 	$MONITOR_ALL_OFF_CMD 	;;
+	$MONITOR_OFFICE_ON_L	) 	$MONITOR_ALL_OFF_CMD
+							$MONITOR_OFFICE_ON_L_CMD 	;;
+	$MONITOR_OFFICE_ON_R	) 	$MONITOR_ALL_OFF_CMD
+							$MONITOR_OFFICE_ON_R_CMD 	;;
 
 # *** BLUETOOTH
 	$BLUETOOTH_ON		) 	$BLUETOOTH_ON_CMD 		;;
@@ -500,6 +531,11 @@ case "$(printf "$all" | dmenu -p "$(date +"%a.%d.%b")" )" in
 	$STEAM	) $STEAM_CMD	;;
 	$GFORCE	) $GFORCE_CMD	;;
 	$DOOM	) $DOOM_CMD		;;
+	$FLATPAK_BOTTLES ) $FLATPAK_BOTTLES_CMD ;;
+	$FLATPAK_BOTTLES_BATTLE_NET ) $FLATPAK_BOTTLES_BATTLE_NET_CMD ;;
+	$FLATPAK_BOTTLES_BMX_DM ) $FLATPAK_BOTTLES_BMX_DM_CMD ;;
+
+
 
 # ** CLI  
 	$TGPT			) $TGPT_CMD 			;;

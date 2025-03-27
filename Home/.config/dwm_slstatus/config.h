@@ -15,11 +15,16 @@ static const char unknown_str[] = "n/a";
 static const char dynamic_slstatus[] = "sh ~/.config/dwm_slstatus/dynamic_slstatus.sh" ;
 
 
+
+// arch = "wlan0"    
+// void= "wlp1s0";
+static const char wifi_conn[] = "wlp1s0";
+
 static const struct arg args[] = {
 	/* function format          argument */
 	
-	{ netspeed_rx, 	"D:%s:","wlan0"},
-	{ netspeed_tx, 	" U:%s ","wlan0"},		
+	{ netspeed_rx, 	"D:%s:",wifi_conn},
+	{ netspeed_tx, 	" U:%s ",wifi_conn},		
 	{ cpu_perc, 		"%s%%:",	NULL  },
 	{ ram_perc, 		"%s%% ",	NULL  },
 
