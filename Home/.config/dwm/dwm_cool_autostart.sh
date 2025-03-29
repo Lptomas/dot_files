@@ -14,18 +14,19 @@ xrandr --output eDP --primary --mode 1920x1200 --pos 0x0 --rotate normal --outpu
 setxkbmap pt &
 numlockx on &
 
-flameshot &
+
 #nm-applet &         # for slstatus  netwokk   -> in dmenu
 #volumeicon &        # for slstatus   -> in dmenu
-
 #blueman-applet &    # for slstatus   -> in dmenu
 #blueberry &         # for slstatus   -> in dmenu
 #pavucontrol & 
-dunst &              # for notifications, it is needed for " flameshot"
+#flameshot &         # not need: DWM->config.def.h ->Flameshoot is called with X11/XF86keysym 
+dunst &              # for notifications, it is needed for "flameshot"
 firefox &
 pipewire &           # void linux: need for sound
 pipewire-pulse &     # void linux: need for sound
 dbus-run-session &
+
 
 #xfce4-clipman &
 clipit &    # for slstatus - clipboard manager

@@ -10,10 +10,10 @@ set ignorecase true
 set autoquit true
 set icons true
 set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
+set previewer ~/.config/lf/preview
 set preview true  #https://www.youtube.com/watch?v=mM_OWfaKfcg
+set cleaner ~/.config/lf/cleaner
 set ratios 1:2:3
-set cleaner '~/.config/lf/cleaner'
-set previewer '~/.config/lf/previewer'
 
 
 #set drawbox on
@@ -70,7 +70,7 @@ cmd mkfile ${{
 #cmd setwallpaper %cp "$f" ~/.config/wall.jpg && xwallpaper --zoom "$f"
 
 # Archive bindings
-cmd extract ${{
+cmd unarchive ${{
   case "$f" in
 	  *.tar.bz) tar -xjvf "$f" ;;
       *.tar.bz2) tar -xjvf "$f" ;;
@@ -222,7 +222,7 @@ map <enter> open
 # Functions : custom
 map mf mkfile
 map md mkdir
-map me extract
+map mu unarchive
 map ma archive
   
 

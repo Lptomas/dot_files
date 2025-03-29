@@ -106,7 +106,7 @@ const char *spcmd1[] = {"alacritty", "--class", "spterm", "-o", "window.dimensio
 const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=160", "-o", "window.dimensions.lines=45", "-e", "sh", "-c", "~/.local/bin/lfub", NULL};
 */
 /*Void*/
-const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=160", "-o", "window.dimensions.lines=45", "-e", "sh", "-c", "lf", NULL};
+const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=160", "-o", "window.dimensions.lines=45", "-e", "sh", "-c", "~/.config/lf/lfub", NULL};
 
 
 const char *spcmd3[] = {"thunar", NULL }; 
@@ -376,7 +376,7 @@ xev
 
 */
 
-#include <X11/XF86keysym.h> // to use XF86XK_TouchpadToggle
+#include <X11/XF86keysym.h> // to use XF86XK_TouchpadToggle    
 
 static const Key keys[] = {
 
