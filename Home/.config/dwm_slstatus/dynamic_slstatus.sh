@@ -1,10 +1,10 @@
 +#!/bin/bash
 # LPT
 # used in slstatus-DWM
-
+# test this file on TERMINAL:  #sh ~/path/dynamic:skstatus.sh
 #Attention: 
 # Arch and VOID have some diferent setting in this FILE
-# test this file on TERMINAL:  #sh ~/path/dynamic:skstatus.sh
+
 
 ########################################################################################################
 #### DATE + TIME ####
@@ -164,10 +164,14 @@ fi
 
 if [ "$( pidof firefox )" != "" ]; then
 	firefox="" 	#firefox=""
+else #OFF
+	firefox=""
 fi
 
 if [ "$( pidof flameshot )" != "" ]; then
 	flameshot=""
+else #OFF
+	flameshot=""
 fi
 
 if [ "$( pidof syncthing )" != "" ]; then
@@ -191,8 +195,8 @@ fi
 
 ########################################################################################################
 #### OUTPUT ####
-#echo "$ram_used $bat $conn $sound $date $time $steam $touchpad $firefox $flameshot$pcloud " $pcloud  $steam$ firefox $monitores_connected 
-echo " $PF_icon $bat $time $touchpad $conn $name_conn $sycnthing $flameshot $bluetooth $sound"
+
+echo " $PF_icon $bat $time $touchpad $conn $name_conn $flameshot $bluetooth $sycnthing $sound "
  
 
 

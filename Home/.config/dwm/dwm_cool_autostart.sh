@@ -15,20 +15,20 @@ setxkbmap pt &
 numlockx on &
 
 flameshot &
-#nm-applet &         # for slstatus  net woek
-#volumeicon &        # for slstatus
+#nm-applet &         # for slstatus  netwokk   -> in dmenu
+#volumeicon &        # for slstatus   -> in dmenu
 
-#blueman-applet &    # for slstatus
-#blueberry &         # for slstatus
+#blueman-applet &    # for slstatus   -> in dmenu
+#blueberry &         # for slstatus   -> in dmenu
 #pavucontrol & 
 dunst &              # for notifications, it is needed for " flameshot"
 firefox &
 pipewire &           # void linux: need for sound
-pipewire-pulse &    # void linux: need for sound
+pipewire-pulse &     # void linux: need for sound
 dbus-run-session &
 
 #xfce4-clipman &
 clipit &    # for slstatus - clipboard manager
-synclient tapbutton1=1 & # Enable double tap in touchpad
+synclient tapbutton1=1 &        # VOID:  Enable double tap in touchpad
 # ver se isto resolve o TEARing no ecra, mais visivel no youtube
 xrandr |grep ' connected'|cut -f 1 -d ' '|while read display;do xrandr --output $display --set TearFree on;done

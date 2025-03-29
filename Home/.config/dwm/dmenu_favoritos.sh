@@ -90,7 +90,7 @@ WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$YOUTUBE_Invidious\n$NETFLIX\n$EMAIL\n$MAPS\
 
 ############################################################################################################ 
 ######  FM - File manager
-THUNAR="Thunar  FM"
+THUNAR="Thunar  FM"s
 THUNAR_CMD="thunar"
 NEMO="Nemo  FM"
 NEMO_CMD="nemo  FM" 
@@ -124,8 +124,10 @@ PDF_CMD="evince"
 #PDF_CMD="okular"
 PDF_Arranger="PDFarranger 󰕕"
 PDF_Arranger_CMD="pdfarranger"
+GIMP="GIMP "
+GIMP_CMD="gimp"
 
-OFFICE="$NOTAS\n$OFFICE_DE\n$PDF\n$PDF_Arranger\n"
+OFFICE="$NOTAS\n$OFFICE_DE\n$PDF\n$PDF_Arranger\n$GIMP\n"
 
 ############################################################################################################ 
 ######  DEV
@@ -465,6 +467,7 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$OFFICE_DE		) $OFFICE_CMD		;;
 	$PDF			) $PDF_CMD			;;
 	$PDF_Arranger 	) $PDF_Arranger_CMD ;;
+	$GIMP			) $GIMP_CMD 		;;
 
 # *** DEV
 	$CODE 			) $CODE_CMD 			;;
