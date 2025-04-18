@@ -33,8 +33,9 @@ PF_icon=""
 #ip -o -4 route show to default | awk '{print $5}'
 conn_aux="$( ip route get 8.8.8.8 | sed -nr 's/.*dev ([^\ ]+).*/\1/p' )"
 case $conn_aux in
-	'enp3s0f2'	) conn="󱎔" ;;
-	'enp3s0f3u2') conn="󱎔"	;;
+	'enp3s0f2'	) conn="󱎔" ;;	#ARCH USB- ethernet Right
+	'enp3s0f3u2') conn="󱎔"	;;	#VOID USB- ethernet left
+	'enp3s0f4u1') conn="󱎔"	;;	#VOID USB- ethernet Right
 	'wlp2s0'	) conn="󰀃"	;;
 	'wlp1s0'	) conn="󰀃"	;;  #HP aero Voidlinux
 	'wlan0'		) conn="󰀃"	;;  #HP aero arch
@@ -49,7 +50,8 @@ if [ "$conn" != "" ]; then  # don't know what appens with the other $conn_aux
 		name_conn="$( iw dev | grep ssid | awk '{print $2}' )"
 		case $name_conn in
 			'Desviado'	) name_conn="5 " 		;;
-			'Desvioado_2G5'	) name_conn="2.4" 		;;
+			'Desviado_2G5'	) name_conn="2.4" 	;;
+			'Deviado_new'	) name_conn="N " 	;;
 			*			) name_conn=""			;; #name_conn="$name_conn";;
 		esac
 
@@ -134,7 +136,7 @@ bat=""
 case $bat_state in
 	'Full'			)	bat="󰁹" ;;    #    $bat_percentage%
 	'Charging'		) 	bat="$bat_percentage%󰚥" ;;
-	'Not charging'	)	bat="$bat_percentage%" ;;
+	'Not charging'	)	bat="$bat_percentage%!s󱐤" ;;
 	'Discharging'	) 	bat="$bat_icon$bat_percentage%󱐤" ;;
 esac
 

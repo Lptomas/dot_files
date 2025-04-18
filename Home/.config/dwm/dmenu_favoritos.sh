@@ -57,6 +57,8 @@ YOUTUBE="  Youtube "
 YOUTUBE_CMD="$BROWSER_SET_CMD https://www.youtube.com/"
 YOUTUBE_Invidious="Youtube No Google "
 YOUTUBE_CMD_Invidious="$BROWSER_SET_CMD https://inv.bp.projectsegfau.lt/feed/popular"
+TRANSLATE="󰗊 translate"
+TRANSLATE_CMD="$BROWSER_SET_CMD https://www.deepl.com"
 EMAIL=" Email 󰇮"
 EMAIL_CMD="$BROWSER_SET_CMD https://mail.google.com/mail/u/0/#inbox"
 MAPS=" Maps 󰗵"
@@ -82,11 +84,16 @@ NERDFONTS="NerdFonts  "
 NERDFONTS_CMD="$BROWSER_SET_CMD https://www.nerdfonts.com/cheat-sheet"
 
 
+PORTALFINANCAS="  Portal das Finanças"
+PORTALFINANCAS_CMD="$BROWSER_SET_CMD https://www.portaldasfinancas.gov.pt"
+PORTALCONTRA="󱅨  Portal Contra Ordenações"
+PORTALCONTRA_CMD="$BROWSER_SET_CMD https://portalcontraordenacoes.ansr.pt"
 
 
 
 
-WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$YOUTUBE_Invidious\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n$IPMA\n$NERDFONTS\n$SHEETS\n$DOCS\n$KEEP\n"
+
+WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$YOUTUBE_Invidious\n$TRANSLATE\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n$IPMA\n$NERDFONTS\n$SHEETS\n$DOCS\n$KEEP\n$PORTALFINANCAS\n$PORTALCONTRA\n"
 
 ############################################################################################################ 
 ######  FM - File manager
@@ -234,18 +241,19 @@ GAME="$STEAM\n$GFORCE\n$DOOM\n$FLATPAK_BOTTLES\n$FLATPAK_BOTTLES_BATTLE_NET\n$FL
 ############################################################################################################  		 
 # *** OPT
 #### TouchPAD #### Tongle input in dmenu
-# #"xinput list" dá o numero do List-Props ,  no aero-ARCH é 11 no void é 10. 
+# #"xinput list" dá o numero do List-Props ,  no ARCH pode ser != do void
+
 
 
 AUDIO="audio "
 AUDIO_CMD="pavucontrol"
 TOUCHPAD_OFF="Touchpad Off"					# se ele está ON .. queremos por a OFF
-TOUCHPAD_OFF_CMD="xinput disable 10"		#"xinput list" dá o numero do List-Props ,  no aero ARCH o touchpad é 11
+TOUCHPAD_OFF_CMD="xinput disable 9"		#"xinput list" dá o numero do List-Props ,  no aero ARCH o touchpad é 11
 TOUCHPAD_ON="Touchpad On" 					# se ele está OFF .. queremos por a ON
-TOUCHPAD_ON_CMD="xinput enable 10"			#"xinput list" dá o numero do List-Props ,  no aero o touchpad é 11
+TOUCHPAD_ON_CMD="xinput enable 9"			#"xinput list" dá o numero do List-Props ,  no aero o touchpad é 11
 
 
-if [ $(xinput list-props "10" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
+if [ $(xinput list-props "9" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
 	touchpad=$TOUCHPAD_OFF
 else #touchpad is disabled: we want to turn ON, 
 	touchpad=$TOUCHPAD_ON
@@ -440,6 +448,7 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$WHASTAPP 	) $WHASTAPP_CMD ;;
 	$YOUTUBE 	) $YOUTUBE_CMD	;;
 	$YOUTUBE_Invidious 	) $YOUTUBE_CMD_Invidious	;;
+	$TRANSLATE	) $TRANSLATE_CMD ;;
 	$NETFLIX	) $NETFLIX_CMD	;;
 	$EMAIL		) $EMAIL_CMD 	;;
 	$MAPS		) $MAPS_CMD 	;;
@@ -450,6 +459,9 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$DOCS		) $DOCS_CMD 	;;
 	$SHEETS		) $SHEETS_CMD 	;;
 	$KEEP		) $KEEP_CMD 	;;
+	$PORTALFINANCAS ) $PORTALFINANCAS_CMD ;;
+	$PORTALCONTRA) $PORTALCONTRA_CMD ;;
+
 # *** FM
 	$THUNAR		) $THUNAR_CMD 	;;
 	$NEMO		) $NEMO_CMD 	;;
