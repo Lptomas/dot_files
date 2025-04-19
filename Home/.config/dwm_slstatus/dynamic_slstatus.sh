@@ -51,7 +51,7 @@ if [ "$conn" != "" ]; then  # don't know what appens with the other $conn_aux
 		case $name_conn in
 			'Desviado'	) name_conn="5 " 		;;
 			'Desviado_2G5'	) name_conn="2.4" 	;;
-			'Deviado_new'	) name_conn="N " 	;;
+			'Desviado_new'	) name_conn="N " 	;;
 			*			) name_conn=""			;; #name_conn="$name_conn";;
 		esac
 
