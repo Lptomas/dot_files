@@ -82,7 +82,8 @@ WHASTAPP="WhastApp 󰖣"
 WHASTAPP_CMD="whatsapp-nativefier"
 NERDFONTS="NerdFonts  "
 NERDFONTS_CMD="$BROWSER_SET_CMD https://www.nerdfonts.com/cheat-sheet"
-
+WOKWI=" WOKWI "
+WOKWI_CMD="$BROWSER_SET_CMD https://wokwi.com/dashboard/projects"
 
 PORTALFINANCAS="  Portal das Finanças"
 PORTALFINANCAS_CMD="$BROWSER_SET_CMD https://www.portaldasfinancas.gov.pt"
@@ -93,7 +94,7 @@ PORTALCONTRA_CMD="$BROWSER_SET_CMD https://portalcontraordenacoes.ansr.pt"
 
 
 
-WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$YOUTUBE_Invidious\n$TRANSLATE\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n$IPMA\n$NERDFONTS\n$SHEETS\n$DOCS\n$KEEP\n$PORTALFINANCAS\n$PORTALCONTRA\n"
+WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$YOUTUBE_Invidious\n$TRANSLATE\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n$IPMA\n$NERDFONTS\n$SHEETS\n$DOCS\n$KEEP\n$PORTALFINANCAS\n$PORTALCONTRA\n$WOKWI\n"
 
 ############################################################################################################ 
 ######  FM - File manager
@@ -459,6 +460,8 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$DOCS		) $DOCS_CMD 	;;
 	$SHEETS		) $SHEETS_CMD 	;;
 	$KEEP		) $KEEP_CMD 	;;
+	$WOKWI		) $WOKWI_CMD	;;
+
 	$PORTALFINANCAS ) $PORTALFINANCAS_CMD ;;
 	$PORTALCONTRA) $PORTALCONTRA_CMD ;;
 
