@@ -33,4 +33,10 @@ dbus-run-session &
 clipit &    # for slstatus - clipboard manager
 synclient tapbutton1=1 &        # VOID:  Enable double tap in touchpad
 # ver se isto resolve o TEARing no ecra, mais visivel no youtube
-xrandr |grep ' connected'|cut -f 1 -d ' '|while read display;do xrandr --output $display --set TearFree on;done
+xrandr |grep ' connected'|cut -f 1 -d ' '|while read display;do xrandr --output $display --set TearFree on;done &
+
+
+
+
+alias xs='sudo xbps-query -Rs' &
+alias xu='sudo xbps-install -Su' &

@@ -53,6 +53,8 @@ BROWSER_SET_CMD="firefox"
 
 BROWSER="Firefox "
 BROWSER_CMD="$BROWSER_SET_CMD"
+CHROMIUM="Chromium "
+CHROMIUM_CMD="chromium"
 YOUTUBE="  Youtube "
 YOUTUBE_CMD="$BROWSER_SET_CMD https://www.youtube.com/"
 YOUTUBE_Invidious="Youtube No Google "
@@ -84,6 +86,9 @@ NERDFONTS="NerdFonts  "
 NERDFONTS_CMD="$BROWSER_SET_CMD https://www.nerdfonts.com/cheat-sheet"
 WOKWI=" WOKWI "
 WOKWI_CMD="$BROWSER_SET_CMD https://wokwi.com/dashboard/projects"
+FACEBOOK="FaceBook"
+FACEBOOK_CMD="$BROWSER_SET_CMD https://www.facebook.com/"
+
 
 PORTALFINANCAS="  Portal das Finanças"
 PORTALFINANCAS_CMD="$BROWSER_SET_CMD https://www.portaldasfinancas.gov.pt"
@@ -94,7 +99,7 @@ PORTALCONTRA_CMD="$BROWSER_SET_CMD https://portalcontraordenacoes.ansr.pt"
 
 
 
-WEB="$BROWSER\n$WHASTAPP\n$YOUTUBE\n$YOUTUBE_Invidious\n$TRANSLATE\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n$IPMA\n$NERDFONTS\n$SHEETS\n$DOCS\n$KEEP\n$PORTALFINANCAS\n$PORTALCONTRA\n$WOKWI\n"
+WEB="$BROWSER\n$CHROMIUM\n$WHASTAPP\n$YOUTUBE\n$FACEBOOK\na$YOUTUBE_Invidious\n$TRANSLATE\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n$IPMA\n$NERDFONTS\n$SHEETS\n$DOCS\n$KEEP\n$PORTALFINANCAS\n$PORTALCONTRA\n$WOKWI\n"
 
 ############################################################################################################ 
 ######  FM - File manager
@@ -234,10 +239,13 @@ FLATPAK_BOTTLES_BMX_MH_CMD="xdg-open bottles:run/BMX/BMX"
 FLATPAK_BOTTLES_BMX_DM="BMX Dave M bottles"
 FLATPAK_BOTTLES_BMX_DM_CMD="xdg-open bottles:run/BMX/NgBMX"
 
+KILL_windows_wine="  kill bottles"
+KILL_windows_wine_CMD="ps -ef | grep 'windows' | grep -v grep | awk '{print $2}' | xargs -r kill -9"
 
 
 
-GAME="$STEAM\n$GFORCE\n$DOOM\n$FLATPAK_BOTTLES\n$FLATPAK_BOTTLES_BATTLE_NET\n$FLATPAK_BOTTLES_BMX_DM\n$FLATPAK_BOTTLES_BMX_MH\n"
+GAME="$STEAM\n$GFORCE\n$DOOM\n$FLATPAK_BOTTLES\n$FLATPAK_BOTTLES_BATTLE_NET\n$FLATPAK_BOTTLES_BMX_DM\n
+		$FLATPAK_BOTTLES_BMX_MH\n$KILL_windows_wine\n"
 
 ############################################################################################################  		 
 # *** OPT
@@ -249,12 +257,12 @@ GAME="$STEAM\n$GFORCE\n$DOOM\n$FLATPAK_BOTTLES\n$FLATPAK_BOTTLES_BATTLE_NET\n$FL
 AUDIO="audio "
 AUDIO_CMD="pavucontrol"
 TOUCHPAD_OFF="Touchpad Off"					# se ele está ON .. queremos por a OFF
-TOUCHPAD_OFF_CMD="xinput disable 9"		#"xinput list" dá o numero do List-Props ,  no aero ARCH o touchpad é 11
+TOUCHPAD_OFF_CMD="xinput disable 10"		#"xinput list" dá o numero do List-Props ,  no aero ARCH o touchpad é 11
 TOUCHPAD_ON="Touchpad On" 					# se ele está OFF .. queremos por a ON
-TOUCHPAD_ON_CMD="xinput enable 9"			#"xinput list" dá o numero do List-Props ,  no aero o touchpad é 11
+TOUCHPAD_ON_CMD="xinput enable 10"			#"xinput list" dá o numero do List-Props ,  no aero o touchpad é 11
 
 
-if [ $(xinput list-props "9" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
+if [ $(xinput list-props "10" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
 	touchpad=$TOUCHPAD_OFF
 else #touchpad is disabled: we want to turn ON, 
 	touchpad=$TOUCHPAD_ON
@@ -446,7 +454,9 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 
 # *** WEB
 	$BROWSER	) $BROWSER_CMD 	;;
+	$CHROMIUM	) $CHROMIUM_CMD ;;
 	$WHASTAPP 	) $WHASTAPP_CMD ;;
+	$FACEBOOK 	) $FACEBOOK_CMD ;;
 	$YOUTUBE 	) $YOUTUBE_CMD	;;
 	$YOUTUBE_Invidious 	) $YOUTUBE_CMD_Invidious	;;
 	$TRANSLATE	) $TRANSLATE_CMD ;;
@@ -463,7 +473,7 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$WOKWI		) $WOKWI_CMD	;;
 
 	$PORTALFINANCAS ) $PORTALFINANCAS_CMD ;;
-	$PORTALCONTRA) $PORTALCONTRA_CMD ;;
+	$PORTALCONTRA	) $PORTALCONTRA_CMD   ;;
 
 # *** FM
 	$THUNAR		) $THUNAR_CMD 	;;
@@ -471,8 +481,8 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$DOLPHIN	) $DOLPHIN_CMD	;;
 
 # *** Clould
-	$PCLOUD		) $PCLOUD_CMD 	;;
-	$ICEDRIVE	) $ICEDRIVE_CMD ;;
+	$PCLOUD		) $PCLOUD_CMD 	 ;;
+	$ICEDRIVE	) $ICEDRIVE_CMD  ;;
 	$SYNCTHING	) $SYNCTHING_CMD ;;
 
 
@@ -489,7 +499,7 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$CODE_ARDUINO 	) $CODE_ARDUINO_CMD 	;;
 	$CODE_DOTFILES 	) $CODE_DOTFILES_CMD 	;;
 	$ARDUINO		) $ARDUINO_CMD			;;
-	$EASYEDA		) $EASYEDA_CMD 	;;  
+	$EASYEDA		) $EASYEDA_CMD 			;;  
 
 # *** POWER
 	$SHUNTDOWN			) $SHUNTDOWN_CMD 			;;
@@ -561,6 +571,7 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$FLATPAK_BOTTLES ) $FLATPAK_BOTTLES_CMD ;;
 	$FLATPAK_BOTTLES_BATTLE_NET ) $FLATPAK_BOTTLES_BATTLE_NET_CMD ;;
 	$FLATPAK_BOTTLES_BMX_DM ) $FLATPAK_BOTTLES_BMX_DM_CMD ;;
+	$KILL_windows_wine_CMD ) $KILL_windows_wine_CMD ;;
 
 
 
