@@ -254,19 +254,27 @@ GAME="$STEAM\n$GFORCE\n$DOOM\n$FLATPAK_BOTTLES\n$FLATPAK_BOTTLES_BATTLE_NET\n$FL
 
 
 
+#Recolhe qual é o ID do Touchpad
+TOUCHPAD_ID=$(xinput list | grep -Eio '(touchpad|glidepoint)\s*id=[0-9]{1,2}' | grep -Eo '[0-9]{1,2}')
+
+
 AUDIO="audio "
-AUDIO_CMD="pavucontrol"
-TOUCHPAD_OFF="Touchpad Off"					# se ele está ON .. queremos por a OFF
-TOUCHPAD_OFF_CMD="xinput disable 10"		#"xinput list" dá o numero do List-Props ,  no aero ARCH o touchpad é 11
-TOUCHPAD_ON="Touchpad On" 					# se ele está OFF .. queremos por a ON
-TOUCHPAD_ON_CMD="xinput enable 10"			#"xinput list" dá o numero do List-Props ,  no aero o touchpad é 11
+ADIO_CMD="pavucontrol"
+TOUCHPAD_OFF="Touchpad Off"						# se ele está ON .. queremos por a OFF
+TOUCHPAD_OFF_CMD="xinput disable $TOUCHPAD_ID"	#"xinput list" dá o numero do List-Props ,  no aero ARCH o touchpad é 11
+TOUCHPAD_ON="Touchpad On" 						# se ele está OFF .. queremos por a ON
+TOUCHPAD_ON_CMD="xinput enable $TOUCHPAD_ID"	#"xinput list" dá o numero do List-Props ,  no aero o touchpad é 11
 
 
-if [ $(xinput list-props "10" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
+STATE=$(xinput list-props "$TOUCHPAD_ID" | grep 'Device Enabled' | awk '{print $4}')
+if [ "$STATE" -eq 1 ]
+then
 	touchpad=$TOUCHPAD_OFF
 else #touchpad is disabled: we want to turn ON, 
 	touchpad=$TOUCHPAD_ON
 fi
+
+
 
 OPT="$AUDIO\n$touchpad\n"
 
@@ -276,7 +284,7 @@ MONITORES="Monitores OPT"
 MONITORES_CMD="arandr"
 MONITOR_ALL_OFF="Monitors OFF ALL"
 MONITOR_ALL_OFF_CMD="xrandr --output eDP --primary --mode 1920x1200 --pos 0x0 --rotate normal --output HDMI-A-0 --off --output DisplayPort-0 --off"
-MONITOR_OFFICE_ON_L="Monitor LEFT ON HMI"
+MONITOR_OFFICE_ON_L="Monitor LEFT ON HMI"1
 MONITOR_OFFICE_ON_R="Monitor RIGHT ON HMI"
 MONITOR_OFFICE_GET='cvt 1680 1050 59'   # get the Modeline for the resolution 
 MONITOR_OFFICE_NEW='xrandr  --newmode "1680x1050_59.00"  143.75  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync' # Create a new Mode
