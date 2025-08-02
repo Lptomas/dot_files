@@ -1,12 +1,14 @@
 #!/bin/sh
 
+## LTomas
+
 #Attention: 
-# Arch and VOID have some diferent setting in this FILE
+# Arch and VOID have some diferent setting in this FILE 
 # test this file on TERMINAL:  #sh ~/path/dmenu_favoritos.sh
 
 #Software necessário:
 # xinput para habilitar/desabilitar o touchpad
-
+# nmtui para  ligar o WIFi
 
 
 # PODEMos acabar com o serviço do teamvieer antes de desligar e liga-lo quando inicoiamos o team viere ??
@@ -46,6 +48,7 @@
 # Wine
 #
 
+############################################################################################################  
 ############################################################################################################ 
 ######  WEB 
 
@@ -53,12 +56,13 @@ BROWSER_SET_CMD="firefox"
 
 BROWSER="Firefox "
 BROWSER_CMD="$BROWSER_SET_CMD"
+
 CHROMIUM="Chromium "
 CHROMIUM_CMD="chromium"
 YOUTUBE="  Youtube "
 YOUTUBE_CMD="$BROWSER_SET_CMD https://www.youtube.com/"
-YOUTUBE_Invidious="Youtube No Google "
-YOUTUBE_CMD_Invidious="$BROWSER_SET_CMD https://inv.bp.projectsegfau.lt/feed/popular"
+YOUTUBE_ALTERNATIVE="Youtube No Google "
+YOUTUBE_ALTERNATIVE_CMD="$BROWSER_SET_CMD https://inv.bp.projectsegfau.lt/feed/popular"
 TRANSLATE="󰗊 translate"
 TRANSLATE_CMD="$BROWSER_SET_CMD https://www.deepl.com"
 EMAIL=" Email 󰇮"
@@ -86,6 +90,8 @@ NERDFONTS="NerdFonts  "
 NERDFONTS_CMD="$BROWSER_SET_CMD https://www.nerdfonts.com/cheat-sheet"
 WOKWI=" WOKWI "
 WOKWI_CMD="$BROWSER_SET_CMD https://wokwi.com/dashboard/projects"
+GIT="GIT "
+GIT_CMD="$BROWSER_SET_CMD https://github.com/"
 FACEBOOK="FaceBook"
 FACEBOOK_CMD="$BROWSER_SET_CMD https://www.facebook.com/"
 
@@ -99,8 +105,9 @@ PORTALCONTRA_CMD="$BROWSER_SET_CMD https://portalcontraordenacoes.ansr.pt"
 
 
 
-WEB="$BROWSER\n$CHROMIUM\n$WHASTAPP\n$YOUTUBE\n$FACEBOOK\na$YOUTUBE_Invidious\n$TRANSLATE\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n$IPMA\n$NERDFONTS\n$SHEETS\n$DOCS\n$KEEP\n$PORTALFINANCAS\n$PORTALCONTRA\n$WOKWI\n"
+WEB="$BROWSER\n$CHROMIUM\n$WHASTAPP\n$YOUTUBE\n$FACEBOOK\n$YOUTUBE_ALTERNATIVE\n$TRANSLATE\n$NETFLIX\n$EMAIL\n$MAPS\n$PHOTOS\n$MYCUF\n$IPMA\n$NERDFONTS\n$SHEETS\n$DOCS\n$KEEP\n$PORTALFINANCAS\n$PORTALCONTRA\n$WOKWI\n$GIT\n"
 
+############################################################################################################  
 ############################################################################################################ 
 ######  FM - File manager
 THUNAR="Thunar  FM"s
@@ -126,6 +133,7 @@ fi
 
 FM="$DOLPHIN\n$THUNAR\n$NEMO\n$PCLOUD\n$ICEDRIVE\n$SYNCTHING\n"
 
+############################################################################################################  
 ############################################################################################################ 
 ######  OFFICE
 NOTAS="Notas "
@@ -142,6 +150,7 @@ GIMP_CMD="gimp"
 
 OFFICE="$NOTAS\n$OFFICE_DE\n$PDF\n$PDF_Arranger\n$GIMP\n"
 
+############################################################################################################  
 ############################################################################################################ 
 ######  DEV
 CODE="Code "
@@ -169,6 +178,7 @@ EASYEDA_CMD="/opt/easyeda/easyeda %f "
 
 DEV="$CODE\n$CODE_ARDUINO\n$CODE_DOTFILES\n$ARDUINO\n$EASYEDA\n"
 
+############################################################################################################  
 ############################################################################################################  		 
 # *** POWER
 #alacritty.yml
@@ -189,6 +199,7 @@ POWER_PERFORMANCE_CMD="powerprofilesctl set performance"
 
 PW="$SHUNTDOWN\n$REBOOT\n$EXIT\n$POWER_SAVER\n$POWER_BALANCE\n$POWER_PERFORMANCE\n"
 
+############################################################################################################  
 ############################################################################################################  		 
 # *** REMOTE    https://bbs.archlinux.org/viewtopic.php?id=258188
 # https://www.teamviewer.com/en/download/linux/
@@ -199,6 +210,7 @@ TEAMVIEWER_STOP=""
 
 REMOTE="$TEAMVIEWER\n"
 
+############################################################################################################  
 ############################################################################################################  		 
 # *** CLI   - Comand Line Interface
 alacritty_float="alacritty --hold --class float_windows --config-file /home/lpt/.config/alacritty/alacritty.yml"
@@ -247,10 +259,11 @@ KILL_windows_wine_CMD="ps -ef | grep 'windows' | grep -v grep | awk '{print $2}'
 GAME="$STEAM\n$GFORCE\n$DOOM\n$FLATPAK_BOTTLES\n$FLATPAK_BOTTLES_BATTLE_NET\n$FLATPAK_BOTTLES_BMX_DM\n
 		$FLATPAK_BOTTLES_BMX_MH\n$KILL_windows_wine\n"
 
+############################################################################################################  
 ############################################################################################################  		 
 # *** OPT
 #### TouchPAD #### Tongle input in dmenu
-# #"xinput list" dá o numero do List-Props ,  no ARCH pode ser != do void
+# #"xinput list" dá o numero do List-Props ,  O ID depende o Sistema Operadtivo e da Marca do PC. teoricamente está resolvido 
 
 
 
@@ -258,12 +271,10 @@ GAME="$STEAM\n$GFORCE\n$DOOM\n$FLATPAK_BOTTLES\n$FLATPAK_BOTTLES_BATTLE_NET\n$FL
 TOUCHPAD_ID=$(xinput list | grep -Eio '(touchpad|glidepoint)\s*id=[0-9]{1,2}' | grep -Eo '[0-9]{1,2}')
 
 
-AUDIO="audio "
-ADIO_CMD="pavucontrol"
 TOUCHPAD_OFF="Touchpad Off"						# se ele está ON .. queremos por a OFF
-TOUCHPAD_OFF_CMD="xinput disable $TOUCHPAD_ID"	#"xinput list" dá o numero do List-Props ,  no aero ARCH o touchpad é 11
+TOUCHPAD_OFF_CMD="xinput disable $TOUCHPAD_ID"	#"xinput list" dá o numero do List-Props
 TOUCHPAD_ON="Touchpad On" 						# se ele está OFF .. queremos por a ON
-TOUCHPAD_ON_CMD="xinput enable $TOUCHPAD_ID"	#"xinput list" dá o numero do List-Props ,  no aero o touchpad é 11
+TOUCHPAD_ON_CMD="xinput enable $TOUCHPAD_ID"	#"xinput list" dá o numero do List-Props
 
 
 STATE=$(xinput list-props "$TOUCHPAD_ID" | grep 'Device Enabled' | awk '{print $4}')
@@ -276,8 +287,16 @@ fi
 
 
 
+
+
+AUDIO="audio "
+ADIO_CMD="pavucontrol"
+
+
+
 OPT="$AUDIO\n$touchpad\n"
 
+############################################################################################################  
 ############################################################################################################  		 
 # *** SCREENS
 MONITORES="Monitores OPT"
@@ -328,6 +347,7 @@ monitores_connected=""
 #SCREENS="$monitores_connected\n$MONITORES\n$MONITOR_ALL_OFF\n"
 SCREENS="$MONITOR_OFFICE_ON_R\n$MONITORES\n$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON_L\n"
 
+############################################################################################################  
 ############################################################################################################  		 
 # *** BLUETOOTH
 BLUETOOTH_ON="Bluetooth On"
@@ -375,10 +395,6 @@ esac
 #ARCH: if [ "$bluetooth_power" == "$BLUETOOTH_OFF" ]; then   # bluetooth_power =  
 #VOID: if [ "$bluetooth_power" = "yes" ]; then     # bluetooth is ON
 
-
-
-
-
 if [ "$bluetooth_power" = "$BLUETOOTH_OFF" ]; then   # bluetooth_power =  
 		#2st - Check if bluetooth is Powered ON, iF yes, show the other options
 		bluetooth_connected="$(bluetoothctl "info" | grep -E "Name" | awk '{print $2}' )"
@@ -399,27 +415,56 @@ BLUETOOTH="$bluetooth_power\n$bluetooth_connected\n$BLUEBERRY\n$BLUEMAN\n"
 
 NETWORK="NetWork wifi Ethet"
 NETWORK_CMD="nm-applet"
-SAFING="Safing"
-SAFING_CMD="/opt/safing/portmaster/portmaster-start app --data=/opt/safing/portmaster"
 NETWORKCLI="NetWork cli wifi Ethet"
 NETWORKCLI_CMD="alacritty -e nmtui"
+SAFING="Safing"
+SAFING_CMD="/opt/safing/portmaster/portmaster-start app --data=/opt/safing/portmaster"
 
-NET="$NETWORKCLI\n$NETWORK\n$SAFING\n"
 
+NET="$NETWORK\n$NETWORKCLI\n$SAFING\n"
+
+
+########################################################################################################
 ########################################################################################################
 # *** WIFI  - We realy need this ???
 
 # name of the connected NetWork wirelles;
 name_conn="$(iw dev | grep ssid | awk '{print $2}')"
-#WIFI_SSID_1="Desvio_5G"
-#WIFI_SSID_2="Desvio"
-#case $name_conn in
-	#"$WIFI_SSID_1"	) name_conn=" WIFI: $WIFI_SSID_1" 		;;
-	#"$WIFI_SSID_2"	) name_conn=" WIFI: $WIFI_SSID_2" 		;;
-	#*				) name_conn="$name_conn";;
-#esac
 
-WIFI="WIFI: $name_conn\n"
+
+WIFI_conn="wifi 󰤨 $name_conn 󰤨\n"
+
+
+#nmtui-connect Desviado
+#nmcli device wifi connect Desviad
+
+SSDI_1="Desviado"
+SSDI_2="Desviado_new"
+SSDI_3="Desviado_2G4"
+
+
+WIFI1="WIFI -> $SSDI_1"
+WIFI1_CMD="nmtui-connect $SSDI_1"
+WIFI2="WIFI -> $SSDI_2"
+WIFI2_CMD="nmtui-connect $SSDI_2"
+WIFI3="WIFI -> $SSDI_3"
+WIFI3_CMD="nmtui-connect $SSDI_3"
+
+
+
+
+case $name_conn in
+	"$SSDI_1"	) WIFI="$WIFI2\n$WIFI_conn\n$WIFI3\n"  		;;
+	"$SSDI_2"	) WIFI="$WIFI1\n$WIFI_conn\n$WIFI3\n" 		;;
+	"$SSDI_3"	) WIFI="$WIFI1\n$WIFI_conn\n$WIFI2\n" 		;;	
+	*			) WIFI="wifi??\n"	;;
+esac
+
+
+
+
+
+
 
 
 ########################################################################################################
@@ -441,7 +486,7 @@ APP="$APPS\n"
 ########################################################################################################
 
 
-all="$WEB$PW$FM$OFFICE$DEV$REMOTE$TOOL$BLUETOOTH$OPT$GAME$APP$SCREENS$NET$CLI$WIFI"
+all="$WEB$PW$FM$OFFICE$DEV$REMOTE$TOOL$BLUETOOTH$OPT$GAME$APP$SCREENS$NET$CLI$WIFI\nPower 󰐥"
 
 
 
@@ -466,7 +511,7 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$WHASTAPP 	) $WHASTAPP_CMD ;;
 	$FACEBOOK 	) $FACEBOOK_CMD ;;
 	$YOUTUBE 	) $YOUTUBE_CMD	;;
-	$YOUTUBE_Invidious 	) $YOUTUBE_CMD_Invidious	;;
+	#$YOUTUBE_ALTERNATIVE 	) $YOUTUBE_ALTERNATIVE_CMD	;;
 	$TRANSLATE	) $TRANSLATE_CMD ;;
 	$NETFLIX	) $NETFLIX_CMD	;;
 	$EMAIL		) $EMAIL_CMD 	;;
@@ -479,6 +524,7 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$SHEETS		) $SHEETS_CMD 	;;
 	$KEEP		) $KEEP_CMD 	;;
 	$WOKWI		) $WOKWI_CMD	;;
+	$GIT		) $GIT_CMD 		;;
 
 	$PORTALFINANCAS ) $PORTALFINANCAS_CMD ;;
 	$PORTALCONTRA	) $PORTALCONTRA_CMD   ;;
@@ -568,6 +614,9 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$NETWORK 	) $NETWORK_CMD 	;;
 
     $NETWORKCLI ) $NETWORKCLI_CMD ;;
+	$WIFI1		) $WIFI1_CMD	;;
+	$WIFI2		) $WIFI2_CMD	;;
+	$WIFI3		) $WIFI3_CMD	;;
 
 # *** TOOLS   + Monitores 
 	$CALCULADORA )  $CALCULADORA_CMD ;;
@@ -593,10 +642,27 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 
 # *** APPS	
 	$APPS ) $APPS_CMD ;;
+
 	#"TODOS") dmenu_run -m "0" -fn "hack:size=11" -nb "#000000" -nf "#07AE06" -sb "#07AE06" -sf "#060606" ;;   #nao funciona
 
 
 #   submenu
+
+
+#Ainda nao funciona com links
+	$YOUTUBE_ALTERNATIVE) case "$(printf "YOUTUBE\nDailymotion\nOdysee\nTeste" | dmenu )" in
+								"YOUTUBE")	 	"$BROWSER_SET_CMD https://www.youtube.com/" 	;;
+								"dailymotion") 	'$BROWSER_SET_CMD https://www.dailymotion.com' 	;;
+								"odysee") 		'$BROWSER_SET_CMD https://odysee.com' 			;;
+								"Teste") 		$STEAM_CMD 			;;
+								
+
+
+								*) exit 1 ;;
+							esac ;;
+
+
+
 
 	"Power 󰐥") case "$(printf "Shutdown\nReboot\nLock\nExit dwm\n" | dmenu )" in
 			"Shutdown") 'sudo shutdown -h now';;
@@ -607,7 +673,21 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 			esac ;;
 
 
+
+
+	
+	#"Power 󰐥") case "$(printf "Shutdown\nReboot\nLock\nExit dwm\n" | dmenu )" in
+			#"Shutdown") 'sudo shutdown -h now';;
+			#"Reboot") sudo reboot ;;
+			#"Lock") slock ;;
+			#"Exit dwm") pkill dwm ;;
+			#*) exit 1 ;;
+			#esac ;;		
+
+
 	*) exit 1 #xfce4-appfinder ;;  #
+
+
 
 
 esac
