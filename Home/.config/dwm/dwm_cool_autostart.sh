@@ -2,6 +2,7 @@
 
 
 # Used in "../dwm/config.def.h" with : dwm-cool-autostart-6.2.diff 
+feh --bg-scale ~/black.jpg &
 slstatus &
 devmon &            #mount removable devices: pens etc --verificar ARCH , void nao existe
 cvt 1680 1050 59    # generate resolution for second Screen
