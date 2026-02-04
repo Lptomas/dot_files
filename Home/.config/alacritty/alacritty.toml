@@ -19,8 +19,8 @@ multiplier = 3
 
 [general]
 live_config_reload = true
-import = ["/home/lpt/.config/alacritty/colors.toml", "/home/lpt/.config/alacritty/fonts.toml"]
+import = ["~/.config/alacritty/colors.toml", "~/.config/alacritty/fonts.toml"]
 
 [window.dimensions]
-columns = 1000
-lines = 800
+columns = 80
+lines = 24
