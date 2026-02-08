@@ -423,9 +423,13 @@ static const Key keys[] = {
 	{ MODKEY,					XK_F4,  		spawn,   			SHCMD("xdotool getwindowfocus windowkill") }, // KILL current window
 	{ MODKEY,					XK_F5,  		spawn,   			SHCMD("xkill") }, // KILL selected window with mouse
 
+
 	{ WIN_KEY,             		XK_f,      		togglefullscr,  	{0} },  // from patch
 	{ WIN_KEY,					XK_q, 			killclient,     	{0} },
 	{ WIN_KEY,                  XK_b,      		togglebar,     		{0} },
+	{ WIN_KEY,                  XK_t,      		togglefloating, 	{0} }, // FLOATING TO TILE
+
+
 	{ MODKEY,					XK_comma,  		cyclelayout,    	{.i = -1 } },
 	{ MODKEY,           		XK_space, 		cyclelayout,    	{.i = +1 } },
 	//{ MODKEY,                   XK_p,      		spawn,          	{.v = dmenucmd } },
