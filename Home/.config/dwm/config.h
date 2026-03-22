@@ -425,7 +425,8 @@ static const Key keys[] = {
 
 
 	{ WIN_KEY,             		XK_f,      		togglefullscr,  	{0} },  // from patch
-	{ WIN_KEY,					XK_q, 			killclient,     	{0} },
+  //{ WIN_KEY,					XK_q, 			killclient,     	{0} },
+	{ WIN_KEY,					XK_Escape, 		killclient,     	{0} },
 	{ WIN_KEY,                  XK_b,      		togglebar,     		{0} },
 	{ WIN_KEY,                  XK_t,      		togglefloating, 	{0} }, // FLOATING TO TILE
 

@@ -290,11 +290,12 @@ fi
 
 
 AUDIO="audio "
-ADIO_CMD="pavucontrol"
+AUDIO_CMD="pavucontrol"
+OBS="OBS"
+OBS_CMD="obs"
 
 
-
-OPT="$AUDIO\n$touchpad\n"
+OPT="$AUDIO\n$OBS\n$touchpad\n"
 
 ############################################################################################################  
 ############################################################################################################  		 
@@ -569,6 +570,7 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 
 # *** OPT
 	$AUDIO			) $AUDIO_CMD 			;;
+	$OBS			) $OBS_CMD				;;
 	$TOUCHPAD_ON	) $TOUCHPAD_ON_CMD 		;;
 	$TOUCHPAD_OFF	) $TOUCHPAD_OFF_CMD 	;;
 	$BLUEBERRY		) $BLUEBERRY_CMD 		;;
@@ -581,6 +583,12 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 							$MONITOR_OFFICE_ON_L_CMD 	;;
 	$MONITOR_OFFICE_ON_R	) 	$MONITOR_ALL_OFF_CMD
 							$MONITOR_OFFICE_ON_R_CMD 	;;
+
+
+# *** audio
+
+	$ADIO ) ADIO_CMD ;;
+
 
 # *** BLUETOOTH
 	$BLUETOOTH_ON		) 	$BLUETOOTH_ON_CMD 		;;
