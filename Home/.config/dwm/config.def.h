@@ -394,7 +394,8 @@ static const Key keys[] = {
 	/*FN+F10*/   { 0, XF86XK_AudioNext ,	    spawn,		SHCMD("xset dpms force off") },
 	/*FN+F11*/   { WIN_KEY, XK_p,	            spawn,		SHCMD("xset dpms force off") },      // monitor ?? / touchpad ?? Symbol ->
 	/*FN+F12*/   { 0, XK_Insert, 				spawn,      SHCMD("xset dpms force off") },
-	/*prt sc*/	 { 0, XK_Print, 				spawn,      SHCMD("flameshot gui") },
+	/*prt sc*/	 { WIN_KEY, XK_Print, 				spawn,      SHCMD("flameshot gui") },
+				 { 0, XK_Print, 				spawn,      SHCMD("flameshot full -p ~/Imagens/Screenshots/") },
 	/* ⏻ */	     { 0, XF86XK_PowerOff,	        spawn,		SHCMD("xset dpms force off") },  // NÂO funciona
 
 
@@ -430,7 +431,7 @@ static const Key keys[] = {
 	{ WIN_KEY,                  XK_b,      		togglebar,     		{0} },
 	{ WIN_KEY,                  XK_t,      		togglefloating, 	{0} }, // FLOATING TO TILE
 
-
+	//ALT key 
 	{ MODKEY,					XK_comma,  		cyclelayout,    	{.i = -1 } },
 	{ MODKEY,           		XK_space, 		cyclelayout,    	{.i = +1 } },
 	//{ MODKEY,                   XK_p,      		spawn,          	{.v = dmenucmd } },
