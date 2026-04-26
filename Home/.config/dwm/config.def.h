@@ -39,7 +39,7 @@ static const unsigned int systrayspacing = 1;	/* systray spacing */
 static const int systraypinningfailfirst = 1;	/* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;		/* 0 means no systray */
 static const int showbar            = 1;		/* 0 means no bar */
-static const int topbar             = 1;		 /* 0 means bottom bar */
+static const int topbar             = 1;		/* 0 means bottom bar */
 static const int user_bh            = 2;		/* 2 is the default spacing around the bar's font */
 //static const char *fonts[]          = { "Noto Sans Mono:size=10" };
 static const char *fonts[]          = { "hack:size=12", "Symbols Nerd Font:antialias=true:autohint=true"  };
@@ -156,38 +156,39 @@ static const Rule rules[] = {
 	 */
 	 
 	 //multiple scratchpads
-	/* class      					instance    		title       tags mask    		isfloating   	monitor */
-	{ NULL,		  					"spterm",			NULL,		SPTAG(0),			1,			 	-1 },
-	{ NULL,		  					"spfm",				NULL,		SPTAG(1),			1,			 	-1 },
-	{ NULL,		  					"thunar",			NULL,		SPTAG(2),			0,			 	-1 },
-	{ NULL,		  					"firefox",			NULL,		SPTAG(3),			0,			 	-1 },
-	{ NULL,		  					"code",				NULL,		SPTAG(4),			0,			 	-1 },
-	{ NULL,		  					"sphtop",			NULL,		SPTAG(5),			1,			 	-1 },
+	/* class      					instance    		title       	tags mask    		isfloating   	monitor */
+	{ NULL,		  					"spterm",			NULL,			SPTAG(0),			1,			 	-1 },
+	{ NULL,		  					"spfm",				NULL,			SPTAG(1),			1,			 	-1 },
+	{ NULL,		  					"thunar",			NULL,			SPTAG(2),			0,			 	-1 },
+	{ NULL,		  					"firefox",			NULL,			SPTAG(3),			0,			 	-1 },
+	{ NULL,		  					"code",				NULL,			SPTAG(4),			0,			 	-1 },
+	{ NULL,		  					"sphtop",			NULL,			SPTAG(5),			1,			 	-1 },
 
 // Actual workspace
-	/* class                      	instance    		title      	Tags mask     		isfloating   	monitor */
-	{ "Galculator", 				NULL,      			NULL,  		0,            		1,           	-1 },
-	{ NULL, 		   	   			"xfce4-appfinder", 	NULL,   	0,           		1,           	-1 },
-	{ "Arandr", 			   		NULL,      			NULL,  		0,            		1,           	-1 },
-	{ "Gimp",                      	NULL,       		NULL,      	1,            		0,           	-1 },
-	{ "Xfce4-terminal",            	NULL,       		NULL,      	0,            		1,           	-1 },
-	{ "Arcolinux-welcome-app.py",  	NULL,       		NULL,      	0,           		1,           	-1 },
-	{ "Arcolinux-calamares-tool.py",NULL,    			NULL,      	0,            		1,           	-1 },	
-	{ "resistor_decoder",  			NULL,    			NULL,      	0,            		1,           	-1 },	
-	{ "pixeltomatrix.exe",  		NULL,    			NULL,      	0,            		1,           	-1 },
-	{ "pavucontrol",  				NULL,    			NULL,      	0,            		1,           	-1 },
-	{ "float_windows",  			NULL,    			NULL,      	0,            		1,           	-1 },
+	/* class                      	instance    		title      		Tags mask     		isfloating   	monitor */
+	{ "Galculator", 				NULL,      			NULL,  			0,            		1,           	-1 },
+	{ NULL, 		   	   			"xfce4-appfinder", 	NULL,   		0,           		1,           	-1 },
+	{ "Arandr", 			   		NULL,      			NULL,  			0,            		1,           	-1 },
+	{ "Gimp",                      	NULL,       		NULL,      		1,            		0,           	-1 },
+	{ "Xfce4-terminal",            	NULL,       		NULL,      		0,            		1,           	-1 },
+	{ "Arcolinux-welcome-app.py",  	NULL,       		NULL,      		0,           		1,           	-1 },
+	{ "Arcolinux-calamares-tool.py",NULL,    			NULL,      		0,            		1,           	-1 },	
+	{ "resistor_decoder",  			NULL,    			NULL,      		0,            		1,           	-1 },	
+	{ "pixeltomatrix.exe",  		NULL,    			NULL,      		0,            		1,           	-1 },
+	{ "pavucontrol",  				NULL,    			NULL,      		0,            		1,           	-1 },
+	{ "float_windows",  			NULL,    			NULL,      		0,            		1,           	-1 },
 	
 	
 	/* "Picture-in-Picture" do firefox--nao está a funcionar
-	{ "Toolkit",  					NULL,    			NULL,      	0,            		1,           	-1 },	
-	{ NULL,  						"Toolkit",  		NULL,      	0,            		1,           	-1 },
-	{ NULL,  		   				NULL,      			"Toolkit",  0,            		1,           	-1 },
-	{ "Picture-in-Picture",  		NULL,    			NULL,      	0,            		1,           	-1 },	
-	{ NULL,  						"Picture-in-Picture", NULL,     0,            		1,           	-1 },
+	{ "Toolkit",  					NULL,    			NULL,      		0,            		1,           	-1 },	
+	{ NULL,  						"Toolkit",  		NULL,      		0,            		1,           	-1 },
+	{ NULL,  		   				NULL,      			"Toolkit",  	0,            		1,           	-1 },
+	{ "Picture-in-Picture",  		NULL,    			NULL,      		0,            		1,           	-1 },	
+	{ NULL,  						"Picture-in-Picture", NULL,     	0,            		1,           	-1 },
 	{ NULL,  		   				NULL,      			"Picture-in-Picture",  0,       1,           	-1 },
 */
-	{ NULL,  "Toolkit",  		   				     			"Picture-in-Picture",  0,       1,           	-1 },
+	{ NULL,  						"Toolkit",  		 "Picture-in-Picture", 0,      	 	1,           	-1 },
+	{ NULL,  						"Toolkit",  		 "Vídeo em janela flutuante", 0,    1,           	-1 },
 
 /*
 	 *	WM_CLASS(STRING) = instance, class

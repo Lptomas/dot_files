@@ -304,13 +304,19 @@ MONITORES="Monitores OPT"
 MONITORES_CMD="arandr"
 MONITOR_ALL_OFF="Monitors OFF ALL"
 MONITOR_ALL_OFF_CMD="xrandr --output eDP --primary --mode 1920x1200 --pos 0x0 --rotate normal --output HDMI-A-0 --off --output DisplayPort-0 --off"
-MONITOR_OFFICE_ON_L="Monitor LEFT ON HMI"1
+MONITOR_OFFICE_ON_L="Monitor LEFT ON HMI"
 MONITOR_OFFICE_ON_R="Monitor RIGHT ON HMI"
+MONITOR_OFFICE_ON_U="Monitor UP ON HMI"
 MONITOR_OFFICE_GET='cvt 1680 1050 59'   # get the Modeline for the resolution 
 MONITOR_OFFICE_NEW='xrandr  --newmode "1680x1050_59.00"  143.75  1680 1784 1960 2240  1050 1053 1059 1089 -hsync +vsync' # Create a new Mode
 MONITOR_OFFICE_ADD='xrandr --addmode HDMI-A-0 1680x1050_59.00'  # add the new resolution mode to the avaliable  HDMI-A-0 list 
 MONITOR_OFFICE_ON_L_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 1680x0 --rotate normal --output HDMI-A-0 --mode 1680x1050_59.00 --pos 0x0 --rotate normal --output DisplayPort-0 --off'
 MONITOR_OFFICE_ON_R_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 0x0 --rotate normal --output HDMI-A-0 --mode 1680x1050_59.00 --pos 1920x0 --rotate normal --output DisplayPort-0 --off'
+MONITOR_OFFICE_ON_U_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 0x1050 --rotate normal --output HDMI-A-0 --mode 1680x1050_59.00 --pos 120x0 --rotate normal --output DisplayPort-0 --off'
+
+
+
+
 #MONITOR_OFFICE_ON_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 1680x0 --rotate normal --output HDMI-A-0 --mode 1680x1050 --pos 0x0 --rotate normal --output DisplayPort-0 --off'
 
 
@@ -346,7 +352,7 @@ monitores_connected=""
 #fi
 
 #SCREENS="$monitores_connected\n$MONITORES\n$MONITOR_ALL_OFF\n"
-SCREENS="$MONITOR_OFFICE_ON_R\n$MONITORES\n$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON_L\n"
+SCREENS="$MONITORES\n$MONITOR_ALL_OFF\n$MONITOR_OFFICE_ON_U\n$MONITOR_OFFICE_ON_R\n\n$MONITOR_OFFICE_ON_L\n"
 
 ############################################################################################################  
 ############################################################################################################  		 
@@ -581,13 +587,16 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 	$MONITOR_ALL_OFF	) 	$MONITOR_ALL_OFF_CMD 	;;
 	$MONITOR_OFFICE_ON_L	) 	$MONITOR_ALL_OFF_CMD
 							$MONITOR_OFFICE_ON_L_CMD 	;;
-	$MONITOR_OFFICE_ON_R	) 	$MONITOR_ALL_OFF_CMD
+	$MONITOR_OFFICE_ON_R	) 	$MONITOR_ALL_OFF_CMD	
 							$MONITOR_OFFICE_ON_R_CMD 	;;
+	$MONITOR_OFFICE_ON_U	) 	$MONITOR_ALL_OFF_CMD	
+							$MONITOR_OFFICE_ON_U_CMD 	;;
+
 
 
 # *** audio
 
-	$ADIO ) ADIO_CMD ;;
+	$AUDIO ) AUDIO_CMD ;;
 
 
 # *** BLUETOOTH
