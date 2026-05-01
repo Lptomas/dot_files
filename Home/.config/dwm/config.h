@@ -1,8 +1,12 @@
-/*
-To compile : # cd ~/.config/dwm/ ; rm -f config.h ; sudo make clean install'
-
-
+/* ######################################################################################
 EDIT:    config.def.h     NOT   config.h   remove "config.h" before compiling
+######################################################################################
+
+
+Compile : # cd ~/.config/dwm/ ; rm -f config.h ; sudo make clean install      '
+
+
+
 
 patch -p1 < /path/to/patch.diff
 remove "config.h" before compiling
@@ -39,7 +43,7 @@ static const unsigned int systrayspacing = 1;	/* systray spacing */
 static const int systraypinningfailfirst = 1;	/* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;		/* 0 means no systray */
 static const int showbar            = 1;		/* 0 means no bar */
-static const int topbar             = 1;		 /* 0 means bottom bar */
+static const int topbar             = 1;		/* 0 means bottom bar */
 static const int user_bh            = 2;		/* 2 is the default spacing around the bar's font */
 //static const char *fonts[]          = { "Noto Sans Mono:size=10" };
 static const char *fonts[]          = { "hack:size=12", "Symbols Nerd Font:antialias=true:autohint=true"  };
@@ -187,8 +191,8 @@ static const Rule rules[] = {
 	{ NULL,  						"Picture-in-Picture", NULL,     	0,            		1,           	-1 },
 	{ NULL,  		   				NULL,      			"Picture-in-Picture",  0,       1,           	-1 },
 */
-	{ NULL,  						"Toolkit",  		 "Picture-in-Picture", 0,      	 1,           	-1 },
-	{ NULL,  						"Toolkit",  		 "Vídeo em janela flutuante", 0,      	 1,           	-1 },
+	{ NULL,  						"Toolkit",  		 "Picture-in-Picture", 0,      	 	1,           	-1 },
+	{ NULL,  						"Toolkit",  		 "Vídeo em janela flutuante", 0,    1,           	-1 },
 
 /*
 	 *	WM_CLASS(STRING) = instance, class
@@ -427,37 +431,39 @@ static const Key keys[] = {
 
 
 	{ WIN_KEY,             		XK_f,      		togglefullscr,  	{0} },  // from patch
-  //{ WIN_KEY,					XK_q, 			killclient,     	{0} },
-	{ WIN_KEY,					XK_Escape, 		killclient,     	{0} },
+  //{ WIN_KEY,					XK_q, 			killclient,     	{0} },	// Fecha a janela focada
+	{ WIN_KEY,					XK_Escape, 		killclient,     	{0} },	// Fecha a janela focada
 	{ WIN_KEY,                  XK_b,      		togglebar,     		{0} },
-	{ WIN_KEY,                  XK_t,      		togglefloating, 	{0} }, // FLOATING TO TILE
+	{ WIN_KEY,                  XK_t,      		togglefloating, 	{0} }, 	// FLOATING TO TILE
+	{ WIN_KEY,                  XK_backslash, 	focusmon,       	{.i = +1 } },	// Foca o monitor seguinte "\" + RATO, ratp adicionado na função DWM.C:focusmon  
+
 
 	//ALT key 
-	{ MODKEY,					XK_comma,  		cyclelayout,    	{.i = -1 } },
-	{ MODKEY,           		XK_space, 		cyclelayout,    	{.i = +1 } },
+	{ MODKEY,					XK_comma,  		cyclelayout,    	{.i = -1 } },   // Cicla para o layout anterior
+	{ MODKEY,           		XK_period, 		cyclelayout,    	{.i = +1 } },   // Cicla para o layout seguinte
 	//{ MODKEY,                   XK_p,      		spawn,          	{.v = dmenucmd } },
 	//{ MODKEY|ShiftMask,      	XK_Return, 		spawn,          	{.v = termcmd } },
-	{ MODKEY,                   XK_j,      		focusstack,     	{.i = +1 } },
-	{ MODKEY,                   XK_k,      		focusstack,     	{.i = -1 } },
-	{ MODKEY,                   XK_i,     		incnmaster,    		{.i = +1 } },
-	{ MODKEY,                   XK_d,      		incnmaster,     	{.i = -1 } },
-	{ MODKEY,                   XK_h,      		setmfact,       	{.f = -0.05} },
-	{ MODKEY,                   XK_l,      		setmfact,       	{.f = +0.05} },
-	{ MODKEY,                   XK_Return, 		zoom,           	{0} },
-	{ MODKEY,                   XK_Tab,    		view,           	{0} },
-	{ MODKEY|ShiftMask,      	XK_c,      		killclient,     	{0} },
+	{ MODKEY,                   XK_j,      		focusstack,     	{.i = +1 } }, 	// Move o foco para a janela seguinte na stack
+	{ MODKEY,                   XK_k,      		focusstack,     	{.i = -1 } }, 	// Move o foco para a janela anterior na stack
+	{ MODKEY,                   XK_i,     		incnmaster,    		{.i = +1 } },   // Aumenta o número de janelas na área master ?
+	{ MODKEY,                   XK_d,      		incnmaster,     	{.i = -1 } },	// Diminui o número de janelas na área master
+	{ MODKEY,                   XK_h,      		setmfact,       	{.f = -0.05} },	// Encolhe a área master (−5%)
+	{ MODKEY,                   XK_l,      		setmfact,       	{.f = +0.05} },	// Expande a área master (+5%
+	{ MODKEY,                   XK_Return, 		zoom,           	{0} },			// Promove a janela focada a master (zoom ?)
+	{ MODKEY,                   XK_Tab,    		view,           	{0} },			// Alterna para o tAG anteriormente visto , TAG é definido no " *tags[]"  e "TAGKEYS" 
+	{ MODKEY|ShiftMask,      	XK_c,      		killclient,     	{0} },			// Fecha a janela focada
 	{ MODKEY,                   XK_t,      		setlayout,     		{.v = &layouts[0]} },
 	{ MODKEY,                   XK_f,      		setlayout,      	{.v = &layouts[1]} },
 	{ MODKEY,                   XK_m,      		setlayout,      	{.v = &layouts[2]} },
-	{ MODKEY,                   XK_space,  		setlayout,      	{0} },
-	{ MODKEY|ShiftMask,      	XK_space,  		togglefloating, 	{0} },
-	{ MODKEY,                   XK_0,      		view,           	{.ui = ~0 } },
-	{ MODKEY|ShiftMask,      	XK_0,      		tag,            	{.ui = ~0 } },
-	{ MODKEY,                   XK_comma,  		focusmon,       	{.i = -1 } },
-	{ MODKEY,                   XK_period, 		focusmon,       	{.i = +1 } },
-	{ MODKEY|ShiftMask,     	XK_comma,  		tagmon,         	{.i = -1 } },
-	{ MODKEY|ShiftMask,     	XK_period, 		tagmon,         	{.i = +1 } },	// move windows to another monitor
-	TAGKEYS(                    XK_1,                     			0)
+	{ MODKEY,                   XK_space,  		setlayout,      	{0} },			// Alterna entre o layout atual e o anterior
+	{ MODKEY|ShiftMask,      	XK_space,  		togglefloating, 	{0} },			// FLOATING TO TILE
+	{ MODKEY,                   XK_0,      		view,           	{.ui = ~0 } },	// Mostra todas as tags ao mesmo tempo
+	{ MODKEY|ShiftMask,      	XK_0,      		tag,            	{.ui = ~0 } },	// Move a janela focada para todas as TAGs
+	//{ MODKEY,                   XK_comma,  		focusmon,       	{.i = -1 } },	// Foca o monitor anterior
+	//{ MODKEY,                   XK_space, 		focusmon,       	{.i = +1 } },	// Foca o monitor seguinte
+	{ MODKEY|ShiftMask,     	XK_comma,  		tagmon,         	{.i = -1 } },	// move windows to previus monitor
+	{ MODKEY|ShiftMask,     	XK_period, 		tagmon,         	{.i = +1 } },	// move windows to next .,monitor
+	TAGKEYS(                    XK_1,                     			0) // browswer
 	TAGKEYS(                    XK_2,                      			1)
 	TAGKEYS(                    XK_3,                      			2)
 	TAGKEYS(                    XK_4,                      			3)

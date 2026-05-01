@@ -1,3 +1,11 @@
+/**
+ * Adiçoes em focusmon()
+ * 
+ * 
+ */
+
+
+
 /* See LICENSE file for copyright and license details.
  *
  * dynamic window manager is designed like any other X client as well. It is
@@ -1031,6 +1039,18 @@ focusmon(const Arg *arg)
 	unfocus(selmon->sel, 0);
 	selmon = m;
 	focus(NULL);
+
+
+
+
+	//Na função tagmon em dwm.c, adicionas uma linha para mover o cursor com XWarpPointer depois de mover a janela
+    // Adiciona isto — move o cursor para o centro do novo monitor
+    XWarpPointer(dpy, None, root, 0, 0, 0, 0,
+        selmon->wx + selmon->ww / 2,
+        selmon->wy + selmon->wh / 2);
+
+
+
 }
 
 void
