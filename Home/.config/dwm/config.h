@@ -431,14 +431,17 @@ static const Key keys[] = {
 
 
 	{ WIN_KEY,             		XK_f,      		togglefullscr,  	{0} },  // from patch
-  //{ WIN_KEY,					XK_q, 			killclient,     	{0} },	// Fecha a janela focada
+  	//{ WIN_KEY,					XK_q, 			killclient,     	{0} },	// Fecha a janela focada
 	{ WIN_KEY,					XK_Escape, 		killclient,     	{0} },	// Fecha a janela focada
 	{ WIN_KEY,                  XK_b,      		togglebar,     		{0} },
 	{ WIN_KEY,                  XK_t,      		togglefloating, 	{0} }, 	// FLOATING TO TILE
 	{ WIN_KEY,                  XK_backslash, 	focusmon,       	{.i = +1 } },	// Foca o monitor seguinte "\" + RATO, ratp adicionado na função DWM.C:focusmon  
-
+	{ WIN_KEY,                  XK_Tab,    		view,           	{0} },			// Alterna para o tAG anteriormente visto , TAG é definido no " *tags[]"  e "TAGKEYS" 		
 
 	//ALT key 
+	{ MODKEY,                   XK_Tab,      		focusstack,     	{.i = +1 } }, 	// Move o foco para a janela seguinte na stack
+
+
 	{ MODKEY,					XK_comma,  		cyclelayout,    	{.i = -1 } },   // Cicla para o layout anterior
 	{ MODKEY,           		XK_period, 		cyclelayout,    	{.i = +1 } },   // Cicla para o layout seguinte
 	//{ MODKEY,                   XK_p,      		spawn,          	{.v = dmenucmd } },
@@ -450,7 +453,7 @@ static const Key keys[] = {
 	{ MODKEY,                   XK_h,      		setmfact,       	{.f = -0.05} },	// Encolhe a área master (−5%)
 	{ MODKEY,                   XK_l,      		setmfact,       	{.f = +0.05} },	// Expande a área master (+5%
 	{ MODKEY,                   XK_Return, 		zoom,           	{0} },			// Promove a janela focada a master (zoom ?)
-	{ MODKEY,                   XK_Tab,    		view,           	{0} },			// Alterna para o tAG anteriormente visto , TAG é definido no " *tags[]"  e "TAGKEYS" 
+	//MODKEY                XK_Tab,    		view,           	{0} },			// Alterna para o tAG anteriormente visto , TAG é definido no " *tags[]"  e "TAGKEYS" 
 	{ MODKEY|ShiftMask,      	XK_c,      		killclient,     	{0} },			// Fecha a janela focada
 	{ MODKEY,                   XK_t,      		setlayout,     		{.v = &layouts[0]} },
 	{ MODKEY,                   XK_f,      		setlayout,      	{.v = &layouts[1]} },
