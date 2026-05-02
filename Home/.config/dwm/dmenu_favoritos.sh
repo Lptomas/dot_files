@@ -48,6 +48,9 @@
 # Wine
 #
 
+
+
+
 ############################################################################################################  
 ############################################################################################################ 
 ######  WEB 
@@ -215,6 +218,11 @@ REMOTE="$TEAMVIEWER\n"
 # *** CLI   - Comand Line Interface
 alacritty_float="alacritty --hold --class float_windows --config-file /home/lpt/.config/alacritty/alacritty.yml"
 
+#nao funciona
+MKDWM="MkDwm"
+#MKDWM_CMD="alacritty --hold -e cd ~/.config/dwm/ && rm -f config.h && sudo make clean install"
+MKDWM_CMD="alacritty --hold -e sh -c cd ~/.config/dwm/ && rm -f config.h && sudo make clean install"
+
 SPEEDTEST="SpeedTest cli "
 SPEEDTEST_CMD="$alacritty_float -o window.dimensions.columns=40 -o window.dimensions.lines=3 -e speedtest-cli --simple"
 DISK_ANALIZER="Disk Analizer cli "
@@ -232,7 +240,7 @@ CALENDARIO_CMD="$alacritty_float -o window.dimensions.columns=80 -o window.dimen
 TGPT="TGPT CLI"
 TGPT_CMD="sh /home/lpt/.config/dwm/tgpt.sh"
 
-CLI="$SPEEDTEST\n$DISK_ANALIZER\n$FIND\n$TEMPO\n$CALENDARIO\n$TGPT\n"
+CLI="$MKDWM\n$SPEEDTEST\n$DISK_ANALIZER\n$FIND\n$TEMPO\n$CALENDARIO\n$TGPT\n"
 
 ############################################################################################################  		 
 # *** GAMES
@@ -650,6 +658,7 @@ case "$(printf "$all" | dmenu -p "$title_up_time"      )" in
 
 
 # ** CLI  
+	$MKDWM			) $MKDWM_CMD			;;
 	$TGPT			) $TGPT_CMD 			;;
 	$SPEEDTEST 		) $SPEEDTEST_CMD 		;;
 	$DISK_ANALIZER 	) $DISK_ANALIZER_CMD 	;;

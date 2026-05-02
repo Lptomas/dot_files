@@ -1,0 +1,26 @@
+{
+    "editor.fontFamily": "'Hack Nerd Font'",
+    "workbench.editor.enablePreview": false,
+    "files.associations": {
+        "*.cpp": "c"
+    },
+    "chat.commandCenter.enabled": false,
+    "git.openRepositoryInParentFolders": "always",
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "python.createEnvironment.trigger": "off",
+    "editor.inlineSuggest.edits.showCollapsed": true,
+    "mssql.connectionGroups": [
+        {
+            "name": "ROOT",
+            "id": "ROOT"
+        }
+    ],
+    "claudeCode.preferredLocation": "panel",
+    "python.analysis.typeCheckingMode": "basic",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": true
+    },
+    "editor.suggestOnTriggerCharacters": true
+}

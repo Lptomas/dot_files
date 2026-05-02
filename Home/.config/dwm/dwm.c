@@ -1,6 +1,8 @@
 /**
- * Adiçoes em focusmon()
+ * Adiçoes em:
  * 
+ * focusmon() para que ao mover o focus de monitor, o rato vai a traz
+ * movemouse() , A janela em FLOATING vai a todos os cantos, não fica limitada a zonas do ecra
  * 
  */
 
@@ -1409,6 +1411,25 @@ movemouse(const Arg *arg)
 
 			nx = ocx + (ev.xmotion.x - x);
 			ny = ocy + (ev.xmotion.y - y);
+
+
+			/* limita ao monitor atual  -- As janelas não saem do monitor
+			if (nx < selmon->wx)
+				nx = selmon->wx;
+			if (ny < selmon->wy)
+				ny = selmon->wy;
+			if (nx + WIDTH(c) > selmon->wx + selmon->ww)
+				nx = selmon->wx + selmon->ww - WIDTH(c);
+			if (ny + HEIGHT(c) > selmon->wy + selmon->wh)
+				ny = selmon->wy + selmon->wh - HEIGHT(c);
+
+			*/
+
+
+
+
+
+
 			if (abs(selmon->wx - nx) < snap)
 				nx = selmon->wx;
 			else if (abs((selmon->wx + selmon->ww) - (nx + WIDTH(c))) < snap)

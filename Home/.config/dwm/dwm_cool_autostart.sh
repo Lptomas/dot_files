@@ -34,7 +34,8 @@ xrandr --output eDP        --primary --mode 1920x1200 --pos 0x0    --rotate norm
 #       --output DisplayPort-0 --off
 
 # Disposição: HDMI em CIMA do ecrã principal (ativo)
-xrandr --output eDP        --primary --mode 1920x1200    --pos 0x1050   --rotate normal \
+#NOTA: -pos 0x1060  tem + 1opx para que as janelas em FLOATING possam percorrer todos os Monitores.
+xrandr --output eDP        --primary --mode 1920x1200    --pos 0x1060   --rotate normal \
        --output HDMI-A-0   --mode 1680x1050_59.00        --pos 120x0    --rotate normal \
        --output DisplayPort-0 --off
 

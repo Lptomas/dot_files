@@ -1,565 +1,662 @@
 /* ######################################################################################
-EDIT:    config.def.h     NOT   config.h   remove "config.h" before compiling
-######################################################################################
+   IMPORTANTE: Editar SEMPRE este ficheiro (config.def.h) e NÃO o config.h
+   O config.h é gerado automaticamente durante a compilação.
+
+   COMPILAR:cd ~/.config/dwm/ && rm -f config.h && sudo make clean install   
+
+   APLICAR UM PATCH:
+       patch -p1 < /path/to/patch.diff
+       rm -f config.h
+       sudo make clean install
+
+   PATCHES INSTALADOS:
+       dwm-systray-20210418-67d76bd.diff           -> System tray na barra
+       dwm-bar-height-spacing-6.3.diff             -> Controlo da altura da barra
+       dwm-scratchpads-20200414-728d397b.diff       -> Janelas flutuantes persistentes (scratchpads)
+       dwm-actualfullscreen-20211013-cb3f58a.diff   -> Fullscreen real (não só monocle)
+       dwm-gridmode-5.8.2.diff                      -> Layout em grelha (grid)
+       dwm-pertag-20200914-61bb8b2.diff             -> Cada tag/workspace guarda o seu próprio layout
+       dwm-cyclelayouts-20180524-6.2.diff           -> Ciclar entre layouts com um atalho
+       dwm-attachbottom-6.3.diff                    -> Novas janelas abrem no fundo da stack
+       dwm-cool-autostart-6.2.diff                  -> Executa script de arranque ao iniciar o DWM
+                                                       Ficheiro: ~/.config/dwm/dwm_cool_autostart.sh
+
+   UTILITÁRIOS ÚTEIS:
+       xprop       -> Ver propriedades de janelas (class, instance, title) para as Rules
+       xkill       -> Matar uma janela clicando nela com o rato
+       xev         -> Ver eventos de teclado/rato (para descobrir nomes de teclas)
+       xmodmap -pk -> Listar todos os keycodes
+       showkey -a  -> Ver keycodes no terminal
+
+######################################################################################*/
 
 
-Compile : # cd ~/.config/dwm/ ; rm -f config.h ; sudo make clean install      '
+/* ============================================================
+   APARÊNCIA
+   ============================================================ */
 
+static const unsigned int borderpx       = 1;   /* Espessura da borda das janelas em pixels */
+static const unsigned int snap           = 25;  /* Distância em pixels para "snap" ao encostar janelas à borda */
 
+/* --- System Tray --- */
+static const unsigned int systraypinning    = 0; /* 0 = systray segue o monitor selecionado; >0 = fixa no monitor N */
+static const unsigned int systrayonleft     = 0; /* 0 = systray à direita do status text; >0 = à esquerda */
+static const unsigned int systrayspacing    = 1; /* Espaço em pixels entre ícones do systray */
+static const int systraypinningfailfirst    = 1; /* 1 = se pinning falhar, mostra no 1º monitor; 0 = mostra no último */
+static const int showsystray                = 1; /* 0 = esconde o systray */
 
+/* --- Barra --- */
+static const int showbar   = 1; /* 0 = esconde a barra */
+static const int topbar    = 1; /* 0 = barra em baixo; 1 = barra em cima */
+static const int user_bh   = 2; /* Espaço extra (padding) à volta da fonte na barra. 2 = valor padrão */
 
-patch -p1 < /path/to/patch.diff
-remove "config.h" before compiling
+/* --- Fontes --- */
+static const char *fonts[] = {
+    "hack:size=12",                                          /* Fonte principal */
+    "Symbols Nerd Font:antialias=true:autohint=true"         /* Fonte para ícones/símbolos Nerd Font */
+};
+static const char dmenufont[] = "hack:size=12";             /* Fonte usada no dmenu */
 
-
-Patches instalados:
-dwm-systray-20210418-67d76bd.diff		
-dwm-bar-height-spacing-6.3.diff			
-dwm-scratchpads-20200414-728d397b.diff  
-dwm-actualfullscreen-20211013-cb3f58a.diff
-dwm-gridmode-5.8.2.diff
-dwm-pertag-20200914-61bb8b2.diff
-dwm-cyclelayouts-20180524-6.2.diff
-dwm-attachbottom-6.3.diff 
-dwm-cool-autostart-6.2.diff  -> configurated to have a autostart file: dwm_cool_autostart.sh
-
-*/
+/* --- Cores --- */
+static const char col_gray1[]      = "#4d4d4d";
+static const char col_gray2[]      = "#666666";
+static const char col_gray3[]      = "#bbbbbb";
+static const char col_gray4[]      = "#eeeeee";
+static const char col_gray5[]      = "#060606";  /* Quase preto */
+static const char col_cyan[]       = "#005577";
+static const char col_green[]      = "#07AE06";  /* Verde principal */
+static const char col_dark_green[] = "#153715";  /* Verde escuro (fundo do elemento ativo) */
+static const char col_red[]        = "#ff0000";
+static const char col_black[]      = "#000000";
 
 /*
+   Esquema de cores:
+   SchemeNorm = elementos NÃO ativos (workspaces não selecionados, slstatus)
+   SchemeSel  = elementos ATIVOS (workspace em foco, título da janela ativa)
 
-xkill   -  select window with mouse to kill
+   { cor_texto, cor_fundo, cor_borda_janela }
 */
-
-
-
-/* See LICENSE file for copyright and license details. */
-
-/* appearance */
-static const unsigned int borderpx  	 = 1;	/* border pixel of windows */
-static const unsigned int snap      	 = 25;	/* snap pixel */
-static const unsigned int systraypinning = 0;	/* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft  = 0;	/* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 1;	/* systray spacing */
-static const int systraypinningfailfirst = 1;	/* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;		/* 0 means no systray */
-static const int showbar            = 1;		/* 0 means no bar */
-static const int topbar             = 1;		/* 0 means bottom bar */
-static const int user_bh            = 2;		/* 2 is the default spacing around the bar's font */
-//static const char *fonts[]          = { "Noto Sans Mono:size=10" };
-static const char *fonts[]          = { "hack:size=12", "Symbols Nerd Font:antialias=true:autohint=true"  };
-
-static const char dmenufont[]       = "hack:size=12";
-static const char col_gray1[]       = "#4d4d4d";
-static const char col_gray2[]       = "#666666";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_gray5[]       = "#060606";
-static const char col_cyan[]        = "#005577";
-static const char col_green[]       = "#07AE06";
-static const char col_dark_green[]  = "#153715"; //
-static const char col_red[]       	= "#ff0000";
-static const char col_black[]       = "#000000";
-static const char *colors[][3]      = {		
-	/*[SchemeNorm] = { A, B, C }, 
-		A = cor do TEXTO do que NÂO está activo : workspaces não selecionados e slstatus
-		B=  cor do FUNDO do que NÂO está activo : workspaces não selecionados e slstatus
-		C = Cor da borda das janelas que não está em foco				*/
-	[SchemeNorm] = { col_green, col_black, col_gray5 },
-	
-	/*[SchemeSel]  = {A , B,  C  }, 
-		A = Cor texto em Focus e cor texto da designação das janelas
-		B = Cor Fundo worksapce em focus e cor fundo da designação das janelas
-		C = Cor da borda das janelas que estão em foco				*/		
-	[SchemeSel]  = { col_green , col_dark_green,  col_green  },
+static const char *colors[][3] = {
+    [SchemeNorm] = { col_green, col_black,      col_gray5      }, /* Texto verde, fundo preto, borda quase preta */
+    [SchemeSel]  = { col_green, col_dark_green, col_green      }, /* Texto verde, fundo verde escuro, borda verde */
 };
 
+
+/* ============================================================
+   SCRATCHPADS  (patch: dwm-scratchpads)
+   Janelas flutuantes persistentes — escondem-se mas não fecham.
+   Útil para terminal rápido, gestor de ficheiros, htop, etc.
+
+   Requie
+     - Alacritty: usar "--class <nome>" para definir o instance
+     - st:        usar "-n <nome>"
+   ============================================================ */
+
 typedef struct {
-	const char *name;
-	const void *cmd;
+    const char *name;
+    const void *cmd;
 } Sp;
 
+/* Definição dos comandos de cada scratchpad */
+
+/* Terminal rápido — 120 colunas x 30 linhas */
+const char *spcmd1[] = {
+    "alacritty", "--class", "spterm",
+    "-o", "window.dimensions.columns=120",
+    "-o", "window.dimensions.lines=30",
+    NULL
+};
+
+/* Gestor de ficheiros lf — 160x45 */
+/* Void Linux: usa ~/.config/lf/lfub */
+const char *spcmd2[] = {
+    "alacritty", "--class", "spfm",
+    "-o", "window.dimensions.columns=160",
+    "-o", "window.dimensions.lines=45",
+    "-e", "sh", "-c", "~/.config/lf/lfub",
+    NULL
+};
+/* Arch Linux (alternativa comentada):
+const char *spcmd2[] = {
+    "alacritty", "--class", "spfm",
+    "-o", "window.dimensions.columns=160",
+    "-o", "window.dimensions.lines=45",
+    "-e", "sh", "-c", "~/.local/bin/lfub",
+    NULL
+}; */
+
+const char *spcmd3[] = { "thunar", NULL };                          /* Gestor de ficheiros gráfico */
+const char *spcmd4[] = { "firefox", "--class", "firefox", NULL };   /* Firefox (não funciona bem como scratchpad) */
+const char *spcmd5[] = { "code", NULL };                            /* VS Code */
+
+/* Monitor de sistema htop — 130x35 */
+const char *spcmd6[] = {
+    "alacritty", "--class", "sphtop",
+    "-o", "window.dimensions.columns=130",
+    "-o", "window.dimensions.lines=35",
+    "-e", "htop",
+    NULL
+};
+
+/* Tabela de scratchpads: { "nome/instance", comando } */
+static Sp scratchpads[] = {
+    { "spterm",   spcmd1 },  /* índice 0 -> WIN + s */
+    { "spranger", spcmd2 },  /* índice 1 -> WIN + d */
+    { "thunar",   spcmd3 },  /* índice 2 -> WIN + c */
+    { "firefox",  spcmd4 },  /* índice 3 -> (sem atalho, não funciona) */
+    { "code",     spcmd5 },  /* índice 4 -> WIN + z */
+    { "sphtop",   spcmd6 },  /* índice 5 -> WIN + h */
+};
 
 
-/* helper for spawning shell commands in the pre dwm-5.0 fashion */
+/* ============================================================
+   AUTOSTART  (patch: dwm-cool-autostart)
+   Executa um script ao arrancar o DWM.
+   Toda a configuração de arranque está em:
+       ~/.config/dwm/dwm_cool_autostart.sh
+   ============================================================ */
+
+static const char *const autostart[] = {
+    "sh", "-c", "~/.config/dwm/dwm_cool_autostart.sh",
+    NULL /* obrigatório para terminar o array */
+};
+
+
+/* ============================================================
+   TAGS (Workspaces)
+   Usa ícones Nerd Font. Referência Unicode: https://www.unicode.org/charts/
+   ============================================================ */
+
+static const char *tags[] = {
+    "",        /* Tag 1: Browser      (WIN+1) */
+    "",        /* Tag 2: Code         (WIN+2) */
+    "3",        /* Tag 3: Ficheiros    (WIN+3) */
+    "󰈙",        /* Tag 4: Office       (WIN+4) */
+    "5",        /* Tag 5: PDF          (WIN+5) */
+    "󰊖",        /* Tag 6: Jogos        (WIN+6) */
+    "7",        /* Tag 7: Áudio/BT     (WIN+7) */
+    "󰢹",        /* Tag 8: Remoto       (WIN+8) */
+};
+
+
+/* ============================================================
+   RULES — Regras de atribuição automática de janelas pelas TAG
+   Descobrir propriedades: executar "xprop" e clicar na janela
+       WM_CLASS(STRING) = instance, class
+       WM_NAME(STRING)  = title
+
+   tags mask:   0       = tag atual
+                1 << N  = tag N+1 (ex: 1<<0=tag1, 1<<2=tag3)
+                ~0      = todas as tags
+
+   isfloating:  0 = tiled  |  1 = floating
+   monitor:    -1 = monitor atual  |  0 = primário  |  1 = secundário
+   ============================================================ */
+
+static const Rule rules[] = {
+
+    /* --- Scratchpads --- */
+    /* class    instance    title    tags mask    isfloating    monitor */
+    { NULL,     "spterm",   NULL,    SPTAG(0),    1,            -1 },
+    { NULL,     "spfm",     NULL,    SPTAG(1),    1,            -1 },
+    { NULL,     "thunar",   NULL,    SPTAG(2),    0,            -1 },
+    { NULL,     "firefox",  NULL,    SPTAG(3),    0,            -1 },
+    { NULL,     "code",     NULL,    SPTAG(4),    0,            -1 },
+    { NULL,     "sphtop",   NULL,    SPTAG(5),    1,            -1 },
+
+    /* --- Janelas Flutuantes Globais (qualquer tag) --- */
+    /* class                        instance            title    tags    float    monitor */
+    { "Galculator",                 NULL,               NULL,    0,      1,       -1 },
+    { NULL,                         "xfce4-appfinder",  NULL,    0,      1,       -1 },
+    { "Arandr",                     NULL,               NULL,    0,      1,       -1 },
+    { "Xfce4-terminal",             NULL,               NULL,    0,      1,       -1 },
+    { "Arcolinux-welcome-app.py",   NULL,               NULL,    0,      1,       -1 },
+    { "Arcolinux-calamares-tool.py",NULL,               NULL,    0,      1,       -1 },
+    { "resistor_decoder",           NULL,               NULL,    0,      1,       -1 },
+    { "pixeltomatrix.exe",          NULL,               NULL,    0,      1,       -1 },
+    { "pavucontrol",                NULL,               NULL,    0,      1,       -1 },
+    { "float_windows",              NULL,               NULL,    0,      1,       -1 },
+
+    /* --- Firefox Picture-in-Picture ---
+       WM_CLASS = "Toolkit", "firefox"
+       WM_NAME  = "Picture-in-Picture" ou "Vídeo em janela flutuante" (PT) */
+    /* class      instance    title    tags mask    float    monitor */
+    { NULL, "Toolkit", "Picture-in-Picture",          0, 1, -1 },
+    { NULL, "Toolkit", "Vídeo em janela flutuante",   0, 1, -1 },
+
+    /* --- Gimp (tag 1, tiled) --- */
+    /* class      instance    title    tags mask    float    monitor */
+    { "Gimp", NULL, NULL, 1, 0, -1 },
+
+    /* ── Tag 1: Browser ── */
+    /* class      instance    title    tags mask    float    monitor */
+    { "firefox",  NULL,       NULL,    1,           0,       -1 },
+
+    /* ── Tag 2: Editor de Código ── */
+    /* class      instance    title    tags mask    float    monitor */
+    { NULL,   "code", NULL,   1 << 1,  0,  -1 },
+    { "code",  NULL,  NULL,   1 << 1,  0,  -1 },
+
+    /* ── Tag 3: Gestor de Ficheiros ── */
+    /* class      instance    title    tags mask    float    monitor */
+    { "thunar", NULL, NULL,   1 << 2,  0,  -1 },
+    { "Thunar", NULL, NULL,   1 << 2,  0,  -1 },
+    { "Nemo",   NULL, NULL,   1 << 2,  0,  -1 },
+    { "lf",     NULL, NULL,   1 << 2,  0,  -1 },
+
+    /* ── Tag 4: Office ── */
+    /* class      instance    title    tags mask    float    monitor */
+    { NULL,               "libreoffice", NULL,          1 << 3, 0, -1 },
+    { "libreoffice",      "libreoffice", NULL,          1 << 3, 0, -1 },
+    { "libreoffice-writer", NULL,        NULL,          1 << 3, 0, -1 },
+    { NULL,               NULL,          "libreoffice", 1 << 3, 0, -1 }, /* Void Linux */
+
+    /* ── Tag 5: PDF ── */
+    /* class      instance    title    tags mask    float    monitor */
+    { NULL, "evince", NULL,   1 << 4,  0,  -1 },
+
+    /* ── Tag 6: Jogos ── */
+    /* class      instance    title    tags mask    float    monitor */
+    { "Steam",          NULL,           NULL,             1 << 5, 0, -1 },
+    { NULL,             "Steam",        NULL,             1 << 5, 0, -1 },
+    { "steamwebhelper", NULL,           NULL,             1 << 5, 0, -1 },
+    { NULL,             "steamwebhelper",NULL,            1 << 5, 0, -1 },
+    { NULL,             NULL,           "steamwebhelper", 1 << 5, 0, -1 },
+    { "Special Offers", NULL,           NULL,             1 << 5, 0, -1 },
+    { NULL,             "Special Offers",NULL,            1 << 5, 0, -1 },
+    { NULL,             NULL,           "Special Offers", 1 << 5, 0, -1 },
+    { NULL,             NULL,           "Steam",          1 << 5, 0, -1 },
+    { "Lutris",         NULL,           NULL,             1 << 5, 0, -1 },
+    { "chromium",       NULL,           NULL,             1 << 5, 0, -1 },
+    { "steam_proton",   NULL,           NULL,             1 << 5, 0, -1 },
+
+    /* ── Tag 7: Áudio & Bluetooth — fixo no monitor 0 (primário) ── */
+    { NULL, NULL, "Bluetooth",               1 << 6, 0, 0 },
+    { NULL, NULL, "Controlo de Volume",      1 << 6, 0, 0 },
+    { NULL, NULL, "JBL E65BTNC",             1 << 6, 0, 0 },
+    { NULL, NULL, "Flipbuds Lite",           1 << 6, 0, 0 },
+    { NULL, NULL, "Xiaomi Buds 3",           1 << 6, 0, 0 },
+    { NULL, NULL, "blueman-applet",          1 << 6, 0, 0 },
+    { NULL, NULL, "Dispositivos Bluetooth",  1 << 6, 0, 0 },
+
+    /* ── Tag 8: Acesso Remoto ── */
+    { "TeamViewer", NULL, NULL,                          1 << 7, 0, -1 },
+    { NULL, NULL, "133 - Srv EPLAN — TeamViewer",        1 << 7, 0, -1 },
+    { NULL, NULL, "Luis-Nuc — TeamViewer",               1 << 7, 0, -1 },
+};
+
+
+/* ============================================================
+   LAYOUTS
+   ============================================================ */
+
+static const float mfact        = 0.55; /* Proporção da área master [0.05..0.95] */
+static const int   nmaster      = 1;    /* Número de janelas na área master */
+static const int   resizehints  = 1;    /* 1 means respect size hints in tiled resizals */
+static const int   lockfullscreen = 1;  /* 1 will force focus on the fullscreen window */
+
+#include "grid.c"
+
+static const Layout layouts[] = {
+    /* símbolo    função de arranjo */
+    { "[]=",  tile    },  /* 0: Tiled — padrão (master + stack) */
+    { "[M]",  monocle },  /* 1: Monocle — janela ativa ocupa tudo */
+    { "HHH",  grid    },  /* 2: Grid — grelha igual para todas as janelas */
+    { "><>",  NULL    },  /* 3: Floating — sem arranjo automático */
+    { NULL,   NULL    },  /* terminador (necessário para cyclelayouts) */
+};
+
+
+/* ============================================================
+   MODIFICADORES E MACROS
+   ============================================================ */
+
+#define WIN_KEY  Mod4Mask   /* Tecla Super (Windows) */
+#define MODKEY   Mod1Mask   /* Alt Esquerdo */
+
+/* Macro para definir os 4 atalhos de cada tag:
+   WIN+N          -> vai para a tag N
+   WIN+Ctrl+N     -> mostra/esconde a tag N em conjunto com a atual
+   WIN+Shift+N    -> move a janela para a tag N
+   WIN+Ctrl+Shift+N -> adiciona/remove a janela da tag N */
+#define TAGKEYS(KEY, TAG) \
+    { WIN_KEY,                       KEY, view,       {.ui = 1 << TAG} }, \
+    { WIN_KEY|ControlMask,           KEY, toggleview,  {.ui = 1 << TAG} }, \
+    { WIN_KEY|ShiftMask,             KEY, tag,         {.ui = 1 << TAG} }, \
+    { WIN_KEY|ControlMask|ShiftMask, KEY, toggletag,   {.ui = 1 << TAG} },
+
+/* Macro para lançar comandos shell */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 
+/* ============================================================
+   COMANDOS  (variáveis para uso nos atalhos)
+   ============================================================ */
 
-
-/******************** scratchpad  
-Para usar os scratchpad é necessário que pelo menos o Terminal aceite:
-https://www.youtube.com/watch?v=sTHww5r_mVU
- - mudar o mome da janela, ou seja o "instance"
- - mudar o windows size
-
-man st
-man alacritty */
-
-// *spcmd1[] = { programa + flag -n = name = spterm + flnag -g = size = 120x34		: st --man man 
-//const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-//const char *spcmd2[] = {"st", "-n", "spfm", "-g", "120x34", "-e", "lf", NULL };
-
-// O tamanho da janela depende da resolução do ecrã e do: "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=30"
-
-//const char *spcmd1[] = {"alacritty", "--class", "spterm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml",NULL, NULL,NULL};
-//const char *spcmd2[] = {"alacritty", "--class", "spfm", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "lf",NULL};
-//const char *spcmd6[] = {"alacritty", "--class", "sphtop", "--config-file", "/home/lpt/.config/alacritty/alacritty_dwm_scratchpad.yml","-e", "htop",NULL};
-
-const char *spcmd1[] = {"alacritty", "--class", "spterm", "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=30",NULL, NULL,NULL};
-/*Arch
-const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=160", "-o", "window.dimensions.lines=45", "-e", "sh", "-c", "~/.local/bin/lfub", NULL};
-*/
-/*Void*/
-const char *spcmd2[] = {"alacritty", "--class", "spfm", "-o", "window.dimensions.columns=160", "-o", "window.dimensions.lines=45", "-e", "sh", "-c", "~/.config/lf/lfub", NULL};
-
-
-const char *spcmd3[] = {"thunar", NULL }; 
-const char *spcmd4[] = {"firefox", "--class", "firefox",NULL }; // Nao funciona
-const char *spcmd5[] = {"code", NULL }; // estava thunar
-const char *spcmd6[] = {"alacritty", "--class", "sphtop", "-o", "window.dimensions.columns=130", "-o", "window.dimensions.lines=35","-e", "htop",NULL};
-
-
-
-static Sp scratchpads[] = {   	//{"thunar",   	SHCMD("thunar")}, // nao funciona
-	/* name          cmd  */
-	{"spterm",      spcmd1},
-	{"spranger",    spcmd2},
-	{"thunar",   	spcmd3},
-	{"firefox",   	spcmd4},   //nao funciona no scratchpads
-	{"code",   		spcmd5},   
-	{"sphtop",   	spcmd6},
+/* dmenu — barra de lançamento de aplicações 
+ (#RGB, #RRGGBB, and color names are supported).*/
+static char dmenumon[2] = "0";
+static const char *dmenucmd[] = {
+    "dmenu_run", "-i",
+    "-m",  dmenumon,
+    "-fn", dmenufont,   /* defines the font */
+    "-nb", col_black,   /* fundo normal: preto */
+    "-nf", col_green,   /* texto normal: verde */
+    "-sb", col_green,   /* fundo selecionado: verde */
+    "-sf", col_gray5,   /* texto selecionado: quase preto */
+    NULL
 };
+/* Teste direto no terminal:
+   dmenu_run -m "0" -fn "hack:size=11" -nb "#000000" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
+   dmenu_run -m dmenumon -fn "monospace:size=12" -nb "#4d4d4d" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
+   dmenu_run -m "0" -fn "hack:size=11" -nb "#000000" -nf "#07AE06" -sb "#07AE06" -sf "#060606
+   
+   
+   */
 
-
-/******************** Autostart  : dwm-cool-autostart-6.2.diff 
-* Everything to start after DWM is in ~/.config/dwm/dwm_cool_autostart.sh file 			*/
-
-static const char *const autostart[] = {
-//	"st", NULL,
-	"sh", "-c", "~/.config/dwm/dwm_cool_autostart.sh",
-	NULL /* terminate */
-};
-
-
-/* tagging : https://www.unicode.org/charts/PDF/U260
-0.pdf */ 
-static const char *tags[] = {"", "", "3", "󰈙", "5", "󰊖", "7", "󰢹"};
-
-static const Rule rules[] = {
-	/* See windows properties with : xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 *  use tags mask to point an application to a specific workspace
-	 * 
-	 * https://dwm.suckless.org/customisation/tagmask/
-	 * *tags[] = 00001 = work   Original position
-	 * *tags[] = 00100 = FM   -> 1 << 2 : 1 is shifted 2 times to left: 
-	 * 
-	 * 
-	 * monitor: "-1"= actual monitor ; "0"= main Monitor ? ;  "1"=2nd monitor  ; 
-	 */
-	 
-	 //multiple scratchpads
-	/* class      					instance    		title       	tags mask    		isfloating   	monitor */
-	{ NULL,		  					"spterm",			NULL,			SPTAG(0),			1,			 	-1 },
-	{ NULL,		  					"spfm",				NULL,			SPTAG(1),			1,			 	-1 },
-	{ NULL,		  					"thunar",			NULL,			SPTAG(2),			0,			 	-1 },
-	{ NULL,		  					"firefox",			NULL,			SPTAG(3),			0,			 	-1 },
-	{ NULL,		  					"code",				NULL,			SPTAG(4),			0,			 	-1 },
-	{ NULL,		  					"sphtop",			NULL,			SPTAG(5),			1,			 	-1 },
-
-// Actual workspace
-	/* class                      	instance    		title      		Tags mask     		isfloating   	monitor */
-	{ "Galculator", 				NULL,      			NULL,  			0,            		1,           	-1 },
-	{ NULL, 		   	   			"xfce4-appfinder", 	NULL,   		0,           		1,           	-1 },
-	{ "Arandr", 			   		NULL,      			NULL,  			0,            		1,           	-1 },
-	{ "Gimp",                      	NULL,       		NULL,      		1,            		0,           	-1 },
-	{ "Xfce4-terminal",            	NULL,       		NULL,      		0,            		1,           	-1 },
-	{ "Arcolinux-welcome-app.py",  	NULL,       		NULL,      		0,           		1,           	-1 },
-	{ "Arcolinux-calamares-tool.py",NULL,    			NULL,      		0,            		1,           	-1 },	
-	{ "resistor_decoder",  			NULL,    			NULL,      		0,            		1,           	-1 },	
-	{ "pixeltomatrix.exe",  		NULL,    			NULL,      		0,            		1,           	-1 },
-	{ "pavucontrol",  				NULL,    			NULL,      		0,            		1,           	-1 },
-	{ "float_windows",  			NULL,    			NULL,      		0,            		1,           	-1 },
-	
-	
-	/* "Picture-in-Picture" do firefox--nao está a funcionar
-	{ "Toolkit",  					NULL,    			NULL,      		0,            		1,           	-1 },	
-	{ NULL,  						"Toolkit",  		NULL,      		0,            		1,           	-1 },
-	{ NULL,  		   				NULL,      			"Toolkit",  	0,            		1,           	-1 },
-	{ "Picture-in-Picture",  		NULL,    			NULL,      		0,            		1,           	-1 },	
-	{ NULL,  						"Picture-in-Picture", NULL,     	0,            		1,           	-1 },
-	{ NULL,  		   				NULL,      			"Picture-in-Picture",  0,       1,           	-1 },
+/* Áudio (PipeWire/PulseAudio via pactl) 
+static const char *Audioup[]   = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *Audiodown[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
 */
-	{ NULL,  						"Toolkit",  		 "Picture-in-Picture", 0,      	 	1,           	-1 },
-	{ NULL,  						"Toolkit",  		 "Vídeo em janela flutuante", 0,    1,           	-1 },
-
-/*
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-WM_CLASS(STRING) = "Toolkit", "firefox"
-WM_NAME(STRING) = "Picture-in-Picture"
-
+/* Brilho do ecrã (light) 
+static const char *light_inc[] = { "xlight", "-A", "5", NULL };
+static const char *light_dec[] = { "xlight", "-U", "5", NULL };
 */
 
-
-
-// Workspace 1 // WEB
-	/* class                       	instance    		title      		tags mask     		isfloating  	monitor */
-	 { "firefox", 	            	NULL,       		NULL,     		1,       			0,           	-1 },
-
-
-// Workspace 2    // code
-	/* class                       	instance    		title     		tags mask     		isfloating   	monitor */
-	{ NULL, 		   				"code",    			NULL,  	   		1 << 1,             0,           	-1 },
-	{ "code",						NULL, 	   			NULL,  	   		1 << 1,             0,           	-1 },
-
-
-// Workspace 3   // File manager
-	/* class       					instance    		title     		tags mask     		isfloating  	 monitor */
-	{ "thunar", 					NULL,    			NULL,      		1 << 2,       		0,           	-1 },
-	{ "Thunar", 					NULL,    			NULL,      		1 << 2,       		0,           	-1 },
-	{ "Nemo", 						NULL,    			NULL,     		1 << 2,       		0,          	-1 },	
-	{ "lf", 						NULL,    			NULL,      		1 << 2,       		0,           	-1 },	
-	//{ NULL, 						"Nemo",    			NULL,      		1 << 2,       		0,           	-1 },
-// Workspace 4 // OFFICE
-	/* class                    	instance    		Title      		tags mask     		isfloating   	monitor */
-	{ NULL, 		   				"libreoffice",  	NULL,     		1 << 3,      		0,           	-1 },
-	{ "libreoffice", 		   		"libreoffice",  	NULL,      		1 << 3,       		0,           	-1 },
-	{ "libreoffice-writer", 		 NULL,				NULL,      		1 << 3,       		0,           	-1 },
-
-	
-	//voidlinux:
-	{NULL , 		   				NULL, 				"libreoffice",  1 << 3,      		 0,           	-1 },
-
-// Workspace 5 // PDF
-	/* class                    	instance    		Title      		tags mask     		isfloating   	monitor */
-	{ NULL, 		   				"evince",    		NULL,      		1 << 4,      		 0,           	-1 },	
-
-// Workspace 6 // Game
-	/* class                    	instance    		Title      			tags mask     	isfloating   	monitor */
-	{ "Steam", 		   				NULL,    			NULL,      			1 << 5,       		0,           	-1 },
-	{ NULL, 		   				"Steam",    		NULL,      			1 << 5,       		0,           	-1 },
-	{ "steamwebhelper", 		   	NULL,    			NULL,      			1 << 5,       		0,           	-1 },
-	{ NULL, 						"steamwebhelper",   NULL,      			1 << 5,       		0,           	-1 },
-	{ NULL, 		   				NULL,    			"steamwebhelper",	1 << 5,       		0,           	-1 },
-	{ "Special Offers", 		   	NULL,    			NULL,      			1 << 5,       		0,           	-1 },
-	{ NULL, 						"Special Offers",   NULL,      			1 << 5,       		0,           	-1 },
-	{ NULL, 		   				NULL,    			"Special Offers",   1 << 5,       		0,           	-1 },
-	{ NULL, 		   				NULL,    			"Steam",   			1 << 5,      		0,           	-1 },	
-	{ "Lutris", 		   			NULL,    			NULL,      			1 << 5,       		0,           	-1 },
-	{ "chromium", 		   			NULL,    			NULL,      			1 << 5,       		0,           	-1 },
-	{ "steam_proton", 		   		NULL,    			NULL,      			1 << 5,       		0,           	-1 },
-
-// Workspace 7 // bluethood e som e comfig
-	/* class                    	instance    		Title      				tags mask     isfloating   		monitor */
-	{ NULL, 		   				NULL,    			"Bluetooth",      			1 << 6,       		0,           	0 },
-	{ NULL, 						NULL,    			"Controlo de Volume",      	1 << 6,       		0,          	0 },
-	{ NULL, 						NULL,    			"JBL E65BTNC",      		1 << 6,       		0,           	0 },
-	{ NULL, 						NULL,    			"Flipbuds Lite",      		1 << 6,       		0,           	0 },
-	{ NULL, 						NULL,    			"Xiaomi Buds 3",      		1 << 6,       		0,           	0 },
-	{ NULL, 						NULL,    			"blueman-applet",      		1 << 6,       		0,           	0 },
-	{ NULL, 						NULL,    			"Dispositivos Bluetooth",   1 << 6,       		0,           	0 },
+/* =======================================================================================================================
+   ATALHOS DE TECLADO
+  ======================================================================================================================= */
 
 
 
-// Workspace 8 // Remote
-	/* class                    	instance    		Title      								tags mask     		isfloating   		monitor */
-	{ "TeamViewer",					NULL, 	   			NULL,  	   								1 << 7,             		0,           	-1 },
-	{ NULL,							NULL, 	   			"133 - Srv EPLAN — TeamViewer",  	   	1 << 7,             		0,           	-1 },
-	{ NULL,							NULL, 	   			"Luis-Nuc — TeamViewer",  	   			1 << 7,             		0,           	-1 },
-	
-
-};
-
-/* layout(s) */
-static const float mfact    	= 0.55; /* factor of master area size [0.05..0.95] */
-static const int nmaster    	= 1;    /* number of clients in master area */
-static const int resizehints 	= 1;    /* 1 means respect size hints in tiled resizals */
-static const int lockfullscreen = 1; 	/* 1 will force focus on the fullscreen window */
-
-#include "grid.c"
-static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "[M]",      monocle },
-	{ "HHH",      grid },
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ NULL,       NULL },
-};
-
-/* key definitions */
-#define WIN_KEY Mod4Mask  	// SUPER
-#define MODKEY Mod1Mask   	// left ALT
-
-#define TAGKEYS(KEY,TAG) \
-	{ WIN_KEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ WIN_KEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ WIN_KEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ WIN_KEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
-
-
-/* commands */
-
-//static const char *app_finder[]  	= { "xfce4-appfinder", NULL };
-//{ WIN_KEY|ShiftMask,      			XK_a, 			spawn,          {.v = app_finder } },
+/* ============================================================
+   CHEATSHEET — WIN+F1
+   Abre terminal com lista de atalhos navegável (q = fechar)
+   ============================================================ */
+#define CHEATSHEET \
+"===== RATO =====\n" \
+"-- nas Janelas \n" \
+"WIN+Rato_Esq     : Move janela e passa para Float\n" \
+"WIN+Rato_Dir     : Resize janela e passa para Float\n" \
+"WIN+ScroolCLICK  : Janela para TILED \n" \
+"-- no SystemTRAY \n" \
+"WIN+Rato_Esq     : Abre HTOP\n" \
+"WIN+Rato_Dir     : Abre calendario\n" \
+"WIN+ScroolCLICK  : Abre thunar\n" \
+"WIN+ScroolUP     : Ecra principal brilho UP \n" \
+"WIN+ScroolDOWN   : Ecra principal brilho DW \n" \
+"ALT+ScroolUP     : Ecra HMI-x-Y brilho UP \n" \
+"ALT+ScroolDOWN   : Ecra HMI-x-Y brilho DW \n" \
+"===== SCRATCHPADS =====\n" \
+"WIN+s           : Terminal rápido\n" \
+"WIN+d           : Gestor ficheiros lf\n" \
+"WIN+c           : Thunar\n" \
+"WIN+z           : VS Code\n" \
+"WIN+h           : htop\n" \
+"\n===== JANELAS =====\n" \
+"WIN+Esc         : Fecha janela\n" \
+"WIN+f           : Fullscreen\n" \
+"WIN+b           : Mostra/esconde barra\n" \
+"WIN+t           : Floating <-> Tiled\n" \
+"ALT+j/k         : Foco janela seguinte/anterior\n" \
+"ALT+Enter       : Promove janela a master\n" \
+"ALT+h/l         : Redimensiona area master\n" \
+"ALT+i/d         : Aumenta/diminui janelas no master\n" \
+"ALT+Shift+c     : Fecha janela\n" \
+"\n===== TAGS =====\n" \
+"WIN+1..8        : Vai para tag N\n" \
+"WIN+Ctrl+1..8   : Mostra tag N em simultaneo\n" \
+"WIN+Shift+1..8  : Move janela para tag N\n" \
+"WIN+Tab         : Tag anteriormente vista\n" \
+"ALT+0           : Mostra todas as tags\n" \
+"\n===== MONITORES =====\n" \
+"WIN+\\           : Foca monitor seguinte (rato segue)\n" \
+"ALT+Shift+,     : Move janela para monitor anterior\n" \
+"ALT+Shift+.     : Move janela para monitor seguinte\n" \
+"\n===== APLICACOES =====\n" \
+"WIN+Enter       : Terminal (alacritty)\n" \
+"WIN+a           : dmenu favoritos\n" \
+"WIN+Shift+a     : xfce4-appfinder\n" \
+"WIN+v           : lf no terminal\n" \
+"WIN+t           : Thunar\n" \
+"WIN+m           : ARandR (monitores)\n" \
+"\n===== MULTIMÉDIA =====\n" \
+"FN+F2/F3        : Brilho ecra -/+\n" \
+"FN+F5           : Mute\n" \
+"FN+F6/F7        : Volume +/-\n" \
+"WIN+F1          : Este cheatsheet\n" \
+"\n===== LAYOUTS =====\n" \
+"ALT+,/.         : Cicla layouts\n" \
+"ALT+t           : Layout Tiled  []=\n" \
+"ALT+f           : Layout Monocle [M]\n" \
+"ALT+m           : Layout Grid   HHH\n" \
+"ALT+Space       : Alterna layout anterior\n" \
+"\n===== DWM =====\n" \
+"ALT+Shift+q     : Reinicia DWM\n" \
+"FIM\n" \
 
 
 
 
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */																
-//static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };																	
-static const char *dmenucmd[] = { "dmenu_run", "-i", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_green, "-sb", col_green, "-sf", col_gray5, NULL };
 
 
-/*
--fn defines the font
--nb defines the normal background color
--nf defines the normal foreground color (#RGB, #RRGGBB, and color names are supported).
--sb defines the selected background color
-
-directamente no terminal
-dmenu_run -m dmenumon -fn dmenufont -nb "#4d4d4d" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
-
-dmenu_run -m dmenumon -fn "monospace:size=12" -nb "#4d4d4d" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
-dmenu_run -m "0" -fn "hack:size=11" -nb "#000000" -nf "#07AE06" -sb "#07AE06" -sf "#060606"
-
-SHCMD('dmenu_run -m "0" -fn "monospace:size=11" -nb "#col_black" -nf "#col_green" -sb "#col_green" -sf "#col_gray5"')  },
-
-static const char *termcmd[]  		= { "alacritty", NULL };
-static const char *fileterminal[]  	= { "alacritty", "-e", "lf", NULL };
-static const char *editorcmd[]  	= { "xed", NULL };
-//static const char *webcmd[]  		= { "firefox", NULL };
-static const char *monitors[]  		= { "arandr", NULL };
-static const char *filecmd[]  		= { "thunar", NULL };
-static const char *printscreen[]  	= { "flameshot", "gui", NULL, NULL };
-static const char *app_finder[]  	= { "xfce4-appfinder", NULL };
-static const char *app_pdf[]  		= { "evince", NULL };
-static const char *office[]  		= { "libreoffice", NULL };
-static const char *calendar[]  		= { "gsimplecal", NULL };
-static const char *taskmanager[]  	= { "alacritty", "-e", "htop", NULL };
-
-//static const char *light_inc[]  		= { "xbacklight", "-inc", "5", NULL };  //nao detecta monitor
-//static const char *light_dec[]  		= { "xbacklight", "-dec", "5", NULL };
-
-static const char *light_inc[]  		= { "xlight", "-A", "5", NULL };  
-static const char *light_dec[]  		= { "xlight", "-U", "5", NULL };  
-
-// AUDIO 
-static const char *alsa_Audioup[]  		= { "amixer", "-c", "0", "set", "Master","2+", NULL };
-static const char *alsa_Audiodown[]  	= { "amixer", "-c", "0", "set", "Master","2-", NULL };
-static const char *pipewire_Audioup[]  		= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
-static const char *pipewire_Audiodown[]  	= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
-
-static const char *Audioup[]  				= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
-static const char *Audiodown[]  			= { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
 
 
-static const char *Touchpadtoggle[]  		= { "sh", "-c", "~/my_configs/scripts/toggletouchpad.sh", NULL };
-static const char *turnoffscreens[]  		= { "xset", "dpms", "force", "off", NULL };
-*/
 
 
-/*+
-	
-https://dev.to/wallclocks/x11-special-keyboard-keys-for-window-managers-4no2
-xbacklight -inc -20
-{ 0,                            XF86XK_MonBrightnessUp,     spawn,      {.v = inclight } },
-{ 0,                            XF86XK_MonBrightnessDown,   spawn,      {.v = declight } 
-
-list de  XF86XK  /usr/include/X11/XF86keysym.h
-*/
-
-//   /usr/include/X11/XF86keysym.h
-
-/*   xrandr --output HDMI1 --brightness 0.5
-showkey -a
-
-xmodmap -pk | grep PowerOff
-evtest    https://unix.stackexchange.com/questions/130656/how-to-get-all-my-keys-to-send-keycodes
-xev
-
-*/
-
-#include <X11/XF86keysym.h> // to use XF86XK_TouchpadToggle    
+#include <X11/XF86keysym.h>  /* Para teclas multimédia: XF86XK_* */
 
 static const Key keys[] = {
 
-	/************** FN keys - HP AERO *******************/
-	//{ 0, XF86XK ,	spawn,		SHCMD("xset dpms force off") },
-	/*FN+F1 */   { WIN_KEY, XK_F1 ,	            spawn,		SHCMD("xset dpms force off") },            
-	/*FN+F2 */   { 0, XF86XK_MonBrightnessDown ,spawn,		SHCMD("light -U 5") },
-	/*FN+F3 */   { 0, XF86XK_MonBrightnessUp ,	spawn,		SHCMD("light -A 5") },
-	/*FN+F4 */     // Keyboard back light
-	/*FN+F5 */   { 0, XF86XK_AudioMute,		    spawn,		SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle")  },
-	/*FN+F6 */   { 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
-	/*FN+F7 */   { 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
-	/*FN+F8 */   { 0, XF86XK_AudioPrev ,	    spawn,		SHCMD("xset dpms force off") },
-	/*FN+F9 */   { 0, XF86XK_AudioPlay ,	    spawn,		SHCMD("xset dpms force off") },
-	/*FN+F10*/   { 0, XF86XK_AudioNext ,	    spawn,		SHCMD("xset dpms force off") },
-	/*FN+F11*/   { WIN_KEY, XK_p,	            spawn,		SHCMD("xset dpms force off") },      // monitor ?? / touchpad ?? Symbol ->
-	/*FN+F12*/   { 0, XK_Insert, 				spawn,      SHCMD("xset dpms force off") },
-	/*prt sc*/	 { WIN_KEY, XK_Print, 				spawn,      SHCMD("flameshot gui") },
-				 { 0, XK_Print, 				spawn,      SHCMD("flameshot full -p ~/Imagens/Screenshots/") },
-	/* ⏻ */	     { 0, XF86XK_PowerOff,	        spawn,		SHCMD("xset dpms force off") },  // NÂO funciona
+   // { WIN_KEY, XK_F1, spawn, SHCMD("firefox ~/.config/dwm/cheatsheet.html") },
+
+    /* ──────────────────────────────────────────────
+       TECLAS DE FUNÇÃO / MULTIMÉDIA  (Laptop HP Aero)
+       ────────────────────────────────────────────── */
+    /* modifier    tecla                          função    argumento */
+    //{ WIN_KEY, XK_F1,                   spawn, SHCMD("xset dpms force off")                           }, /* FN+F1  : Desligar ecrã */
+   { WIN_KEY, XK_F1, spawn, SHCMD("alacritty -e sh -c 'printf \"%b\" \"" CHEATSHEET "\" | less -K'") },  // O less permite navegar com as setas e fechar com q. Se quiseres que feche automaticamente ao carregar qualquer tecla, substitui less por less -K.
+    { 0,       XF86XK_MonBrightnessDown, spawn, SHCMD("light -U 5")                                   }, /* FN+F2  : Baixar brilho */
+    { 0,       XF86XK_MonBrightnessUp,  spawn, SHCMD("light -A 5")                                    }, /* FN+F3  : Aumentar brilho */
+    /* FN+F4 : backlight teclado (sem atalho configurado) */
+    { 0,       XF86XK_AudioMute,        spawn, SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle")     }, /* FN+F5  : Mute */
+    { 0,       XF86XK_AudioRaiseVolume, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%")      }, /* FN+F6  : Volume + */
+    { 0,       XF86XK_AudioLowerVolume, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%")      }, /* FN+F7  : Volume - */
+    { 0,       XF86XK_AudioPrev,        spawn, SHCMD("xset dpms force off")                           }, /* FN+F8  : (reatribuir?) */
+    { 0,       XF86XK_AudioPlay,        spawn, SHCMD("xset dpms force off")                           }, /* FN+F9  : (reatribuir?) */
+    { 0,       XF86XK_AudioNext,        spawn, SHCMD("xset dpms force off")                           }, /* FN+F10 : (reatribuir?) */
+    { WIN_KEY, XK_p,                    spawn, SHCMD("xset dpms force off")                           }, /* FN+F11 : Monitor/Touchpad (reatribuir?) */
+    { 0,       XK_Insert,               spawn, SHCMD("xset dpms force off")                           }, /* FN+F12 : (reatribuir?) */
+    { WIN_KEY, XK_Print,                spawn, SHCMD("flameshot gui")                                 }, /* Print Screen : Captura com seleção */
+    { 0,       XK_Print,                spawn, SHCMD("flameshot full -p ~/Imagens/Screenshots/")      }, /* Print Screen (sem mod): Captura total */
+    { 0,       XF86XK_PowerOff,         spawn, SHCMD("xset dpms force off")                           }, /* Botão Power: desligar ecrã (NÃO funciona) */
 
 
-	/************** DWM or patched *******************/
-
-	/* modifier                    	key        					function        argument */
-	//{ 0,      					XF86XK_TouchpadToggle , 	spawn,          {.v = Touchpadtoggle } },  // this file uses dunst to notifi
-	//{ 0,      					XF86XK_TouchpadToggle , 	spawn,          SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
-
-
-
-	/* togglescratch */
-	/* modifier                 key        		function        	argument */
-	{ WIN_KEY,            		XK_s,  	   		togglescratch,  	{.ui = 0 } },
-	{ WIN_KEY,            		XK_d,	   		togglescratch,  	{.ui = 1 } },
-	{ WIN_KEY,            		XK_c,	   		togglescratch,  	{.ui = 2 } },
-	//{ WIN_KEY,            		XK_w,	   		togglescratch,  		{.ui = 3 } },	 não funciona para o firefox
-	{ WIN_KEY,            		XK_z,	   		togglescratch,  	{.ui = 4 } },	// 
-	{ WIN_KEY,            		XK_h,	   		togglescratch,  	{.ui = 5 } },	// htop
+    /* ──────────────────────────────────────────────
+       SCRATCHPADS  (WIN + tecla)
+       ────────────────────────────────────────────── */
+    /* modifier    tecla    função           argumento (índice em scratchpads[]) */
+    { WIN_KEY, XK_s,  togglescratch, {.ui = 0} },  /* Terminal rápido (alacritty) */
+    { WIN_KEY, XK_d,  togglescratch, {.ui = 1} },  /* Gestor de ficheiros lf */
+    { WIN_KEY, XK_c,  togglescratch, {.ui = 2} },  /* Thunar */
+    /* WIN+w : firefox scratchpad — não funciona, desativado */
+    { WIN_KEY, XK_z,  togglescratch, {.ui = 4} },  /* VS Code */
+    { WIN_KEY, XK_h,  togglescratch, {.ui = 5} },  /* htop */
 
 
+    /* ──────────────────────────────────────────────
+       GESTÃO DE JANELAS — DWM
+       ────────────────────────────────────────────── */
 
-	/* modifier                     key        		function        argument */
-	//https://www.fosslinux.com/20109/7-best-ways-to-kill-unresponsive-programs-in-linux.htm
-	//https://superuser.com/questions/757160/kill-the-currently-active-window-with-a-keyboard-shortcut
-	{ MODKEY,					XK_F4,  		spawn,   			SHCMD("xdotool getwindowfocus windowkill") }, // KILL current window
-	{ MODKEY,					XK_F5,  		spawn,   			SHCMD("xkill") }, // KILL selected window with mouse
+    /* Fechar / Matar janelas */
+    { MODKEY,           XK_F4,     spawn,     SHCMD("xdotool getwindowfocus windowkill") }, /* ALT+F4     : Fecha janela com foco (suave) */
+    { MODKEY,           XK_F5,     spawn,     SHCMD("xkill")                             }, /* ALT+F5     : Seleciona janela com rato para matar */
+    { WIN_KEY,          XK_Escape, killclient,{0}                                        }, /* WIN+Esc    : Fecha a janela com foco */
+    { MODKEY|ShiftMask, XK_c,      killclient,{0}                                        }, /* ALT+Shift+C: Fecha a janela com foco (atalho clássico DWM) */
 
+    /* Foco na stack */
+    { MODKEY,      XK_j,   focusstack, {.i = +1} }, /* ALT+J   : Foco para a janela seguinte na stack */
+    { MODKEY,      XK_k,   focusstack, {.i = -1} }, /* ALT+K   : Foco para a janela anterior na stack */
+    { MODKEY,      XK_Tab, focusstack, {.i = +1} }, /* ALT+Tab : Igual ao ALT+J (ciclar janelas) */
 
-	{ WIN_KEY,             		XK_f,      		togglefullscr,  	{0} },  // from patch
-  	//{ WIN_KEY,					XK_q, 			killclient,     	{0} },	// Fecha a janela focada
-	{ WIN_KEY,					XK_Escape, 		killclient,     	{0} },	// Fecha a janela focada
-	{ WIN_KEY,                  XK_b,      		togglebar,     		{0} },
-	{ WIN_KEY,                  XK_t,      		togglefloating, 	{0} }, 	// FLOATING TO TILE
-	{ WIN_KEY,                  XK_backslash, 	focusmon,       	{.i = +1 } },	// Foca o monitor seguinte "\" + RATO, ratp adicionado na função DWM.C:focusmon  
-	{ WIN_KEY,                  XK_Tab,    		view,           	{0} },			// Alterna para o tAG anteriormente visto , TAG é definido no " *tags[]"  e "TAGKEYS" 		
+    /* Área master */
+    { MODKEY,      XK_i,      incnmaster, {.i = +1}   }, /* ALT+I : Aumenta nº de janelas na área master */
+    { MODKEY,      XK_d,      incnmaster, {.i = -1}   }, /* ALT+D : Diminui nº de janelas na área master */
+    { MODKEY,      XK_h,      setmfact,   {.f = -0.05}}, /* ALT+H : Encolhe área master em 5% */
+    { MODKEY,      XK_l,      setmfact,   {.f = +0.05}}, /* ALT+L : Expande área master em 5% */
+    { MODKEY,      XK_Return, zoom,       {0}          }, /* ALT+Enter : Promove janela com foco a master */
 
-	//ALT key 
-	{ MODKEY,                   XK_Tab,      	focusstack,     	{.i = +1 } }, 	// Move o foco para a janela seguinte na stack
+    /* Floating */
+    { WIN_KEY,          XK_t,     togglefloating, {0} }, /* WIN+T       : Alterna floating/tiled da janela */
+    { MODKEY|ShiftMask, XK_space, togglefloating, {0} }, /* ALT+Shift+Sp: Alterna floating/tiled da janela */
 
+    /* Fullscreen real (patch actualfullscreen) */
+    { WIN_KEY, XK_f, togglefullscr, {0} }, /* WIN+F : Fullscreen real */
 
-	{ MODKEY,					XK_comma,  		cyclelayout,    	{.i = -1 } },   // Cicla para o layout anterior
-	{ MODKEY,           		XK_period, 		cyclelayout,    	{.i = +1 } },   // Cicla para o layout seguinte
-	//{ MODKEY,                   XK_p,      		spawn,          	{.v = dmenucmd } },
-	//{ MODKEY|ShiftMask,      	XK_Return, 		spawn,          	{.v = termcmd } },
-	{ MODKEY,                   XK_j,      		focusstack,     	{.i = +1 } }, 	// Move o foco para a janela seguinte na stack
-	{ MODKEY,                   XK_k,      		focusstack,     	{.i = -1 } }, 	// Move o foco para a janela anterior na stack
-	{ MODKEY,                   XK_i,     		incnmaster,    		{.i = +1 } },   // Aumenta o número de janelas na área master ?
-	{ MODKEY,                   XK_d,      		incnmaster,     	{.i = -1 } },	// Diminui o número de janelas na área master
-	{ MODKEY,                   XK_h,      		setmfact,       	{.f = -0.05} },	// Encolhe a área master (−5%)
-	{ MODKEY,                   XK_l,      		setmfact,       	{.f = +0.05} },	// Expande a área master (+5%
-	{ MODKEY,                   XK_Return, 		zoom,           	{0} },			// Promove a janela focada a master (zoom ?)
-	//MODKEY                XK_Tab,    		view,           	{0} },			// Alterna para o tAG anteriormente visto , TAG é definido no " *tags[]"  e "TAGKEYS" 
-	{ MODKEY|ShiftMask,      	XK_c,      		killclient,     	{0} },			// Fecha a janela focada
-	{ MODKEY,                   XK_t,      		setlayout,     		{.v = &layouts[0]} },
-	{ MODKEY,                   XK_f,      		setlayout,      	{.v = &layouts[1]} },
-	{ MODKEY,                   XK_m,      		setlayout,      	{.v = &layouts[2]} },
-	{ MODKEY,                   XK_space,  		setlayout,      	{0} },			// Alterna entre o layout atual e o anterior
-	{ MODKEY|ShiftMask,      	XK_space,  		togglefloating, 	{0} },			// FLOATING TO TILE
-	{ MODKEY,                   XK_0,      		view,           	{.ui = ~0 } },	// Mostra todas as tags ao mesmo tempo
-	{ MODKEY|ShiftMask,      	XK_0,      		tag,            	{.ui = ~0 } },	// Move a janela focada para todas as TAGs
-	//{ MODKEY,                   XK_comma,  		focusmon,       	{.i = -1 } },	// Foca o monitor anterior
-	//{ MODKEY,                   XK_space, 		focusmon,       	{.i = +1 } },	// Foca o monitor seguinte
-	{ MODKEY|ShiftMask,     	XK_comma,  		tagmon,         	{.i = -1 } },	// move windows to previus monitor
-	{ MODKEY|ShiftMask,     	XK_period, 		tagmon,         	{.i = +1 } },	// move windows to next .,monitor
-	TAGKEYS(                    XK_1,                     			0) // browswer
-	TAGKEYS(                    XK_2,                      			1)
-	TAGKEYS(                    XK_3,                      			2)
-	TAGKEYS(                    XK_4,                      			3)
-	TAGKEYS(                    XK_5,                      			4)
-	TAGKEYS(                    XK_6,                      			5)
-	TAGKEYS(                    XK_7,                      			6)
-	TAGKEYS(                    XK_8,                      			7)
-	TAGKEYS(                    XK_9,                      			8)
-	{ MODKEY|ShiftMask,         XK_q,      		quit,           	{0} },  // restart DWM
+    /* Barra */
+    { WIN_KEY, XK_b, togglebar, {0} }, /* WIN+B : Mostra/esconde a barra */
+
+    /* Tags */
+    { WIN_KEY,          XK_Tab, view, {0}        }, /* WIN+Tab      : Alterna para a tag anteriormente vista */
+    { MODKEY,           XK_0,   view, {.ui = ~0} }, /* ALT+0        : Mostra todas as tags ao mesmo tempo */
+    { MODKEY|ShiftMask, XK_0,   tag,  {.ui = ~0} }, /* ALT+Shift+0  : Move janela para todas as tags */
 
 
+    /* ──────────────────────────────────────────────
+       LAYOUTS
+       ────────────────────────────────────────────── */
+    { MODKEY,      XK_comma,  cyclelayout, {.i = -1}         }, /* ALT+,  : Layout anterior (patch cyclelayouts) */
+    { MODKEY,      XK_period, cyclelayout, {.i = +1}         }, /* ALT+.  : Layout seguinte (patch cyclelayouts) */
+    { MODKEY,      XK_t,      setlayout,   {.v = &layouts[0]}}, /* ALT+T  : Layout Tiled    []=  */
+    { MODKEY,      XK_f,      setlayout,   {.v = &layouts[1]}}, /* ALT+F  : Layout Monocle  [M] */
+    { MODKEY,      XK_m,      setlayout,   {.v = &layouts[2]}}, /* ALT+M  : Layout Grid     HHH */
+    { MODKEY,      XK_space,  setlayout,   {0}               }, /* ALT+Sp : Alterna layout atual ↔ anterior */
 
-	/************** Comands + keys *******************/
-	{ WIN_KEY,      			XK_Return, 		spawn,          		SHCMD("alacritty") },
-	//{ WIN_KEY,      			XK_a, 			spawn,          		{.v = dmenucmd } },
-	{ WIN_KEY,      			XK_a, 			spawn,          		SHCMD("sh ~/.config/dwm/dmenu_favoritos.sh") },
-	{ WIN_KEY,      			XK_v, 			spawn,          		SHCMD("alacritty -e sh ~/.local/bin/lfub") },
-																		// com o SHCMD só aparece no munitor 1
-	//{ WIN_KEY,      			XK_a, 			spawn,          		SHCMD("dmenu_run -i -m '0' -fn monospace:size=11 -nb '#000000' -nf '#07AE06' -sb '#07AE06' -sf '#060606'")  },
-	{ WIN_KEY|ShiftMask,      	XK_a, 			spawn,          		SHCMD("xfce4-appfinder") },
-	{ WIN_KEY,      			XK_t, 			spawn,          		SHCMD("thunar") },
-	{ WIN_KEY,      			XK_o, 			spawn,          		SHCMD("libreoffice : evince") },
-	{ WIN_KEY,      			XK_m, 			spawn,          		SHCMD("arandr") },
 
-	//{ WIN_KEY,      			XK_e, 			spawn,          		SHCMD("xed") },   // EDITOR
-	//{ WIN_KEY,      			XK_KP_Enter, 	spawn,          		{.v = termcmd } },
-	//{ WIN_KEY,      			XK_Return, 		spawn,          		{.v = termcmd } },
-	//{ WIN_KEY,      			XK_w, 			spawn,          		{.v = webcmd } },
+    /* ──────────────────────────────────────────────
+       MÚLTIPLOS MONITORES
+       Nota: o rato segue o foco — ver função focusmon() em dwm.c
+             onde foi adicionado XWarpPointer().
+       Configuração xrandr:
+           HDMI (1680x1050) por cima   — pos 120x0
+           eDP  (1920x1200) por baixo  — pos 0x1060  (10px de gap evita salto de janelas)
+       ────────────────────────────────────────────── */
+    /* modifier    tecla           função      argumento */
+    { WIN_KEY,          XK_backslash, focusmon, {.i = +1} }, /* WIN+\       : Foca monitor seguinte (rato segue) */
+    { MODKEY|ShiftMask, XK_comma,     tagmon,   {.i = -1} }, /* ALT+Shift+, : Move janela para monitor anterior */
+    { MODKEY|ShiftMask, XK_period,    tagmon,   {.i = +1} }, /* ALT+Shift+. : Move janela para monitor seguinte */
+
+
+    /* ──────────────────────────────────────────────
+       TAGS / WORKSPACES
+       (gerados pela macro TAGKEYS)
+       WIN+N           : vai para tag N
+       WIN+Ctrl+N      : mostra tag N em simultâneo
+       WIN+Shift+N     : move janela para tag N
+       WIN+Ctrl+Shift+N: toggle da janela na tag N
+       ────────────────────────────────────────────── */
+    TAGKEYS(XK_1, 0)  /* Tag 1: Browser  */
+    TAGKEYS(XK_2, 1)  /* Tag 2: Código   */
+    TAGKEYS(XK_3, 2)  /* Tag 3: Ficheiros*/
+    TAGKEYS(XK_4, 3)  /* Tag 4: Office   */
+    TAGKEYS(XK_5, 4)  /* Tag 5: PDF      */
+    TAGKEYS(XK_6, 5)  /* Tag 6: Jogos    */
+    TAGKEYS(XK_7, 6)  /* Tag 7: Áudio/BT */
+    TAGKEYS(XK_8, 7)  /* Tag 8: Remoto   */
+    TAGKEYS(XK_9, 8)  /* Tag 9: (extra)  */
+
+    /* Reiniciar DWM */
+    { MODKEY|ShiftMask, XK_q, quit, {0} }, /* ALT+Shift+Q : Reinicia o DWM */
+
+
+    /* ──────────────────────────────────────────────
+       LANÇAR APLICAÇÕES  (WIN + tecla)
+       ────────────────────────────────────────────── */
+    /* modifier    tecla       função    comando */
+    { WIN_KEY,           XK_Return, spawn, SHCMD("alacritty")                             }, /* WIN+Enter      : Terminal */
+    { WIN_KEY,           XK_a,      spawn, SHCMD("sh ~/.config/dwm/dmenu_favoritos.sh")   }, /* WIN+A          : dmenu favoritos (script personalizado) */
+    { WIN_KEY|ShiftMask, XK_a,      spawn, SHCMD("xfce4-appfinder")                      }, /* WIN+Shift+A    : Lançador de aplicações XFCE */
+    { WIN_KEY,           XK_v,      spawn, SHCMD("alacritty -e sh ~/.local/bin/lfub")     }, /* WIN+V          : Gestor de ficheiros lf no terminal */
+    { WIN_KEY,           XK_t,      spawn, SHCMD("thunar")                               }, /* WIN+T          : Thunar (ficheiros gráfico) */
+    { WIN_KEY,           XK_o,      spawn, SHCMD("libreoffice : evince")                 }, /* WIN+O          : LibreOffice ou Evince */
+    { WIN_KEY,           XK_m,      spawn, SHCMD("arandr")                               }, /* WIN+M          : ARandR (configuração de monitores) */
 };
 
-/* button definitions
- click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin 
-Clicar na Barra de tarefas e SystemTray 
- Rato esquerdo = Button1
- Rato centro = Button2
- Rato direito = Button3
- scroll cima= button4
- scroll baixo = button5
- 
-ClkTagBar= bar:indicadores dos workspaces
-ClkLtSymbol= bar
-ClkStatusText=   bar:Zona onde mostra o CPU, RAM, DATA, HORAS
-ClkWinTitle=  	 bar: Windows Titles
 
-ClkClientWin= 	Windows 
-ClkRootWin=
-*/
+/* ============================================================
+   BOTÕES DO RATO
+   Estrutura: { zona_clique, modificador, botão, função, argumento }
+
+   Botões:
+     Button1 = esquerdo   Button2 = meio    Button3 = direito
+     Button4 = scroll ↑   Button5 = scroll ↓
+
+   Zonas:
+     ClkTagBar    = indicadores de workspaces na barra
+     ClkLtSymbol  = símbolo do layout na barra
+     ClkWinTitle  = título da janela na barra
+     ClkStatusText= área de status (slstatus/dwmblocks)
+     ClkClientWin = área das janelas
+     ClkRootWin   = desktop (sem janelas)
+   ============================================================ */
+
+/* Brilho HDMI via xrandr */
+static const char *hdmi_bright_up[]   = { "sh", "-c", "xrandr --output HDMI-A-0 --brightness $(echo $(xrandr --verbose | grep -A 10 HDMI-A-0 | grep Brightness | awk '{print $2}') + 0.1 | bc)", NULL };
+static const char *hdmi_bright_down[] = { "sh", "-c", "xrandr --output HDMI-A-0 --brightness $(echo $(xrandr --verbose | grep -A 10 HDMI-A-0 | grep Brightness | awk '{print $2}') - 0.1 | bc)", NULL };
+
+
+
 static const Button buttons[] = {
-/* new  */
 
-	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {.v = &layouts[2]} },
-	{ ClkLtSymbol,          0,              Button4,        cyclelayout,    {.i = -1 }  },
-	{ ClkLtSymbol,          0,              Button5,        cyclelayout,    {.i = +1 }  },
+      /* ── Símbolo do Layout (ClkLtSymbol) ── */
+      /* click          mod    botão    função        argumento */
+      { ClkLtSymbol, 0, Button1, setlayout,   {.v = &layouts[2]} }, /* Clique esq  : Layout Grid */
+      { ClkLtSymbol, 0, Button3, setlayout,   {0}                }, /* Clique dir  : Alterna layout anterior */
+      { ClkLtSymbol, 0, Button4, cyclelayout, {.i = -1}          }, /* Scroll ↑    : Layout anterior */
+      { ClkLtSymbol, 0, Button5, cyclelayout, {.i = +1}          }, /* Scroll ↓    : Layout seguinte */
 
+      /* ── Título da Janela (ClkWinTitle) ── */
+      { ClkWinTitle, 0, Button1, zoom,       {0}   }, /* Clique esq  : Promove janela a master */
+      { ClkWinTitle, 0, Button4, focusstack, {.i = -1} }, /* Scroll ↑    : Janela anterior na stack */
+      { ClkWinTitle, 0, Button5, focusstack, {.i = +1} }, /* Scroll ↓    : Janela seguinte na stack */
 
-	/* click                event mask      button          function        argument */
-	{ ClkWinTitle,          0,              Button1,        zoom,           {0} },  // altera entrea APP actual e ultima usada
-	{ ClkWinTitle,          0,              Button4,        focusstack,     {.i = -1 } },
-	{ ClkWinTitle,          0,              Button5,        focusstack,     {.i = +1 } },
-
-
-// clicar no system Tray : 
-	/* click                event mask      button          function        argument */
-	//{ ClkStatusText,        0,              Button1,        spawn,          {.v = taskmanager } }, //
-	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("alacritty -e htop") },
-	{ ClkStatusText,        0,              Button2,        spawn,          SHCMD("thunar") },
-	{ ClkStatusText,        0,              Button3,        spawn,          SHCMD("gsimplecal") },
-	{ ClkStatusText,        0,              Button5,        spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
-	{ ClkStatusText,        0,              Button4,        spawn,          SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
-	{ ClkStatusText,        WIN_KEY,        Button5,        spawn,          SHCMD("light -U 5") },
-	{ ClkStatusText,        WIN_KEY,        Button4,        spawn,          SHCMD("light -A 5") },
+      /* ── Área de Status / System Tray (ClkStatusText) ── */
+      { ClkStatusText, 0,       Button1, spawn, SHCMD("alacritty -e htop")                           }, /* Clique esq      : htop */
+      { ClkStatusText, 0,       Button2, spawn, SHCMD("thunar")                                      }, /* Clique meio     : Thunar */
+      { ClkStatusText, 0,       Button3, spawn, SHCMD("gsimplecal")                                  }, /* Clique dir      : Calendário */
+      { ClkStatusText, 0,       Button4, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%")    }, /* Scroll ↑        : Volume + */
+      { ClkStatusText, 0,       Button5, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%")    }, /* Scroll ↓        : Volume - */
+      { ClkStatusText, WIN_KEY, Button4, spawn, SHCMD("light -A 5")                                  }, /* WIN + Scroll ↑  : Brilho + */
+      { ClkStatusText, WIN_KEY, Button5, spawn, SHCMD("light -U 5")                                  }, /* WIN + Scroll ↓  : Brilho - */
 
 
-// Nas janelas: 
-/* click                	event mask      button         function        	argument */
-	{ ClkClientWin,         WIN_KEY,        Button1,       movemouse,      	{0} },
-	{ ClkClientWin,         WIN_KEY,        Button2,       togglefloating, 	{0} }, // FLOATING TO TILE
-	{ ClkClientWin,         WIN_KEY,        Button3,       resizemouse,    	{0} },
-	{ ClkClientWin,	  		WIN_KEY,	   	Button4,       focusstack,     	{.i = -1  }  }, 
 
 
-// nos indicadores dos workspaces
-	/* click                event mask      button          function        argument */
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },  // mostra tambem os outros workspaces
-	{ ClkTagBar,            WIN_KEY,        Button1,        tag,            {0} },
-	{ ClkTagBar,            WIN_KEY,        Button3,        toggletag,      {0} },
-	//{ ClkTagBar,          	0,              Button4,        shiftview,      {.i =  -1 } },
-	//{ ClkTagBar,          	0,              Button5,        shiftview,      {.i =  +1 } },
+   { ClkStatusText, MODKEY, Button4, spawn, {.v = hdmi_bright_up  } }, /* MODKEY + Scroll ↑ : Brilho HDMI + */
+   { ClkStatusText, MODKEY, Button5, spawn, {.v = hdmi_bright_down} }, /* MODKEY + Scroll ↓ : Brilho HDMI - */
 
+      //{ ClkStatusText, MODKEY,  Button4, spawn, SHCMD("xrandr --output HDMI-A-0 --brightness $(echo \"$(xrandr --verbose | grep -A 10 \"HDMI-A-0\" | grep \"Brightness\" | awk '{print $2}') - 0.1\" | bc)") },
+     // { ClkStatusText, MODKEY,  Button5, spawn, SHCMD("xrandr --output HDMI-A-0 --brightness $(echo \"$(xrandr --verbose | grep -A 10 \"HDMI-A-0\" | grep \"Brightness\" | awk '{print $2}') + 0.1\" | bc)") },                               }, /* WIN + Scroll ↓  : Brilho - */
 
+/*
+CURRENT=$(xrandr --verbose | grep -A 10 "HDMI-A-0" | grep "Brightness" | awk '{print $2}')
+NEW=$(echo "$CURRENT + 0.1" | bc)
+xrandr --output HDMI-A-0 --brightness $(echo "$(xrandr --verbose | grep -A 10 "HDMI-A-0" | grep "Brightness" | awk '{print $2}') + 0.1" | bc)
+
+*/
+	
+
+    /* ── Janelas (ClkClientWin) ── */
+    { ClkClientWin, WIN_KEY, Button1, movemouse,     {0} }, /* WIN + Arrasto esq  : Mover janela floating */
+    { ClkClientWin, WIN_KEY, Button2, togglefloating,{0} }, /* WIN + Clique meio  : Alterna floating/tiled */
+    { ClkClientWin, WIN_KEY, Button3, resizemouse,   {0} }, /* WIN + Arrasto dir  : Redimensionar janela floating */
+    { ClkClientWin, WIN_KEY, Button4, focusstack,    {.i = -1} }, /* WIN + Scroll ↑: Janela anterior na stack */
+
+    /* ── Indicadores de Workspaces / Tags (ClkTagBar) ── */
+    { ClkTagBar, 0,       Button1, view,      {0} }, /* Clique esq       : Vai para a tag */
+    { ClkTagBar, 0,       Button3, toggleview,{0} }, /* Clique dir       : Mostra tag em simultâneo */
+    { ClkTagBar, WIN_KEY, Button1, tag,       {0} }, /* WIN + Clique esq : Move janela para a tag */
+    { ClkTagBar, WIN_KEY, Button3, toggletag, {0} }, /* WIN + Clique dir : Toggle da janela na tag */
 };
 
 
