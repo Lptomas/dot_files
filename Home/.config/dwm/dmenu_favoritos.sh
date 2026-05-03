@@ -320,7 +320,7 @@ MONITOR_OFFICE_NEW='xrandr  --newmode "1680x1050_59.00"  143.75  1680 1784 1960 
 MONITOR_OFFICE_ADD='xrandr --addmode HDMI-A-0 1680x1050_59.00'  # add the new resolution mode to the avaliable  HDMI-A-0 list 
 MONITOR_OFFICE_ON_L_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 1680x0 --rotate normal --output HDMI-A-0 --mode 1680x1050_59.00 --pos 0x0 --rotate normal --output DisplayPort-0 --off'
 MONITOR_OFFICE_ON_R_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 0x0 --rotate normal --output HDMI-A-0 --mode 1680x1050_59.00 --pos 1920x0 --rotate normal --output DisplayPort-0 --off'
-MONITOR_OFFICE_ON_U_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 0x1050 --rotate normal --output HDMI-A-0 --mode 1680x1050_59.00 --pos 120x0 --rotate normal --output DisplayPort-0 --off'
+MONITOR_OFFICE_ON_U_CMD='xrandr --output eDP --primary --mode 1920x1200 --pos 0x1060 --rotate normal --output HDMI-A-0 --mode 1680x1050_59.00 --pos 120x0 --rotate normal --output DisplayPort-0 --off'
 
 
 

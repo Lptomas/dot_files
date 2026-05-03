@@ -573,10 +573,10 @@ static const Key keys[] = {
        LANÇAR APLICAÇÕES  (WIN + tecla)
        ────────────────────────────────────────────── */
     /* modifier    tecla       função    comando */
-    { WIN_KEY,           XK_Return, spawn, SHCMD("alacritty")                             }, /* WIN+Enter      : Terminal */
-    { WIN_KEY,           XK_a,      spawn, SHCMD("sh ~/.config/dwm/dmenu_favoritos.sh")   }, /* WIN+A          : dmenu favoritos (script personalizado) */
+    { WIN_KEY,           XK_Return, spawn, SHCMD("alacritty")                            }, /* WIN+Enter      : Terminal */
+    { WIN_KEY,           XK_a,      spawn, SHCMD("sh ~/.config/dwm/dmenu_favoritos.sh")  }, /* WIN+A          : dmenu favoritos (script personalizado) */
     { WIN_KEY|ShiftMask, XK_a,      spawn, SHCMD("xfce4-appfinder")                      }, /* WIN+Shift+A    : Lançador de aplicações XFCE */
-    { WIN_KEY,           XK_v,      spawn, SHCMD("alacritty -e sh ~/.local/bin/lfub")     }, /* WIN+V          : Gestor de ficheiros lf no terminal */
+    { WIN_KEY,           XK_v,      spawn, SHCMD("alacritty -e sh ~/.local/bin/lfub")    }, /* WIN+V          : Gestor de ficheiros lf no terminal */
     { WIN_KEY,           XK_t,      spawn, SHCMD("thunar")                               }, /* WIN+T          : Thunar (ficheiros gráfico) */
     { WIN_KEY,           XK_o,      spawn, SHCMD("libreoffice : evince")                 }, /* WIN+O          : LibreOffice ou Evince */
     { WIN_KEY,           XK_m,      spawn, SHCMD("arandr")                               }, /* WIN+M          : ARandR (configuração de monitores) */

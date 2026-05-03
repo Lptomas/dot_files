@@ -22,5 +22,6 @@
         "comments": false,
         "strings": true
     },
-    "editor.suggestOnTriggerCharacters": true
+    "editor.suggestOnTriggerCharacters": true,
+    "git.confirmSync": false
 }
