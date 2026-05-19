@@ -10,8 +10,8 @@
        sudo make clean install
 
    PATCHES INSTALADOS:
-       dwm-systray-20210418-67d76bd.diff           -> System tray na barra
-       dwm-bar-height-spacing-6.3.diff             -> Controlo da altura da barra
+       dwm-systray-20210418-67d76bd.diff            -> System tray na barra
+       dwm-bar-height-spacing-6.3.diff              -> Controlo da altura da barra
        dwm-scratchpads-20200414-728d397b.diff       -> Janelas flutuantes persistentes (scratchpads)
        dwm-actualfullscreen-20211013-cb3f58a.diff   -> Fullscreen real (não só monocle)
        dwm-gridmode-5.8.2.diff                      -> Layout em grelha (grid)
@@ -378,7 +378,7 @@ static const char *light_dec[] = { "xlight", "-U", "5", NULL };
 "-- nas Janelas \n" \
 "WIN+Rato_Esq     : Move janela e passa para Float\n" \
 "WIN+Rato_Dir     : Resize janela e passa para Float\n" \
-"WIN+ScroolCLICK  : Janela para TILED \n" \
+"WIN+ScroolCLICK  : Janela para °Floating <-> Tiled \n" \
 "-- no SystemTRAY \n" \
 "WIN+Rato_Esq     : Abre HTOP\n" \
 "WIN+Rato_Dir     : Abre calendario\n" \
@@ -397,7 +397,7 @@ static const char *light_dec[] = { "xlight", "-U", "5", NULL };
 "WIN+Esc         : Fecha janela\n" \
 "WIN+f           : Fullscreen\n" \
 "WIN+b           : Mostra/esconde barra\n" \
-"WIN+t           : Floating <-> Tiled\n" \
+"WIN+t           : °Floating <-> Tiled\n" \
 "ALT+j/k         : Foco janela seguinte/anterior\n" \
 "ALT+Enter       : Promove janela a master\n" \
 "ALT+h/l         : Redimensiona area master\n" \
@@ -409,6 +409,9 @@ static const char *light_dec[] = { "xlight", "-U", "5", NULL };
 "WIN+Shift+1..8  : Move janela para tag N\n" \
 "WIN+Tab         : Tag anteriormente vista\n" \
 "ALT+0           : Mostra todas as tags\n" \
+"ALT+Shift       : Janela em Todos as tags\n" \
+
+
 "\n===== MONITORES =====\n" \
 "WIN+\\           : Foca monitor seguinte (rato segue)\n" \
 "ALT+Shift+,     : Move janela para monitor anterior\n" \
@@ -492,7 +495,7 @@ static const Key keys[] = {
     { MODKEY,           XK_F4,     spawn,     SHCMD("xdotool getwindowfocus windowkill") }, /* ALT+F4     : Fecha janela com foco (suave) */
     { MODKEY,           XK_F5,     spawn,     SHCMD("xkill")                             }, /* ALT+F5     : Seleciona janela com rato para matar */
     { WIN_KEY,          XK_Escape, killclient,{0}                                        }, /* WIN+Esc    : Fecha a janela com foco */
-    { MODKEY|ShiftMask, XK_c,      killclient,{0}                                        }, /* ALT+Shift+C: Fecha a janela com foco (atalho clássico DWM) */
+    //{ MODKEY|ShiftMask, XK_c,      killclient,{0}                                        }, /* ALT+Shift+C: Fecha a janela com foco (atalho clássico DWM) */
 
     /* Foco na stack */
     { MODKEY,      XK_j,   focusstack, {.i = +1} }, /* ALT+J   : Foco para a janela seguinte na stack */
@@ -508,7 +511,7 @@ static const Key keys[] = {
 
     /* Floating */
     { WIN_KEY,          XK_t,     togglefloating, {0} }, /* WIN+T       : Alterna floating/tiled da janela */
-    { MODKEY|ShiftMask, XK_space, togglefloating, {0} }, /* ALT+Shift+Sp: Alterna floating/tiled da janela */
+    //{ MODKEY|ShiftMask, XK_space, togglefloating, {0} }, /* ALT+Shift+Sp: Alterna floating/tiled da janela */
 
     /* Fullscreen real (patch actualfullscreen) */
     { WIN_KEY, XK_f, togglefullscr, {0} }, /* WIN+F : Fullscreen real */

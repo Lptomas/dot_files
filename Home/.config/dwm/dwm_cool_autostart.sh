@@ -8,7 +8,7 @@ feh --bg-scale ~/black.jpg &
 slstatus &
 
 
-#devmon &   # montar dispositivos removíveis (pen drives, etc.) — só no Arch
+devmon &   # montar dispositivos removíveis (pen drives, etc.) — só no Arch
 
 # ___ Configuração de ecrãs __________________________________________________
 # Gera os parâmetros do modo para o segundo ecrã (1680×1050 @ 59 Hz)
@@ -34,7 +34,7 @@ xrandr --output eDP        --primary --mode 1920x1200 --pos 0x0    --rotate norm
 #       --output DisplayPort-0 --off
 
 # Disposição: HDMI em CIMA do ecrã principal (ativo)
-#NOTA: -pos 0x1060  tem + 1opx para que as janelas em FLOATING possam percorrer todos os Monitores.
+#NOTA: -pos 0x1060  tem + 10px para que as janelas em FLOATING possam percorrer todos os Monitores.
 xrandr --output eDP        --primary --mode 1920x1200    --pos 0x1060   --rotate normal \
        --output HDMI-A-0   --mode 1680x1050_59.00        --pos 120x0    --rotate normal \
        --output DisplayPort-0 --off

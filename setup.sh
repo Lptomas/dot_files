@@ -72,7 +72,7 @@ ln -s $git_dot_folder/xfce4 $home_dot_config
 ln -s $git_dot_folder/Code\ -\ OSS//User/settings.json $home_dot_config/Code\ -\ OSS//User/settings.json
 #ln -s $git_dot_folder/Code\ -\ OSS//User/keybindings.json  $home_dot_config/Code\ -\ OSS//User/keybindings.json 
 #ln -s $git_dot_folder/Code\ -\ OSS//User/snippets/ $home_dot_config/Code\ -\ OSS//User/snippets/ 
-
+ln -s $git_dot_folder/mpv $home_dot_config
 
 
 
