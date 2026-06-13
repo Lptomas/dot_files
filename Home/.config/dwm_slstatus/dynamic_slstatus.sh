@@ -1,4 +1,4 @@
-+#!/bin/bash
+#!/bin/bash
 # LPT
 # used in slstatus-DWM
 # test this file on TERMINAL:  #sh ~/path/dynamic:skstatus.sh
@@ -141,7 +141,7 @@ case $bat_state in
 esac
 
 
-if [ "$bat_state" == 'Full' ] || ["$bat_percentage"-gt 95 ] ; then
+if [ "$bat_state" = 'Full' ] || [ "$bat_percentage" -gt 95 ] ; then
 	bat="󱐥"
 fi
 

@@ -76,11 +76,22 @@ pipewire &
 pipewire-pulse &
 dbus-run-session &
 
-# ___ Gestor de área de transferência ________________________________________
-xfce4-clipman &
-#clipit &   # alternativo
 
 # ___ Correção de tearing no ecrã (ex.: YouTube) _____________________________
 xrandr | grep ' connected' | cut -f1 -d' ' | while read display; do
     xrandr --output "$display" --set TearFree on
 done &
+
+
+#xsettingsd & # servir as definições GTK fora do XFCE:
+
+   # ___ Gestor de área de transferência ________________________________________
+#sleep 3 && xfce4-clipman &
+#sleep 3 && GTK_THEME=Adwaita xfce4-clipman &
+#sleep 3 && GTK_THEME=Adwaita clipit &
+#(while ! xprop -root _NET_SYSTEM_TRAY_S0 &>/dev/null; do sleep 1; done && clipit) &
+#sleep 3 && clipit &  # alternativo
+copyq &
+sleep 1 && clipit &
+sleep 2 && clipit &
+sleep 3 && pkill -o 

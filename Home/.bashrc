@@ -28,10 +28,7 @@ alias rb='source ~/.bashrc && echo " - Bash Reloaded...done"'
 alias ls='ls --color=auto'
 
 
-alias sm='xrandr --output eDP        --primary --mode 1920x1200    --pos 0x1060   --rotate normal \
-       --output HDMI-A-0   --mode 1680x1050_59.00        --pos 120x0    --rotate normal \
-       --output DisplayPort-0 --off
-'
+alias sm='xrandr --output eDP  --primary --mode 1920x1200  --pos 0x1060  --rotate normal --output HDMI-A-0   --mode 1680x1050_59.00   --pos 120x0    --rotate normal --output DisplayPort-0 --off && echo " - set screens...done"'
 
 
 

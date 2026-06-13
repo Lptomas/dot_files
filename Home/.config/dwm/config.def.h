@@ -41,7 +41,7 @@ static const unsigned int snap           = 25;  /* Distância em pixels para "sn
 /* --- System Tray --- */
 static const unsigned int systraypinning    = 0; /* 0 = systray segue o monitor selecionado; >0 = fixa no monitor N */
 static const unsigned int systrayonleft     = 0; /* 0 = systray à direita do status text; >0 = à esquerda */
-static const unsigned int systrayspacing    = 1; /* Espaço em pixels entre ícones do systray */
+static const unsigned int systrayspacing    = 2; /* Espaço em pixels entre ícones do systray */
 static const int systraypinningfailfirst    = 1; /* 1 = se pinning falhar, mostra no 1º monitor; 0 = mostra no último */
 static const int showsystray                = 1; /* 0 = esconde o systray */
 

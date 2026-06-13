@@ -12,7 +12,7 @@ static const char unknown_str[] = "n/a";
 #define MAXLEN 2048
 
 
-static const char dynamic_slstatus[] = "sh ~/.config/dwm_slstatus/dynamic_slstatus.sh" ;
+static const char dynamic_slstatus[] = "bash ~/.config/dwm_slstatus/dynamic_slstatus.sh" ;
 
 
 

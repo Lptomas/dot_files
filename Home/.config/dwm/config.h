@@ -41,7 +41,7 @@ static const unsigned int snap           = 25;  /* Distância em pixels para "sn
 /* --- System Tray --- */
 static const unsigned int systraypinning    = 0; /* 0 = systray segue o monitor selecionado; >0 = fixa no monitor N */
 static const unsigned int systrayonleft     = 0; /* 0 = systray à direita do status text; >0 = à esquerda */
-static const unsigned int systrayspacing    = 1; /* Espaço em pixels entre ícones do systray */
+static const unsigned int systrayspacing    = 2; /* Espaço em pixels entre ícones do systray */
 static const int systraypinningfailfirst    = 1; /* 1 = se pinning falhar, mostra no 1º monitor; 0 = mostra no último */
 static const int showsystray                = 1; /* 0 = esconde o systray */
 
@@ -411,7 +411,8 @@ static const char *light_dec[] = { "xlight", "-U", "5", NULL };
 "ALT+0           : Mostra todas as tags\n" \
 "ALT+Shift       : Janela em Todos as tags\n" \
 "\n===== MONITORES =====\n" \
-"WIN+\\           : Foca monitor seguinte (rato segue)\n" \
+"WIN+\\           : nao faz nada\n" \
+"WIN+Tab           : Foca monitor seguinte (rato segue)\n" \
 "ALT+Shift+,     : Move janela para monitor anterior\n" \
 "ALT+Shift+.     : Move janela para monitor seguinte\n" \
 "\n===== APLICACOES =====\n" \
