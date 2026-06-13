@@ -53,6 +53,10 @@ numlockx on &
 # VOID: ativa o toque no touchpad (tap-to-click)
 synclient tapbutton1=1 &
 
+#desliga o touchpad: 1st-procura qual é o ID, 2nd. desliga pelo ID
+TOUCHPAD_ID=$(xinput list | grep -Eio '(touchpad|glidepoint)\s*id=[0-9]{1,2}' | grep -Eo '[0-9]{1,2}') && xinput disable "$TOUCHPAD_ID" &
+
+
 # ___ Rede / áudio / Bluetooth (geridos via dmenu / slstatus) ________________
 #nm-applet &       # rede
 #volumeicon &      # volume

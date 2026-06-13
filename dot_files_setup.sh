@@ -1,12 +1,24 @@
 #!/bin/bash
 
 # para correr: bash dotfiles.sh
+################################"
+
+
+if [ -z "$BASH_VERSION" ]; then
+  echo "ERRO: correr este script com bash,  e nao sh"
+  echo "  bash $0"
+  exit 1
+fi
+
+
+
 
 # ── Pastas ─────────────────────────────────────────────────────
 gitfolder="dot_files"
 git_folder="$HOME/$gitfolder/Home"
 git_dot_folder="$HOME/$gitfolder/Home/.config"
 home_dot_config="$HOME/.config"
+
 
 # ── Ficheiros na HOME (~/) ─────────────────────────────────────
 home_files=(
@@ -17,13 +29,7 @@ home_files=(
   .zshrc
 )
 
-# ── Ficheiros individuais em ~/.config ─────────────────────────
-individual_files=(
-  # "'Code\ -\ OSS/'/User/settings.json"  # Atenção aos espaços em Branco, resulta ?
-  "Code - OSS/User/settings.json"
-  # "Code - OSS/User/keybindings.json"
-  # "Code - OSS/User/snippets/"
-)
+
 
 # ── Pastas em ~/.config ────────────────────────────────────────
 
@@ -39,6 +45,16 @@ config_folders=(
   xfce4
   mpv
 )
+
+# ── Ficheiros individuais em ~/.config ─────────────────────────
+individual_files=(
+  # "'Code\ -\ OSS/'/User/settings.json"  # Atenção aos espaços em Branco, resulta ?
+  "Code - OSS/User/settings.json"
+  # "Code - OSS/User/keybindings.json"
+  # "Code - OSS/User/snippets/"
+)
+
+
 
 
 #ln -s $git_dot_folder/Code\ -\ OSS//User/settings.json $home_dot_config/Code\ -\ OSS//User/settings.json
@@ -175,7 +191,7 @@ preview() {
   echo ""
   for f in "${home_files[@]}"; do
     echo -e "  ${RED}rm    ${RESET}  ${DIM}$HOME/${RESET}${BOLD}$f${RESET}"
-    echo -e "  ${GREEN}ln -s ${RESET}  ${DIM}$git_folder/${RESET}${BOLD}$f${RESET}  →  ${DIM}$HOME/${RESET}${BOLD}$f${RESET}"
+    echo -e "  ${GREEN}ln -s ${RESET}  ${DIM}$git_folder/${RESET}${BOLD}$f${RESET}   ${DIM}$HOME/${RESET}${BOLD}$f${RESET}"
     echo ""
   done
 
@@ -184,7 +200,7 @@ preview() {
   echo ""
   for d in "${config_folders[@]}"; do
     echo -e "  ${RED}rm    ${RESET}  ${DIM}$home_dot_config/${RESET}${BOLD}$d${RESET}"
-    echo -e "  ${GREEN}ln -s ${RESET}  ${DIM}$git_dot_folder/${RESET}${BOLD}$d${RESET}  →  ${DIM}$home_dot_config/${RESET}${BOLD}$d${RESET}"
+    echo -e "  ${GREEN}ln -s ${RESET}  ${DIM}$git_dot_folder/${RESET}${BOLD}$d${RESET}   ${DIM}$home_dot_config/${RESET}${BOLD}$d${RESET}"
     echo ""
   done
 
@@ -193,10 +209,10 @@ preview() {
   echo ""
   for f in "${individual_files[@]}"; do
     echo -e "  ${RED}rm    ${RESET}  ${DIM}$home_dot_config/${RESET}${BOLD}$f${RESET}"
-    echo -e "  ${GREEN}ln -s ${RESET}  ${DIM}$git_dot_folder/${RESET}${BOLD}$f${RESET}  →  ${DIM}$home_dot_config/${RESET}${BOLD}$f${RESET}"
+    echo -e "  ${GREEN}ln -s ${RESET}  ${DIM}$git_dot_folder/${RESET}${BOLD}$f${RESET}   ${DIM}$home_dot_config/${RESET}${BOLD}$f${RESET}"
     echo ""
   done
-
+\
   separador
   echo -e "  ${YELLOW}⚠  Confirmas que queres executar estas operações?${RESET}"
   echo ""

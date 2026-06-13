@@ -154,11 +154,18 @@ fi
 #if [ $(synclient -l | grep "TouchpadOff .*=.*" |  egrep -o '[0-9]') != "0" ]]; then 
 
 # #"xinput list" dá o numero do List-Props ,  no aero-Arch é 11 no void é 10
-#Arch
-if [ $(xinput list-props "10" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
+#
+
+
+
+##1st-procura qual é o ID, 2nd. verifica se este ID esta desligao ou nao
+TOUCHPAD_ID=$(xinput list | grep -Eio '(touchpad|glidepoint)\s*id=[0-9]{1,2}' | grep -Eo '[0-9]{1,2}')
+
+if [ $(xinput list-props "$TOUCHPAD_ID" | grep 'Device Enabled' | awk '{print $4}') -eq 1 ]; then
 	touchpad=""
 else #OFF
 	touchpad="󱘃"
+	#touchpad="OFF"
 fi
 
 

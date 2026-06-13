@@ -3,7 +3,7 @@
 # para correr: bash bootstrap.sh
 
 # ── Travão de segurança ───────────────────────────────
-# Muda para true assim que revires a lista de pacotes
+# Muda para true assim que lista de pacotes seja revista e Aceite
 #verificado=false
 verificado=true
 # ─────────────────────────────────────────────────────
