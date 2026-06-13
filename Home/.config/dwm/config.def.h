@@ -1,5 +1,5 @@
 /* ######################################################################################
-   IMPORTANTE: Editar SEMPRE este ficheiro (config.def.h) e NÃO o config.h
+   IMPORTANTE: Editar SEMPRE o ficheiro (config.def.h) e NÃO o config.h
    O config.h é gerado automaticamente durante a compilação.
 
    COMPILAR:cd ~/.config/dwm/ && rm -f config.h && sudo make clean install   
@@ -221,8 +221,8 @@ static const Rule rules[] = {
        WM_CLASS = "Toolkit", "firefox"
        WM_NAME  = "Picture-in-Picture" ou "Vídeo em janela flutuante" (PT) */
     /* class      instance    title    tags mask    float    monitor */
-    { NULL, "Toolkit", "Picture-in-Picture",          0, 1, -1 },
-    { NULL, "Toolkit", "Vídeo em janela flutuante",   0, 1, -1 },
+    { NULL, "Toolkit", "Picture-in-Picture",          ~0, 1, -1 },
+    { NULL, "Toolkit", "Vídeo em janela flutuante",   ~0, 1, -1 },
 
     /* --- Gimp (tag 1, tiled) --- */
     /* class      instance    title    tags mask    float    monitor */
@@ -410,10 +410,9 @@ static const char *light_dec[] = { "xlight", "-U", "5", NULL };
 "WIN+Tab         : Tag anteriormente vista\n" \
 "ALT+0           : Mostra todas as tags\n" \
 "ALT+Shift       : Janela em Todos as tags\n" \
-
-
 "\n===== MONITORES =====\n" \
-"WIN+\\           : Foca monitor seguinte (rato segue)\n" \
+"WIN+\\           : nao faz nada\n" \
+"WIN+Tab           : Foca monitor seguinte (rato segue)\n" \
 "ALT+Shift+,     : Move janela para monitor anterior\n" \
 "ALT+Shift+.     : Move janela para monitor seguinte\n" \
 "\n===== APLICACOES =====\n" \
@@ -436,13 +435,7 @@ static const char *light_dec[] = { "xlight", "-U", "5", NULL };
 "ALT+Space       : Alterna layout anterior\n" \
 "\n===== DWM =====\n" \
 "ALT+Shift+q     : Reinicia DWM\n" \
-"FIM\n" \
-
-
-
-
-
-
+"FIM\n"
 
 
 
@@ -451,138 +444,142 @@ static const char *light_dec[] = { "xlight", "-U", "5", NULL };
 
 static const Key keys[] = {
 
-   // { WIN_KEY, XK_F1, spawn, SHCMD("firefox ~/.config/dwm/cheatsheet.html") },
+      // { WIN_KEY, XK_F1, spawn, SHCMD("firefox ~/.config/dwm/cheatsheet.html") },
 
-    /* ──────────────────────────────────────────────
-       TECLAS DE FUNÇÃO / MULTIMÉDIA  (Laptop HP Aero)
-       ────────────────────────────────────────────── */
-    /* modifier    tecla                          função    argumento */
-    //{ WIN_KEY, XK_F1,                   spawn, SHCMD("xset dpms force off")                           }, /* FN+F1  : Desligar ecrã */
-   { WIN_KEY, XK_F1, spawn, SHCMD("alacritty -e sh -c 'printf \"%b\" \"" CHEATSHEET "\" | less -K'") },  // O less permite navegar com as setas e fechar com q. Se quiseres que feche automaticamente ao carregar qualquer tecla, substitui less por less -K.
-    { 0,       XF86XK_MonBrightnessDown, spawn, SHCMD("light -U 5")                                   }, /* FN+F2  : Baixar brilho */
-    { 0,       XF86XK_MonBrightnessUp,  spawn, SHCMD("light -A 5")                                    }, /* FN+F3  : Aumentar brilho */
-    /* FN+F4 : backlight teclado (sem atalho configurado) */
-    { 0,       XF86XK_AudioMute,        spawn, SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle")     }, /* FN+F5  : Mute */
-    { 0,       XF86XK_AudioRaiseVolume, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%")      }, /* FN+F6  : Volume + */
-    { 0,       XF86XK_AudioLowerVolume, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%")      }, /* FN+F7  : Volume - */
-    { 0,       XF86XK_AudioPrev,        spawn, SHCMD("xset dpms force off")                           }, /* FN+F8  : (reatribuir?) */
-    { 0,       XF86XK_AudioPlay,        spawn, SHCMD("xset dpms force off")                           }, /* FN+F9  : (reatribuir?) */
-    { 0,       XF86XK_AudioNext,        spawn, SHCMD("xset dpms force off")                           }, /* FN+F10 : (reatribuir?) */
-    { WIN_KEY, XK_p,                    spawn, SHCMD("xset dpms force off")                           }, /* FN+F11 : Monitor/Touchpad (reatribuir?) */
-    { 0,       XK_Insert,               spawn, SHCMD("xset dpms force off")                           }, /* FN+F12 : (reatribuir?) */
-    { WIN_KEY, XK_Print,                spawn, SHCMD("flameshot gui")                                 }, /* Print Screen : Captura com seleção */
-    { 0,       XK_Print,                spawn, SHCMD("flameshot full -p ~/Imagens/Screenshots/")      }, /* Print Screen (sem mod): Captura total */
-    { 0,       XF86XK_PowerOff,         spawn, SHCMD("xset dpms force off")                           }, /* Botão Power: desligar ecrã (NÃO funciona) */
-
-
-    /* ──────────────────────────────────────────────
-       SCRATCHPADS  (WIN + tecla)
-       ────────────────────────────────────────────── */
-    /* modifier    tecla    função           argumento (índice em scratchpads[]) */
-    { WIN_KEY, XK_s,  togglescratch, {.ui = 0} },  /* Terminal rápido (alacritty) */
-    { WIN_KEY, XK_d,  togglescratch, {.ui = 1} },  /* Gestor de ficheiros lf */
-    { WIN_KEY, XK_c,  togglescratch, {.ui = 2} },  /* Thunar */
-    /* WIN+w : firefox scratchpad — não funciona, desativado */
-    { WIN_KEY, XK_z,  togglescratch, {.ui = 4} },  /* VS Code */
-    { WIN_KEY, XK_h,  togglescratch, {.ui = 5} },  /* htop */
+      /* ──────────────────────────────────────────────
+         TECLAS DE FUNÇÃO / MULTIMÉDIA  (Laptop HP Aero)
+         ────────────────────────────────────────────── */
+      /* modifier    tecla                          função    argumento */
+      //{ WIN_KEY, XK_F1,                   spawn, SHCMD("xset dpms force off")                           }, /* FN+F1  : Desligar ecrã */
+      { WIN_KEY, XK_F1, spawn, SHCMD("alacritty -e sh -c 'printf \"%b\" \"" CHEATSHEET "\" | less -K'") },  // O less permite navegar com as setas e fechar com q. Se quiseres que feche automaticamente ao carregar qualquer tecla, substitui less por less -K.
+      { 0,       XF86XK_MonBrightnessDown, spawn, SHCMD("light -U 5")                                   }, /* FN+F2  : Baixar brilho */
+      { 0,       XF86XK_MonBrightnessUp,  spawn, SHCMD("light -A 5")                                    }, /* FN+F3  : Aumentar brilho */
+      /* FN+F4 : backlight teclado (sem atalho configurado) */
+      { 0,       XF86XK_AudioMute,        spawn, SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle")     }, /* FN+F5  : Mute */
+      { 0,       XF86XK_AudioRaiseVolume, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%")      }, /* FN+F6  : Volume + */
+      { 0,       XF86XK_AudioLowerVolume, spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%")      }, /* FN+F7  : Volume - */
+      { 0,       XF86XK_AudioPrev,        spawn, SHCMD("xset dpms force off")                           }, /* FN+F8  : (reatribuir?) */
+      { 0,       XF86XK_AudioPlay,        spawn, SHCMD("xset dpms force off")                           }, /* FN+F9  : (reatribuir?) */
+      { 0,       XF86XK_AudioNext,        spawn, SHCMD("xset dpms force off")                           }, /* FN+F10 : (reatribuir?) */
+      { WIN_KEY, XK_p,                    spawn, SHCMD("xset dpms force off")                           }, /* FN+F11 : Monitor/Touchpad (reatribuir?) */
+      { 0,       XK_Insert,               spawn, SHCMD("xset dpms force off")                           }, /* FN+F12 : (reatribuir?) */
+      { WIN_KEY, XK_Print,                spawn, SHCMD("flameshot gui")                                 }, /* Print Screen : Captura com seleção */
+      { 0,       XK_Print,                spawn, SHCMD("flameshot full -p ~/Imagens/Screenshots/")      }, /* Print Screen (sem mod): Captura total */
+      { 0,       XF86XK_PowerOff,         spawn, SHCMD("xset dpms force off")                           }, /* Botão Power: desligar ecrã (NÃO funciona) */
 
 
-    /* ──────────────────────────────────────────────
-       GESTÃO DE JANELAS — DWM
-       ────────────────────────────────────────────── */
-
-    /* Fechar / Matar janelas */
-    { MODKEY,           XK_F4,     spawn,     SHCMD("xdotool getwindowfocus windowkill") }, /* ALT+F4     : Fecha janela com foco (suave) */
-    { MODKEY,           XK_F5,     spawn,     SHCMD("xkill")                             }, /* ALT+F5     : Seleciona janela com rato para matar */
-    { WIN_KEY,          XK_Escape, killclient,{0}                                        }, /* WIN+Esc    : Fecha a janela com foco */
-    //{ MODKEY|ShiftMask, XK_c,      killclient,{0}                                        }, /* ALT+Shift+C: Fecha a janela com foco (atalho clássico DWM) */
-
-    /* Foco na stack */
-    { MODKEY,      XK_j,   focusstack, {.i = +1} }, /* ALT+J   : Foco para a janela seguinte na stack */
-    { MODKEY,      XK_k,   focusstack, {.i = -1} }, /* ALT+K   : Foco para a janela anterior na stack */
-    { MODKEY,      XK_Tab, focusstack, {.i = +1} }, /* ALT+Tab : Igual ao ALT+J (ciclar janelas) */
-
-    /* Área master */
-    { MODKEY,      XK_i,      incnmaster, {.i = +1}   }, /* ALT+I : Aumenta nº de janelas na área master */
-    { MODKEY,      XK_d,      incnmaster, {.i = -1}   }, /* ALT+D : Diminui nº de janelas na área master */
-    { MODKEY,      XK_h,      setmfact,   {.f = -0.05}}, /* ALT+H : Encolhe área master em 5% */
-    { MODKEY,      XK_l,      setmfact,   {.f = +0.05}}, /* ALT+L : Expande área master em 5% */
-    { MODKEY,      XK_Return, zoom,       {0}          }, /* ALT+Enter : Promove janela com foco a master */
-
-    /* Floating */
-    { WIN_KEY,          XK_t,     togglefloating, {0} }, /* WIN+T       : Alterna floating/tiled da janela */
-    //{ MODKEY|ShiftMask, XK_space, togglefloating, {0} }, /* ALT+Shift+Sp: Alterna floating/tiled da janela */
-
-    /* Fullscreen real (patch actualfullscreen) */
-    { WIN_KEY, XK_f, togglefullscr, {0} }, /* WIN+F : Fullscreen real */
-
-    /* Barra */
-    { WIN_KEY, XK_b, togglebar, {0} }, /* WIN+B : Mostra/esconde a barra */
-
-    /* Tags */
-    { WIN_KEY,          XK_Tab, view, {0}        }, /* WIN+Tab      : Alterna para a tag anteriormente vista */
-    { MODKEY,           XK_0,   view, {.ui = ~0} }, /* ALT+0        : Mostra todas as tags ao mesmo tempo */
-    { MODKEY|ShiftMask, XK_0,   tag,  {.ui = ~0} }, /* ALT+Shift+0  : Move janela para todas as tags */
+      /* ──────────────────────────────────────────────
+         SCRATCHPADS  (WIN + tecla)
+         ────────────────────────────────────────────── */
+      /* modifier    tecla    função           argumento (índice em scratchpads[]) */
+      { WIN_KEY, XK_s,  togglescratch, {.ui = 0} },  /* Terminal rápido (alacritty) */
+      { WIN_KEY, XK_d,  togglescratch, {.ui = 1} },  /* Gestor de ficheiros lf */
+      { WIN_KEY, XK_c,  togglescratch, {.ui = 2} },  /* Thunar */
+      /* WIN+w : firefox scratchpad — não funciona, desativado */
+      { WIN_KEY, XK_z,  togglescratch, {.ui = 4} },  /* VS Code */
+      { WIN_KEY, XK_h,  togglescratch, {.ui = 5} },  /* htop */
 
 
-    /* ──────────────────────────────────────────────
-       LAYOUTS
-       ────────────────────────────────────────────── */
-    { MODKEY,      XK_comma,  cyclelayout, {.i = -1}         }, /* ALT+,  : Layout anterior (patch cyclelayouts) */
-    { MODKEY,      XK_period, cyclelayout, {.i = +1}         }, /* ALT+.  : Layout seguinte (patch cyclelayouts) */
-    { MODKEY,      XK_t,      setlayout,   {.v = &layouts[0]}}, /* ALT+T  : Layout Tiled    []=  */
-    { MODKEY,      XK_f,      setlayout,   {.v = &layouts[1]}}, /* ALT+F  : Layout Monocle  [M] */
-    { MODKEY,      XK_m,      setlayout,   {.v = &layouts[2]}}, /* ALT+M  : Layout Grid     HHH */
-    { MODKEY,      XK_space,  setlayout,   {0}               }, /* ALT+Sp : Alterna layout atual ↔ anterior */
+      /* ──────────────────────────────────────────────
+         GESTÃO DE JANELAS — DWM
+         ────────────────────────────────────────────── */
+
+      /* Fechar / Matar janelas */
+      { MODKEY,           XK_F4,     spawn,     SHCMD("xdotool getwindowfocus windowkill") }, /* ALT+F4     : Fecha janela com foco (suave) */
+      { MODKEY,           XK_F5,     spawn,     SHCMD("xkill")                             }, /* ALT+F5     : Seleciona janela com rato para matar */
+      { WIN_KEY,          XK_Escape, killclient,{0}                                        }, /* WIN+Esc    : Fecha a janela com foco */
+      //{ MODKEY|ShiftMask, XK_c,      killclient,{0}                                        }, /* ALT+Shift+C: Fecha a janela com foco (atalho clássico DWM) */
+
+      /* Foco na stack */
+      { MODKEY,      XK_j,   focusstack, {.i = +1} }, /* ALT+J   : Foco para a janela seguinte na stack */
+      { MODKEY,      XK_k,   focusstack, {.i = -1} }, /* ALT+K   : Foco para a janela anterior na stack */
+      { MODKEY,      XK_Tab, focusstack, {.i = +1} }, /* ALT+Tab : Igual ao ALT+J (ciclar janelas) */
+
+      /* Área master */
+      { MODKEY,      XK_i,      incnmaster, {.i = +1}   }, /* ALT+I : Aumenta nº de janelas na área master */
+      { MODKEY,      XK_d,      incnmaster, {.i = -1}   }, /* ALT+D : Diminui nº de janelas na área master */
+      { MODKEY,      XK_h,      setmfact,   {.f = -0.05}}, /* ALT+H : Encolhe área master em 5% */
+      { MODKEY,      XK_l,      setmfact,   {.f = +0.05}}, /* ALT+L : Expande área master em 5% */
+      { MODKEY,      XK_Return, zoom,       {0}          }, /* ALT+Enter : Promove janela com foco a master */
+
+      /* Floating */
+      { WIN_KEY,          XK_t,     togglefloating, {0} }, /* WIN+T       : Alterna floating/tiled da janela */
+      //{ MODKEY|ShiftMask, XK_space, togglefloating, {0} }, /* ALT+Shift+Sp: Alterna floating/tiled da janela */
+
+      /* Fullscreen real (patch actualfullscreen) */
+      { WIN_KEY, XK_f, togglefullscr, {0} }, /* WIN+F : Fullscreen real */
+
+      /* Barra */
+      { WIN_KEY, XK_b, togglebar, {0} }, /* WIN+B : Mostra/esconde a barra */
+
+      /* Tags */
+      //{ WIN_KEY,           XK_Tab, view, {0}        }, /* WIN+Tab      : Alterna para a tag anteriormente vista */
+      { WIN_KEY,           XK_0,   view, {.ui = ~0} }, /* ALT+0        : Mostra todas as tags ao mesmo tempo */
+      { WIN_KEY|ShiftMask, XK_0,   tag,  {.ui = ~0} }, /* ALT+Shift+0  : Move janela para todas as tags */
 
 
-    /* ──────────────────────────────────────────────
-       MÚLTIPLOS MONITORES
-       Nota: o rato segue o foco — ver função focusmon() em dwm.c
-             onde foi adicionado XWarpPointer().
-       Configuração xrandr:
-           HDMI (1680x1050) por cima   — pos 120x0
-           eDP  (1920x1200) por baixo  — pos 0x1060  (10px de gap evita salto de janelas)
-       ────────────────────────────────────────────── */
-    /* modifier    tecla           função      argumento */
-    { WIN_KEY,          XK_backslash, focusmon, {.i = +1} }, /* WIN+\       : Foca monitor seguinte (rato segue) */
-    { MODKEY|ShiftMask, XK_comma,     tagmon,   {.i = -1} }, /* ALT+Shift+, : Move janela para monitor anterior */
-    { MODKEY|ShiftMask, XK_period,    tagmon,   {.i = +1} }, /* ALT+Shift+. : Move janela para monitor seguinte */
+      /* ──────────────────────────────────────────────
+         LAYOUTS
+         ────────────────────────────────────────────── */
+      { MODKEY,      XK_comma,  cyclelayout, {.i = -1}         }, /* ALT+,  : Layout anterior (patch cyclelayouts) */
+      { MODKEY,      XK_period, cyclelayout, {.i = +1}         }, /* ALT+.  : Layout seguinte (patch cyclelayouts) */
+      { MODKEY,      XK_t,      setlayout,   {.v = &layouts[0]}}, /* ALT+T  : Layout Tiled    []=  */
+      { MODKEY,      XK_f,      setlayout,   {.v = &layouts[1]}}, /* ALT+F  : Layout Monocle  [M] */
+      { MODKEY,      XK_m,      setlayout,   {.v = &layouts[2]}}, /* ALT+M  : Layout Grid     HHH */
+      { MODKEY,      XK_space,  setlayout,   {0}               }, /* ALT+Sp : Alterna layout atual ↔ anterior */
 
 
-    /* ──────────────────────────────────────────────
-       TAGS / WORKSPACES
-       (gerados pela macro TAGKEYS)
-       WIN+N           : vai para tag N
-       WIN+Ctrl+N      : mostra tag N em simultâneo
-       WIN+Shift+N     : move janela para tag N
-       WIN+Ctrl+Shift+N: toggle da janela na tag N
-       ────────────────────────────────────────────── */
-    TAGKEYS(XK_1, 0)  /* Tag 1: Browser  */
-    TAGKEYS(XK_2, 1)  /* Tag 2: Código   */
-    TAGKEYS(XK_3, 2)  /* Tag 3: Ficheiros*/
-    TAGKEYS(XK_4, 3)  /* Tag 4: Office   */
-    TAGKEYS(XK_5, 4)  /* Tag 5: PDF      */
-    TAGKEYS(XK_6, 5)  /* Tag 6: Jogos    */
-    TAGKEYS(XK_7, 6)  /* Tag 7: Áudio/BT */
-    TAGKEYS(XK_8, 7)  /* Tag 8: Remoto   */
-    TAGKEYS(XK_9, 8)  /* Tag 9: (extra)  */
-
-    /* Reiniciar DWM */
-    { MODKEY|ShiftMask, XK_q, quit, {0} }, /* ALT+Shift+Q : Reinicia o DWM */
+      /* ──────────────────────────────────────────────
+         MÚLTIPLOS MONITORES
+         Nota: o rato segue o foco — ver função focusmon() em dwm.c
+               onde foi adicionado XWarpPointer().
+         Configuração xrandr:
+            HDMI (1680x1050) por cima   — pos 120x0
+            eDP  (1920x1200) por baixo  — pos 0x1060  (10px de gap evita salto de janelas)
+         ────────────────────────────────────────────── */
+      /* modifier    tecla           função      argumento */
+      { WIN_KEY,     XK_Tab, focusmon, {.i = +1} }, /* WIN+\       : Foca monitor seguinte (rato segue) */
+      //{ WIN_KEY,     XK_backslash, focusmon, {.i = +1} }, /* WIN+\       : Foca monitor seguinte (rato segue) */
 
 
-    /* ──────────────────────────────────────────────
-       LANÇAR APLICAÇÕES  (WIN + tecla)
-       ────────────────────────────────────────────── */
-    /* modifier    tecla       função    comando */
-    { WIN_KEY,           XK_Return, spawn, SHCMD("alacritty")                            }, /* WIN+Enter      : Terminal */
-    { WIN_KEY,           XK_a,      spawn, SHCMD("sh ~/.config/dwm/dmenu_favoritos.sh")  }, /* WIN+A          : dmenu favoritos (script personalizado) */
-    { WIN_KEY|ShiftMask, XK_a,      spawn, SHCMD("xfce4-appfinder")                      }, /* WIN+Shift+A    : Lançador de aplicações XFCE */
-    { WIN_KEY,           XK_v,      spawn, SHCMD("alacritty -e sh ~/.local/bin/lfub")    }, /* WIN+V          : Gestor de ficheiros lf no terminal */
-    { WIN_KEY,           XK_t,      spawn, SHCMD("thunar")                               }, /* WIN+T          : Thunar (ficheiros gráfico) */
-    { WIN_KEY,           XK_o,      spawn, SHCMD("libreoffice : evince")                 }, /* WIN+O          : LibreOffice ou Evince */
-    { WIN_KEY,           XK_m,      spawn, SHCMD("arandr")                               }, /* WIN+M          : ARandR (configuração de monitores) */
+      { MODKEY|ShiftMask, XK_comma,     tagmon,   {.i = -1} }, /* ALT+Shift+, : Move janela para monitor anterior */
+      { MODKEY|ShiftMask, XK_period,    tagmon,   {.i = +1} }, /* ALT+Shift+. : Move janela para monitor seguinte */
+
+
+      /* ──────────────────────────────────────────────
+         TAGS / WORKSPACES
+         (gerados pela macro TAGKEYS)
+         WIN+N           : vai para tag N
+         WIN+Ctrl+N      : mostra tag N em simultâneo
+         WIN+Shift+N     : move janela para tag N
+         WIN+Ctrl+Shift+N: toggle da janela na tag N
+         ────────────────────────────────────────────── */
+      TAGKEYS(XK_1, 0)  /* Tag 1: Browser  */
+      TAGKEYS(XK_2, 1)  /* Tag 2: Código   */
+      TAGKEYS(XK_3, 2)  /* Tag 3: Ficheiros*/
+      TAGKEYS(XK_4, 3)  /* Tag 4: Office   */
+      TAGKEYS(XK_5, 4)  /* Tag 5: PDF      */
+      TAGKEYS(XK_6, 5)  /* Tag 6: Jogos    */
+      TAGKEYS(XK_7, 6)  /* Tag 7: Áudio/BT */
+      TAGKEYS(XK_8, 7)  /* Tag 8: Remoto   */
+      TAGKEYS(XK_9, 8)  /* Tag 9: (extra)  */
+
+      /* Reiniciar DWM */
+      { MODKEY|ShiftMask, XK_q, quit, {0} }, /* ALT+Shift+Q : Reinicia o DWM */
+
+
+      /* ──────────────────────────────────────────────
+         LANÇAR APLICAÇÕES  (WIN + tecla)
+         ────────────────────────────────────────────── */
+      /* modifier    tecla       função    comando */
+      { WIN_KEY,           XK_Return, spawn, SHCMD("alacritty")                            }, /* WIN+Enter      : Terminal */
+      { WIN_KEY,           XK_a,      spawn, SHCMD("sh ~/.config/dwm/dmenu_favoritos.sh")  }, /* WIN+A          : dmenu favoritos (script personalizado) */
+      { WIN_KEY|ShiftMask, XK_a,      spawn, SHCMD("xfce4-appfinder")                      }, /* WIN+Shift+A    : Lançador de aplicações XFCE */
+      { WIN_KEY,           XK_v,      spawn, SHCMD("alacritty -e sh ~/.local/bin/lfub")    }, /* WIN+V          : Gestor de ficheiros lf no terminal */
+      { WIN_KEY,           XK_t,      spawn, SHCMD("thunar")                               }, /* WIN+T          : Thunar (ficheiros gráfico) */
+      { WIN_KEY,           XK_o,      spawn, SHCMD("libreoffice : evince")                 }, /* WIN+O          : LibreOffice ou Evince */
+      { WIN_KEY,           XK_m,      spawn, SHCMD("arandr")                               }, /* WIN+M          : ARandR (configuração de monitores) */
+
 };
 
 

@@ -16,12 +16,35 @@
         }
     ],
     "claudeCode.preferredLocation": "panel",
+    "git.confirmSync": false,
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+
+    // ── Pyright ───────────────────────────────────────
+    //"python.languageServer": "Pylance",
+    "python.languageServer": "Pyright",
     "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.parameterTypes": true,
+    "python.pythonPath": "/usr/bin/python3",
+
+    // ── Editor ────────────────────────────────────────
     "editor.quickSuggestions": {
         "other": true,
         "comments": false,
         "strings": true
     },
     "editor.suggestOnTriggerCharacters": true,
-    "git.confirmSync": false
+    "editor.parameterHints.enabled": true,
+    "editor.parameterHints.cycle": true,
+    "editor.hover.enabled": true,
+    "editor.hover.delay": 300,
+    "editor.semanticHighlighting.enabled": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.occurrencesHighlight": "singleFile",
+    "editor.selectionHighlight": true,
+    "editor.wordBasedSuggestions": "matchingDocuments",
+    "editor.guides.bracketPairs": true
 }
