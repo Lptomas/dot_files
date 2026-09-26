@@ -1,0 +1,38 @@
+--- dmenu.c
++++ dmenu.c
+@@ -571,14 +623,14 @@ paste(void)
+ }
+ 
+ static void
+-readstdin(void)
++readstdin(FILE* stream)
+ {
+ 	char buf[sizeof text], *p;
+ 	size_t i, imax = 0, size = 0;
+ 	unsigned int tmpmax = 0;
+ 
+ 	/* read each line from stdin and add it to the item list */
+-	for (i = 0; fgets(buf, sizeof buf, stdin); i++) {
++	for (i = 0; fgets(buf, sizeof buf, stream); i++) {
+ 		if (i + 1 >= size / sizeof *items)
+ 			if (!(items = realloc(items, (size += BUFSIZ))))
+ 				die("cannot realloc %u bytes:", size);
+@@ -596,7 +648,7 @@ readstdin(void)
+ 	if (items)
+ 		items[i].text = NULL;
+ 	inputw = items ? TEXTW(items[imax].text) : 0;
+-	lines = MIN(lines, i);
++	lines = MIN(max_lines, i);
+ }
+ 
+ static void
+@@ -742,7 +794,8 @@ static void
+ usage(void)
+ {
+ 	fputs("usage: dmenu [-bfiv] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
+-	      "             [-nb color] [-nf color] [-sb color] [-sf color] [-w windowid]\n", stderr);
++	      "             [-nb color] [-nf color] [-sb color] [-sf color] [-w windowid]\n"
++	      "             [-dy command]\n", stderr);
+ 	exit(1);
+ }
+ 
