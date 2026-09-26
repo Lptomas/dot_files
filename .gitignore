@@ -1,3 +1,15 @@
+# Executáveis e objetos compilados
+dwm
+*.o
+
+# Ficheiros de rejeição e backup de patches
+*.orig
+*.rej
+
+# Ficheiros temporários de backup
+config__.h
+*copiar*
+
 # Prerequisites
 *.d
 
@@ -53,3 +65,18 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+
+#dmenu
+
+# Binários gerados durante o processo de compilação
+dmenu
+dmenu_path
+stest
+
+# Ficheiros objeto intermediários
+*.o
+
+# Ficheiros de backup/rejeição gerados pelo comando patch
+*.orig
+*.rej

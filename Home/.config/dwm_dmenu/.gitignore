@@ -1,0 +1,14 @@
+
+#dmenu
+
+# Binários gerados durante o processo de compilação
+dmenu
+dmenu_path
+stest
+
+# Ficheiros objeto intermediários
+*.o
+
+# Ficheiros de backup/rejeição gerados pelo comando patch
+*.orig
+*.rej
