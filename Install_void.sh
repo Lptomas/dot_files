@@ -49,6 +49,12 @@ pckg=(
   git                            # controlo de versões
   gimp                           # editor de imagens
  
+  # ____ PROGRAMAÇÃO __________________________________________________
+rust-std
+rust
+cargo
+
+
   # ____ FONTES __________________________________________________
   libreoffice-fonts              # fontes LibreOffice
   dina-font                      # fonte bitmap terminal
@@ -167,6 +173,12 @@ pckg=(
   poppler                        # biblioteca PDF
   poppler-utils                  # utilitários PDF
  
+
+
+
+#____Outros________________________________________________________
+zstd
+
 )
 
 
@@ -189,14 +201,17 @@ verificar_pckg() {
   local disponiveis=()
   local nao_encontrados=()
 
-  seguranca
-
   echo ""
   echo -e "  A verificar se os ${YELLOW}${#pckg[@]}${RESET} pacotes existem nos repositórios..."
   echo -e "  ${GREEN}verde = existe${RESET}  |  ${RED}vermelho = não existe${RESET}"
   echo ""
-  echo " Alguns pocotes poderam estar no>   void-repo-nonfree,  void-repo-multilib,  void-repo-multilib-nonfre "
-  echo "/No final correr novamente"
+  echo "  Alguns pocotes em falha podem estar em:"
+  echo "  - void-repo-nonfree"
+  echo "  - void-repo-multilib"
+  echo "  - void-repo-multilib-nonfre"
+  echo ""
+  echo ""
+  echo "----No final correr novamente"
   echo ""
   read -rp $'  Prima qualquer tecla para continuar...' -n1
   echo ""
@@ -230,4 +245,20 @@ verificar_pckg() {
   sudo xbps-install -Sy "${disponiveis[@]}"
 }
 
+
+enable_services(){
+
+
+echo "Set services :  needed do slstatus and dmenu"
+ln -s /etc/sv/bluetoothd/ /var/service/
+ln -s /etc/sv/dbus/ /var/service/
+
+
+
+}
+
+
+seguranca
 verificar_pckg
+enable_services
+
