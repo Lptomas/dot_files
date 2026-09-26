@@ -1,12 +1,14 @@
 #!/bin/bash
 
-# para correr: bash bootstrap.sh
+# para correr: bash file.sh
 
 # ── Travão de segurança ───────────────────────────────
 # Muda para true assim que lista de pacotes seja revista e Aceite
 #verificado=false
 verificado=true
 # ─────────────────────────────────────────────────────
+
+
 
 
 clear   # ← limpa o terminal
@@ -28,8 +30,8 @@ pckg=(
   # ____ INTERNET ________________________________________________
   firefox                        # browser web
   speedtest-cli                  # teste de velocidade
-  yt-dlp                         # download de vídeos
-  syncthing                      # sincronização P2P
+  #yt-dlp                         # download de vídeos
+  #syncthing                      # sincronização P2P
  
   # ____ OFFICE __________________________________________________
   pdfarranger                    # reorganizar PDFs
@@ -74,7 +76,7 @@ pckg=(
   gparted                        # gestor de partições
   cheese                         # webcam
   flatpak                        # pacotes sandboxed
-  lite-xl                        # editor de texto leve
+  #lite-xl                        # editor de texto leve
  
   # ____ AMD GPU _________________________________________________
   amdvlk                         # driver Vulkan AMD
@@ -96,15 +98,15 @@ pckg=(
   mesa-vulkan-radeon             # Vulkan Radeon
  
   # ____ WINE ____________________________________________________
-  wine                           # compatibilidade Windows
-  wine-common                    # ficheiros comuns
-  wine-gecko                     # motor web Wine
-  wine-mono                      # .NET para Wine
-  wine-tools                     # ferramentas Wine
-  winegui                        # interface gráfica Wine
-  winetricks                     # componentes Windows
-  protontricks                   # winetricks para Steam/Proton
-  wine-32bit                     # Wine 32bit
+  #wine                           # compatibilidade Windows
+  #wine-common                    # ficheiros comuns
+  #wine-gecko                     # motor web Wine
+  #wine-mono                      # .NET para Wine
+  #wine-tools                     # ferramentas Wine
+  #winegui                        # interface gráfica Wine
+  #winetricks                     # componentes Windows
+  #protontricks                   # winetricks para Steam/Proton
+  #wine-32bit                     # Wine 32bit
  
   # ____ BLUETOOTH _______________________________________________
   bluez                          # stack Bluetooth
@@ -112,10 +114,10 @@ pckg=(
   libspa-bluetooth               # Bluetooth para PipeWire
  
   # ____ VIRTUALBOX ______________________________________________
-  virtualbox-ose                 # VirtualBox
-  virtualbox-ose-dkms            # módulos kernel
-  virtualbox-ose-guest           # adições convidado
-  virtualbox-ose-guest-dkms      # módulos kernel convidado
+  #virtualbox-ose                 # VirtualBox
+  #virtualbox-ose-dkms            # módulos kernel
+  #virtualbox-ose-guest           # adições convidado
+  #virtualbox-ose-guest-dkms      # módulos kernel convidado
  
   # ____ DWM — dependências de compilação ________________________
   base-devel                     # ferramentas build
@@ -193,9 +195,13 @@ verificar_pckg() {
   echo -e "  A verificar se os ${YELLOW}${#pckg[@]}${RESET} pacotes existem nos repositórios..."
   echo -e "  ${GREEN}verde = existe${RESET}  |  ${RED}vermelho = não existe${RESET}"
   echo ""
+  echo " Alguns pocotes poderam estar no>   void-repo-nonfree,  void-repo-multilib,  void-repo-multilib-nonfre "
+  echo "/No final correr novamente"
+  echo ""
   read -rp $'  Prima qualquer tecla para continuar...' -n1
   echo ""
   echo ""
+
 
   for pkg in "${pckg[@]}"; do
     if xbps-query -R "$pkg" &>/dev/null; then

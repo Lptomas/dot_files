@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 #GIT folder
 gitfolder="dot_files"
 # Config FILES and DOT files
@@ -37,13 +39,13 @@ echo ""
 echo "Delete corrent Symbolic at: :"
 echo "-->> $home_dot_config"
 read a
-#rm -i $home_dot_config/alacritty
-#rm -i $home_dot_config/zsh
-#rm -i $home_dot_config/dwm
-#rm -i $home_dot_config/lf
-#rm -i $home_dot_config/htop
-#rm -i $home_dot_config/Thunar
-#rm -i $home_dot_config/xfce4
+rm -i $home_dot_config/alacritty
+rm -i $home_dot_config/zsh
+rm -i $home_dot_config/dwm
+rm -i $home_dot_config/lf
+rm -i $home_dot_config/htop
+rm -i $home_dot_config/Thunar
+rm -i $home_dot_config/xfce4
 
 
 # /home/user/ = $git_folder
