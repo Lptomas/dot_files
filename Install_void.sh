@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+
+# Pode ser preciso tornar o ficheiro executavel ???   sudo chmod +x Install_void.sh
 # para correr: bash file.sh
 
 # ── Travão de segurança ───────────────────────────────
